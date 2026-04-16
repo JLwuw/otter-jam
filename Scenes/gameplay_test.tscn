@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b6echlk833f2a"]
+
+[ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
+[ext_resource type="Script" uid="uid://d01fvsywk0yrq" path="res://Scenes/bullet_spawner.gd" id="2_1uy4b"]
+[ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="3_1uy4b"]
+[ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="4_n6585"]
+
+[node name="GameplayTest" type="Node2D" unique_id=1958848919]
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
+position = Vector2(-6, 130)
+max_speed = 500.0
+drag = 0.5
+
+[node name="Bullet Spawner" type="Node2D" parent="." unique_id=1494631834]
+script = ExtResource("2_1uy4b")
+bullet_scene = ExtResource("3_1uy4b")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bullet Spawner" unique_id=1013501704]
+position = Vector2(3, -29)
+rotation = 0.567232
+scale = Vector2(0.3046875, 0.3046875)
+texture = ExtResource("4_n6585")
