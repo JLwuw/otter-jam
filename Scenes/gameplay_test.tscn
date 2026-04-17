@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://b6echlk833f2a"]
 
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
-[ext_resource type="PackedScene" uid="uid://cv27k52wlpppn" path="res://Scenes/Enemies/enemy_slow_chaser.tscn" id="3_1uy4b"]
-[ext_resource type="PackedScene" uid="uid://d3o4a888rrucy" path="res://Scenes/Enemies/enemy_slow_shooter.tscn" id="4_n6585"]
+[ext_resource type="PackedScene" uid="uid://ceel8u3pt84p" path="res://Scenes/wave_manager.tscn" id="5_2okw4"]
 [ext_resource type="PackedScene" uid="uid://wlfg018oiue2" path="res://Scenes/arena.tscn" id="5_6nxcd"]
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
@@ -11,26 +10,6 @@
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
 position = Vector2(-6, 130)
-max_speed = 500.0
-drag = 0.5
-max_distance = 100.0
 
-[node name="Enemy Slow Chaser" parent="." unique_id=1506888642 node_paths=PackedStringArray("player") instance=ExtResource("3_1uy4b")]
-position = Vector2(-386, -85)
-player = NodePath("../Player")
-
-[node name="Enemy Slow Chaser2" parent="." unique_id=1157727113 node_paths=PackedStringArray("player") instance=ExtResource("3_1uy4b")]
-position = Vector2(43, -151)
-player = NodePath("../Player")
-
-[node name="Enemy Slow Shooter" parent="." unique_id=727752382 node_paths=PackedStringArray("player") instance=ExtResource("4_n6585")]
-position = Vector2(261, -108)
-player = NodePath("../Player")
-
-[node name="Enemy Slow Shooter2" parent="." unique_id=1360288986 node_paths=PackedStringArray("player") instance=ExtResource("4_n6585")]
-position = Vector2(202, -174)
-player = NodePath("../Player")
-
-[node name="Enemy Slow Shooter3" parent="." unique_id=657343743 node_paths=PackedStringArray("player") instance=ExtResource("4_n6585")]
-position = Vector2(362, -154)
+[node name="Wave Manager" parent="." unique_id=1540367181 node_paths=PackedStringArray("player") instance=ExtResource("5_2okw4")]
 player = NodePath("../Player")

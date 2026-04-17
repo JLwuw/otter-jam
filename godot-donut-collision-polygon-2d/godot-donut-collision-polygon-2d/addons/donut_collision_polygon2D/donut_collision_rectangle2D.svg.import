@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dn8hljsdwd42q"
-path="res://.godot/imported/donut_collision_rectangle2D.svg-d1330b4ff8ce111cf01e19c94a49e503.ctex"
+path="res://.godot/imported/donut_collision_rectangle2D.svg-ca1661b12b0ce90e25a92c4b3b5f8956.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://godot-donut-collision-polygon-2d-7780d026ae3d4a37fe68f43cc1f97ba664dd775d/godot-donut-collision-polygon-2d-7780d026ae3d4a37fe68f43cc1f97ba664dd775d/addons/donut_collision_polygon2D/donut_collision_rectangle2D.svg"
-dest_files=["res://.godot/imported/donut_collision_rectangle2D.svg-d1330b4ff8ce111cf01e19c94a49e503.ctex"]
+source_file="res://godot-donut-collision-polygon-2d/godot-donut-collision-polygon-2d/addons/donut_collision_polygon2D/donut_collision_rectangle2D.svg"
+dest_files=["res://.godot/imported/donut_collision_rectangle2D.svg-ca1661b12b0ce90e25a92c4b3b5f8956.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d3o4a888rrucy"]
 
 [ext_resource type="Script" uid="uid://gv5d56bawvao" path="res://Scripts/Enemies/enemy_slow_shooter.gd" id="1_fcceh"]
-[ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_slow_chase.gd" id="2_in5mm"]
+[ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="2_in5mm"]
 [ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_vqo77"]
 [ext_resource type="Script" uid="uid://cl8b8ngejaij8" path="res://Scripts/Enemies/Components/component_basic_shoot.gd" id="3_vqo77"]
 [ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="4_6cff3"]
@@ -19,7 +19,7 @@ texture = ExtResource("2_vqo77")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2105024760]
 shape = SubResource("CircleShape2D_vb4pl")
 
-[node name="Slow Chase Component" type="Node" parent="." unique_id=2079848975 groups=["enemies"]]
+[node name="Player Chase Component" type="Node" parent="." unique_id=2079848975]
 script = ExtResource("2_in5mm")
 
 [node name="Basic Shoot Component" type="Node" parent="." unique_id=1860826463]

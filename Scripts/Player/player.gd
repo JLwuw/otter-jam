@@ -2,9 +2,11 @@ class_name Player
 extends CharacterBody2D
 
 @export_category("Movement")
-@export var max_speed: float = 400.0
-@export var responsiveness: float = 8.0
-@export var drag: float = 1.0
+@export var SPEED_CAP: float = 1000
+@export var max_speed: float = 500.0
+@export var responsiveness: float = 45
+@export var acceleration_factor: float = 8
+@export var drag: float = 1
 @export var max_distance: float = 200.0
 
 @export_category("Health")
@@ -23,22 +25,25 @@ var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
 
-func _physics_process(delta: float) -> void:
-	var to_mouse: Vector2 = get_global_mouse_position() - global_position
-	var distance_to_mouse: float = to_mouse.length()
-	clamp(distance_to_mouse, 0, max_distance)
-
-	if distance_to_mouse < 5:
-		move_and_slide()
-		return
+func _physics_process(delta: float) -> void: 
+	var to_mouse: Vector2 = get_global_mouse_position() - global_position 
+	var distance_to_mouse: float = to_mouse.length() 
 	
-	velocity += to_mouse / responsiveness
+	if distance_to_mouse < 5: 
+		move_and_slide() 
+		return 
 	
-	if velocity.length() > max_speed:
-		velocity = velocity.normalized() * max_speed
 	
-	velocity *= 1.0 / (1.0 + drag * delta)
-
+	if distance_to_mouse > max_distance: 
+		to_mouse = to_mouse.normalized() * max_distance 
+	
+	var acceleration: Vector2 = velocity.lerp(to_mouse, delta * responsiveness) 
+	velocity += acceleration * delta * acceleration_factor 
+	
+	if velocity.length() > max_speed: 
+		velocity = velocity.normalized() * max_speed 
+	
+	velocity *= 1.0 / (1.0 + drag * delta) 
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -60,7 +65,7 @@ func handle_shooting(delta: float) -> void:
 		shoot_timer = calc_shoot_cooldown(current_speed)
 	
 func calc_shoot_cooldown(current_speed: float) -> float:
-	var speed_percent: float = clamp(current_speed / max_speed, 0.0, 1.0) 	# Normalize speed (0 → 1)
+	var speed_percent: float = clamp(current_speed / SPEED_CAP, 0.0, 1.0) 	# Normalize speed (0 → 1)
 	var curve_value: float = fire_rate_curve.sample(speed_percent)
 	var current_fire_rate: float = lerp(min_fire_rate, max_fire_rate, curve_value)
 	return 1.0 / current_fire_rate

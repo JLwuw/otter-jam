@@ -3,6 +3,7 @@ extends Node
 
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 1.5
+@export var bullet_speed: float = 200
 
 var player: Node2D
 var owner_body: CharacterBody2D
@@ -30,5 +31,6 @@ func shoot() -> void:
 	var dir: Vector2 = (player.global_position - bullet.global_position).normalized()
 	bullet.direction = dir
 	bullet.team = Bullet.Team.ENEMY
+	bullet.speed = bullet_speed
 
 	get_tree().current_scene.add_child(bullet)
