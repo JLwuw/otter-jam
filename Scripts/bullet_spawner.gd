@@ -1,7 +1,7 @@
 class_name BulletSpawner
 extends Node2D
 
-@export var bullet_scene: PackedScene
+@export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
 @export var spawn_rate: float = 0.5
 
 var timer: float = 0.0
@@ -20,5 +20,6 @@ func spawn_bullet() -> void:
 
 	var dir := Vector2(randf(), randf())
 	bullet.direction = dir
-
+	bullet.team = Bullet.Team.ENEMY
+	
 	add_child(bullet)

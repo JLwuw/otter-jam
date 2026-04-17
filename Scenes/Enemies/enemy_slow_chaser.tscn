@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cv27k52wlpppn"]
+
+[ext_resource type="Script" uid="uid://dvoe1c61kutkr" path="res://Scripts/Enemies/enemy_slow_chaser.gd" id="1_ul00a"]
+[ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_kbahv"]
+[ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_slow_chase.gd" id="3_p7rkd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3pdns"]
+
+[node name="Enemy Slow Chaser" type="CharacterBody2D" unique_id=1506888642 groups=["enemies"]]
+script = ExtResource("1_ul00a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=473309782]
+modulate = Color(0, 0, 1, 1)
+scale = Vector2(0.16503906, 0.16503906)
+texture = ExtResource("2_kbahv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1374992332]
+shape = SubResource("CircleShape2D_3pdns")
+
+[node name="Slow Chase Component" type="Node" parent="." unique_id=1006373814]
+script = ExtResource("3_p7rkd")

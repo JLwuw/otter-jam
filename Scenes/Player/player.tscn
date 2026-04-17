@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://c6apsrrec6tji" path="res://Scripts/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="1_uvnfx"]
+[ext_resource type="Curve" uid="uid://db2wsu2s0lwdt" path="res://Resources/Player/fire_rate_curve.tres" id="2_xpcdj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
 radius = 19.0
 
-[node name="Player" type="CharacterBody2D" unique_id=2009590095]
+[node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
 script = ExtResource("1_a3d8c")
+fire_rate_curve = ExtResource("2_xpcdj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2146350461]
 position = Vector2(9.536743e-07, -9.536743e-07)
@@ -18,4 +20,4 @@ texture = ExtResource("1_uvnfx")
 shape = SubResource("CircleShape2D_a3d8c")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1631860778]
-position_smoothing_speed = 10.0
+position_smoothing_enabled = true
