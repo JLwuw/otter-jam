@@ -8,7 +8,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
-[node name="Enemy Slow Shooter" type="CharacterBody2D" unique_id=727752382]
+[node name="Enemy Slow Shooter" type="CharacterBody2D" unique_id=727752382 groups=["enemies"]]
 script = ExtResource("1_fcceh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2145617784]

@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="SubWave" format=3 uid="uid://drofl5qhxlb5"]
-
-[ext_resource type="Script" uid="uid://cvm5jhsngod2p" path="res://Scripts/Spawner/sub_wave.gd" id="1_wkg1i"]
-
-[resource]
-script = ExtResource("1_wkg1i")
-metadata/_custom_type_script = "uid://cvm5jhsngod2p"

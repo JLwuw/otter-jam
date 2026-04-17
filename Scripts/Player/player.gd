@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var SPEED_CAP: float = 1000
 @export var max_speed: float = 500.0
 @export var responsiveness: float = 45
-@export var acceleration_factor: float = 2
+@export var acceleration_factor: float = 3
 @export var drag: float = 0.5
 @export var max_distance: float = 200.0
 

@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b6echlk833f2a"]
 
+[ext_resource type="Script" uid="uid://cw60l7jw1fy3k" path="res://Scenes/gameplay_test.gd" id="1_2okw4"]
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
-[ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="3_n6585"]
-[ext_resource type="PackedScene" uid="uid://ceel8u3pt84p" path="res://Scenes/wave_manager.tscn" id="5_2okw4"]
+[ext_resource type="PackedScene" uid="uid://cv27k52wlpppn" path="res://Scenes/Enemies/enemy_slow_chaser.tscn" id="3_n6585"]
+[ext_resource type="PackedScene" uid="uid://d3o4a888rrucy" path="res://Scenes/Enemies/enemy_slow_shooter.tscn" id="4_6nxcd"]
 [ext_resource type="PackedScene" uid="uid://wlfg018oiue2" path="res://Scenes/arena.tscn" id="5_6nxcd"]
 [ext_resource type="Script" uid="uid://c6gp2f533dpeb" path="res://Scripts/Player/ice_emitter.gd" id="6_fj6jm"]
 [ext_resource type="Script" uid="uid://bxx4xqct8sv0b" path="res://Scripts/Camera/camera_2d_2.gd" id="7_d6u3u"]
@@ -30,45 +31,19 @@ linear_accel_curve = SubResource("CurveTexture_2okw4")
 turbulence_enabled = true
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
+script = ExtResource("1_2okw4")
 
 [node name="Arena" parent="." unique_id=370423158 instance=ExtResource("5_6nxcd")]
 position = Vector2(24, -10)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
-position = Vector2(-2, 129)
-acceleration_factor = 2.0
-drag = 0.5
-bullet_speed = 1000.0
-min_fire_rate = 1.0
-max_fire_rate = 6.0
+position = Vector2(-6, 130)
+bullet_speed = 800.0
 
-[node name="IceR" type="GPUParticles2D" parent="Player" unique_id=1443561894]
-position = Vector2(-9, 14)
-amount = 20
-texture = ExtResource("3_n6585")
-process_material = SubResource("ParticleProcessMaterial_6nxcd")
-script = ExtResource("6_fj6jm")
-min_emit_speed = 300.0
+[node name="Enemy Slow Chaser" parent="." unique_id=1506888642 node_paths=PackedStringArray("player") instance=ExtResource("3_n6585")]
+position = Vector2(178, 34)
+player = NodePath("../Player")
 
-[node name="IceL" type="GPUParticles2D" parent="Player" unique_id=786274652]
-position = Vector2(12, 13)
-amount = 20
-texture = ExtResource("3_n6585")
-process_material = SubResource("ParticleProcessMaterial_6nxcd")
-script = ExtResource("6_fj6jm")
-min_emit_speed = 300.0
-
-[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1827035387]
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
-rotation_smoothing_enabled = true
-rotation_smoothing_speed = 3.0
-script = ExtResource("7_d6u3u")
-follow_inertia = 2.0
-zoom_lerp_speed = 3.0
-speed_for_max_zoom_out = 500.0
-zoom_in = Vector2(1.2, 1.2)
-zoom_out = Vector2(0.7, 0.7)
-
-[node name="Wave Manager" parent="." unique_id=1540367181 node_paths=PackedStringArray("player") instance=ExtResource("5_2okw4")]
+[node name="Enemy Slow Shooter" parent="." unique_id=727752382 node_paths=PackedStringArray("player") instance=ExtResource("4_6nxcd")]
+position = Vector2(-217, 25)
 player = NodePath("../Player")
