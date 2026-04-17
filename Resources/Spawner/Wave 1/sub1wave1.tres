@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SubWave" format=3 uid="uid://c1khw0nw45egq"]
+
+[ext_resource type="PackedScene" uid="uid://cv27k52wlpppn" path="res://Scenes/Enemies/enemy_slow_chaser.tscn" id="1_ki81v"]
+[ext_resource type="Script" uid="uid://cvm5jhsngod2p" path="res://Scripts/Spawner/sub_wave.gd" id="1_qrb0l"]
+
+[resource]
+script = ExtResource("1_qrb0l")
+enemy_scene = ExtResource("1_ki81v")
+metadata/_custom_type_script = "uid://cvm5jhsngod2p"

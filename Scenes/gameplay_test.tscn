@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b6echlk833f2a"]
+
+[ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
+[ext_resource type="PackedScene" uid="uid://ceel8u3pt84p" path="res://Scenes/wave_manager.tscn" id="5_2okw4"]
+[ext_resource type="PackedScene" uid="uid://wlfg018oiue2" path="res://Scenes/arena.tscn" id="5_6nxcd"]
+
+[node name="GameplayTest" type="Node2D" unique_id=1958848919]
+
+[node name="Arena" parent="." unique_id=370423158 instance=ExtResource("5_6nxcd")]
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
+position = Vector2(-6, 130)
+
+[node name="Wave Manager" parent="." unique_id=1540367181 node_paths=PackedStringArray("player") instance=ExtResource("5_2okw4")]
+player = NodePath("../Player")
