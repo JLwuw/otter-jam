@@ -5,8 +5,8 @@ extends CharacterBody2D
 @export var SPEED_CAP: float = 1000
 @export var max_speed: float = 500.0
 @export var responsiveness: float = 45
-@export var acceleration_factor: float = 8
-@export var drag: float = 1
+@export var acceleration_factor: float = 2
+@export var drag: float = 0.5
 @export var max_distance: float = 200.0
 
 @export_category("Health")
@@ -16,9 +16,9 @@ extends CharacterBody2D
 
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
-@export var bullet_speed: float = 400
+@export var bullet_speed: float = 1000
 @export var min_fire_rate: float = 0.8 
-@export var max_fire_rate: float = 5
+@export var max_fire_rate: float = 6
 @export var fire_rate_curve: Curve
 
 var shoot_timer: float = 0.0

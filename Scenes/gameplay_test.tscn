@@ -67,7 +67,7 @@ script = ExtResource("7_d6u3u")
 follow_inertia = 2.0
 zoom_lerp_speed = 3.0
 speed_for_max_zoom_out = 500.0
-zoom_in = Vector2(1.2, 1.15)
+zoom_in = Vector2(1.2, 1.2)
 zoom_out = Vector2(0.7, 0.7)
 
 [node name="Wave Manager" parent="." unique_id=1540367181 node_paths=PackedStringArray("player") instance=ExtResource("5_2okw4")]

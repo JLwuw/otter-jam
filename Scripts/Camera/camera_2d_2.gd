@@ -1,10 +1,10 @@
 extends Camera2D
 
-@export var follow_inertia: float = 8.0
-@export var zoom_lerp_speed: float = 6.0
-@export var speed_for_max_zoom_out: float = 700.0
-@export var zoom_in: Vector2 = Vector2(1.15, 1.15)
-@export var zoom_out: Vector2 = Vector2(0.8, 0.8)
+@export var follow_inertia: float = 2.0
+@export var zoom_lerp_speed: float = 3.0
+@export var speed_for_max_zoom_out: float = 500.0
+@export var zoom_in: Vector2 = Vector2(1.2, 1.2)
+@export var zoom_out: Vector2 = Vector2(0.7, 0.7)
 
 var player: CharacterBody2D
 
