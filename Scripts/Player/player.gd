@@ -16,9 +16,9 @@ extends CharacterBody2D
 
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
-@export var bullet_speed: float = 400
+@export var bullet_speed: float = 1000
 @export var min_fire_rate: float = 0.8 
-@export var max_fire_rate: float = 5
+@export var max_fire_rate: float = 6
 @export var fire_rate_curve: Curve
 
 var shoot_timer: float = 0.0
