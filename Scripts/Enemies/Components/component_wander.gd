@@ -12,11 +12,20 @@ var wander_direction: Vector2 = Vector2.RIGHT
 var direction_timer: float = 0.0
 
 func _ready() -> void:
-	owner_body = get_parent()
+	owner_body = get_parent() as CharacterBody2D
+	if owner_body == null:
+		push_warning("No owner body for Wander Component")
+		set_physics_process(false)
+		return
+
 	direction_timer = direction_change_interval
 	_pick_new_direction()
+	set_physics_process(false)
 
 func _physics_process(delta: float) -> void:
+	if owner_body == null:
+		return
+
 	# Update direction timer
 	direction_timer -= delta
 	if direction_timer <= 0.0:
@@ -32,6 +41,13 @@ func _physics_process(delta: float) -> void:
 		owner_body.velocity = owner_body.velocity.normalized() * max_speed
 	
 	owner_body.move_and_slide()
+
+func set_active(is_active: bool) -> void:
+	set_physics_process(is_active)
+
+func reset_direction_timer() -> void:
+	direction_timer = direction_change_interval
+	_pick_new_direction()
 
 func _pick_new_direction() -> void:
 	var random_angle: float = randf() * TAU

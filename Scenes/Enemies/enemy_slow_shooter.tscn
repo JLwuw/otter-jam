@@ -4,16 +4,19 @@
 [ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="2_in5mm"]
 [ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_vqo77"]
 [ext_resource type="Script" uid="uid://cl8b8ngejaij8" path="res://Scripts/Enemies/Components/component_basic_shoot.gd" id="3_vqo77"]
+[ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="4_hitfx"]
 [ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_deathfx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
 [node name="Enemy Slow Shooter" type="CharacterBody2D" unique_id=727752382 groups=["enemies"]]
+scale = Vector2(3, 3)
 script = ExtResource("1_fcceh")
 toughness = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2145617784]
-modulate = Color(1, 0, 0.44313726, 1)
+modulate = Color(1, 0, 1, 1)
 scale = Vector2(0.1640625, 0.1640625)
 texture = ExtResource("2_vqo77")
 
@@ -27,6 +30,14 @@ script = ExtResource("2_in5mm")
 script = ExtResource("3_vqo77")
 bullet_scene = ExtResource("5_vqo77")
 fire_rate = 0.75
+
+[node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118202]
+script = ExtResource("4_hitfx")
+flash_color = Color(2.0002677, 2.0002677, 2.0002677, 1)
+flash_duration = 1.0
+
+[node name="Enemy Death Impact Component" type="Node" parent="." unique_id=320118205]
+script = ExtResource("6_deathfx")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
 rect = Rect2(-28, -28, 56, 56)
