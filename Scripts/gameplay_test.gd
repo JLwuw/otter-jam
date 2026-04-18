@@ -19,6 +19,7 @@ var label_update_timer: float = 0.01
 @onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
+@onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
@@ -35,6 +36,9 @@ func _ready() -> void:
 
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
+		
+	if speed_bar != null:
+		speed_bar.max_value = player.max_speed
 
 func _process(delta: float) -> void:
 	if fps_label == null:
@@ -59,7 +63,7 @@ func _process(delta: float) -> void:
 
 	update_speed_fx(delta)
 	
-	update_speed_label()
+	update_speedometer()
 
 
 func update_speed_fx(delta: float) -> void:
@@ -88,13 +92,12 @@ func _on_player_health_changed(current: int, maximum: int) -> void:
 	life_bar.max_value = maximum
 	life_bar.value = current
 	
-func update_speed_label() -> void:
-	# Actualizar velocímetro
+func update_speedometer() -> void:
 	if player != null and speed_label != null:
 		var current_speed: float = player.velocity.length()
 
 		# Convertir a km/h y corregir
 		var speed_kmh: float = current_speed * 3.6 /10
 
-		# Actualizar label
 		speed_label.text = "%.0f" % speed_kmh
+		speed_bar.value = current_speed
