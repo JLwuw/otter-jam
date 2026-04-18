@@ -17,8 +17,10 @@
 [ext_resource type="Texture2D" uid="uid://cr61j1776lcpj" path="res://Graphics/UI/XP Bar Over.png" id="9_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
 [ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Fonts/Pixelmax-Regular.otf" id="17_vuhfc"]
-[ext_resource type="FontFile" uid="uid://c5lj8h0komj00" path="res://Graphics/UI/PixelifySans-VariableFont_wght.ttf" id="18_wl76b"]
+[ext_resource type="Texture2D" uid="uid://btpd7vnp5ky0k" path="res://Graphics/UI/Speed Bar BG.png" id="18_1b3g2"]
+[ext_resource type="FontFile" uid="uid://c5lj8h0komj00" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="18_wl76b"]
 [ext_resource type="Shader" uid="uid://do0tt0i8nft6u" path="res://Scripts/Shaders/speed_dramatic.gdshader" id="19_qf2k8"]
+[ext_resource type="Texture2D" uid="uid://ck1jxp6bfl5mo" path="res://Graphics/UI/Speed Bar.png" id="19_tom5b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -29,14 +31,14 @@ shader_parameter/vignette_strength = 0.18999999575312
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("17_vuhfc")
+font_size = 60
 
 [sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
 font = ExtResource("18_wl76b")
-font_size = 20
+font_size = 75
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
-label_update_interval = null
 
 [node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
 position = Vector2(-3086, -1935)
@@ -171,30 +173,42 @@ texture_progress = ExtResource("10_wl76b")
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 813.0
+offset_top = 435.0
+offset_right = 1185.5
+offset_bottom = 700.0
+scale = Vector2(0.4, 0.4)
 
 [node name="SpeedBar" type="TextureProgressBar" parent="UI/RootUI/Speedometer" unique_id=1895266766]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 20.000013
+offset_top = -24.99997
+offset_right = 264.0
+offset_bottom = 208.00003
+scale = Vector2(1.2, 1.2)
+fill_mode = 4
+radial_initial_angle = 270.0
+radial_fill_degrees = 90.0
+radial_center_offset = Vector2(122, 122)
+texture_under = ExtResource("18_1b3g2")
+texture_progress = ExtResource("19_tom5b")
 
 [node name="KmhLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=1711935247]
 layout_mode = 0
-offset_left = 895.0
-offset_top = 510.0
-offset_right = 941.0
-offset_bottom = 527.0
+offset_left = 127.50005
+offset_top = 164.99997
+offset_right = 298.50006
+offset_bottom = 227.99997
 text = "km/h"
 label_settings = SubResource("LabelSettings_wl76b")
 horizontal_alignment = 1
 
 [node name="SpeedLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=313426342]
 layout_mode = 0
-offset_left = 896.0
-offset_top = 484.0
-offset_right = 939.0
-offset_bottom = 509.0
+offset_left = 92.49993
+offset_top = 70.00002
+offset_right = 324.99994
+offset_bottom = 160.00003
 text = "48"
 label_settings = SubResource("LabelSettings_wnwfe")
 horizontal_alignment = 1
