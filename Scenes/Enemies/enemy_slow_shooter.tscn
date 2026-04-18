@@ -26,3 +26,10 @@ script = ExtResource("2_in5mm")
 [node name="Basic Shoot Component" type="Node" parent="." unique_id=1860826463]
 script = ExtResource("3_vqo77")
 bullet_scene = ExtResource("4_6cff3")
+fire_rate = 0.75
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
+rect = Rect2(-28, -28, 56, 56)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

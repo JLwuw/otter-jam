@@ -27,6 +27,22 @@ var has_direction: bool = false
 var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
+var max_speed_sq: float = 0.0
+var speed_cap_inv: float = 0.0
+@onready var current_scene_root: Node = get_tree().current_scene
+var bullet_pool: BulletPool
+
+# Para progress bar en UI
+signal health_changed(current: int)
+signal xp_changed(current: int)
+
+func _ready() -> void:
+	max_speed_sq = max_speed * max_speed
+	if SPEED_CAP > 0.0:
+		speed_cap_inv = 1.0 / SPEED_CAP
+	if current_scene_root == null:
+		current_scene_root = get_tree().root
+	bullet_pool = current_scene_root.get_node_or_null("BulletPool") as BulletPool
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
@@ -42,7 +58,7 @@ func _physics_process(delta: float) -> void:
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
 		velocity += accel * acceleration_factor * delta
 	
-	if velocity.length() > max_speed: 
+	if velocity.length_squared() > max_speed_sq:
 		velocity = velocity.normalized() * max_speed 
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
@@ -68,7 +84,10 @@ func handle_shooting(delta: float) -> void:
 		shoot_timer = calc_shoot_cooldown(current_speed)
 	
 func calc_shoot_cooldown(current_speed: float) -> float:
-	var speed_percent: float = clamp(current_speed / SPEED_CAP, 0.0, 1.0) 	# Normalize speed (0 → 1)
+	if fire_rate_curve == null:
+		return 1.0 / min_fire_rate
+
+	var speed_percent: float = clamp(current_speed * speed_cap_inv, 0.0, 1.0)
 	var curve_value: float = fire_rate_curve.sample(speed_percent)
 	var current_fire_rate: float = lerp(min_fire_rate, max_fire_rate, curve_value)
 	return 1.0 / current_fire_rate
@@ -79,18 +98,23 @@ func shoot() -> void:
 		return
 
 	var bullet: Bullet = bullet_scene.instantiate()
+	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
+	
+	if bullet_pool != null:
+		bullet_pool.get_bullet(Bullet.Team.PLAYER, global_position, direction, bullet_speed)
+		return
+
 	bullet.team = Bullet.Team.PLAYER
 	bullet.global_position = global_position
-	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
 	bullet.direction = direction
 	bullet.speed = bullet_speed
-	
-	get_tree().current_scene.add_child(bullet)
+	current_scene_root.add_child(bullet)
 		
 func take_damage(amount: int = 1) -> void:
 	if invuln_timer > 0: return
 	print("Taking damage!")
 	current_health -= amount
+	health_changed.emit(current_health)  # UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 		

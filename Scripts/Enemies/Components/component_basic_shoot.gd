@@ -8,29 +8,49 @@ extends Node
 var player: Node2D
 var owner_body: CharacterBody2D
 var shoot_timer: float = 0.0
+var has_warned_missing_player: bool = false
+var fire_interval: float = INF
+@onready var current_scene_root: Node = get_tree().current_scene
+var bullet_pool: BulletPool
 
 func _ready() -> void:
-	owner_body = get_parent()
-	set_process(true)
+	owner_body = get_parent() as CharacterBody2D
+	if fire_rate > 0.0:
+		fire_interval = 1.0 / fire_rate
+	if current_scene_root == null:
+		current_scene_root = get_tree().root
+	bullet_pool = current_scene_root.get_node_or_null("BulletPool") as BulletPool
 
 func _process(delta: float) -> void:
-	if player == null:
-		print("No player found in Basic Shoot Component")
+	if owner_body == null:
 		return
+
+	if player == null:
+		if not has_warned_missing_player:
+			push_warning("No player found in Basic Shoot Component")
+			has_warned_missing_player = true
+		return
+
+	has_warned_missing_player = false
 
 	shoot_timer -= delta
 
 	if shoot_timer <= 0.0:
 		shoot()
-		shoot_timer = 1.0 / fire_rate
+		shoot_timer = fire_interval
 
 func shoot() -> void:
+	if bullet_scene == null:
+		return
+
+	var dir: Vector2 = (player.global_position - owner_body.global_position).normalized()
+	if bullet_pool != null:
+		bullet_pool.get_bullet(Bullet.Team.ENEMY, owner_body.global_position, dir, bullet_speed)
+		return
+
 	var bullet: Bullet = bullet_scene.instantiate()
 	bullet.global_position = owner_body.global_position
-
-	var dir: Vector2 = (player.global_position - bullet.global_position).normalized()
 	bullet.direction = dir
 	bullet.team = Bullet.Team.ENEMY
 	bullet.speed = bullet_speed
-
-	get_tree().current_scene.add_child(bullet)
+	current_scene_root.add_child(bullet)

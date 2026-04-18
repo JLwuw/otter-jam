@@ -19,3 +19,9 @@ shape = SubResource("CircleShape2D_3pdns")
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=1006373814]
 script = ExtResource("3_p7rkd")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1002036001]
+rect = Rect2(-28, -28, 56, 56)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

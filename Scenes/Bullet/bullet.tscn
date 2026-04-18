@@ -7,6 +7,8 @@
 
 [node name="Bullet" type="Area2D" unique_id=143243005]
 script = ExtResource("1_k7rnr")
+lifetime_seconds = 5.0
+despawn_when_offscreen = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1657239318]
 scale = Vector2(0.14257813, 0.14257813)
@@ -15,4 +17,9 @@ texture = ExtResource("2_lv0gj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=368397643]
 shape = SubResource("CircleShape2D_554qy")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=149310001]
+rect = Rect2(-24, -24, 48, 48)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
