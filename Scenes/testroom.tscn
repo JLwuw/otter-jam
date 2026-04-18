@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bkbt7gtak20bh"]
+
+[ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_5anip"]
+[ext_resource type="PackedScene" uid="uid://cv27k52wlpppn" path="res://Scenes/Enemies/enemy_slow_chaser.tscn" id="2_ltq2q"]
+[ext_resource type="PackedScene" uid="uid://d3o4a888rrucy" path="res://Scenes/Enemies/enemy_slow_shooter.tscn" id="3_5382f"]
+[ext_resource type="PackedScene" uid="uid://0my6rj4rribm" path="res://Scenes/Enemies/enemy_tank.tscn" id="4_m26h3"]
+
+[node name="Testroom" type="Node2D" unique_id=1820498590]
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_5anip")]
+max_speed = 100.0
+
+[node name="Enemy Slow Chaser" parent="." unique_id=1506888642 instance=ExtResource("2_ltq2q")]
+position = Vector2(-132, -242)
+
+[node name="Enemy Slow Shooter" parent="." unique_id=727752382 instance=ExtResource("3_5382f")]
+position = Vector2(-28, -240)
+
+[node name="Enemy Tank" parent="." unique_id=1146190899 instance=ExtResource("4_m26h3")]
+position = Vector2(1119, -295)
