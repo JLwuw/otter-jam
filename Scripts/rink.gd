@@ -1,10 +1,12 @@
 class_name Rink
 extends Node2D
 
+@onready var tile_map: TileMapLayer = $TileMapLayer
 @onready var touch_particles_scene: PackedScene = load("res://Scenes/Rink/rink_touch_particles.tscn") as PackedScene
 @export var touch_particles_min_speed: float = 120.0
 @export var touch_particles_cooldown: float = 0.04
 var touch_particles_cooldown_timer: float = 0.0
+
 
 func _process(delta: float) -> void:
 	touch_particles_cooldown_timer = max(0.0, touch_particles_cooldown_timer - delta)
