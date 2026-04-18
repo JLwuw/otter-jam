@@ -96,3 +96,9 @@ func take_damage(amount: int = 1) -> void:
 		
 func die() -> void:
 	print("ggwp")
+
+func apply_slow(slow_amount: float, slow_duration: float) -> void:
+	var original_speed: float = max_speed
+	max_speed *= (1.0 - slow_amount)
+	await get_tree().create_timer(slow_duration).timeout
+	max_speed = original_speed

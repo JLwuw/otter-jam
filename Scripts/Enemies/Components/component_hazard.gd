@@ -37,7 +37,5 @@ func _on_body_entered(body: Node) -> void:
 		has_hit = true
 		body.take_damage(damage)
 		body.apply_slow(slow_amount, slow_duration)
-		# Disable collision for a moment to prevent repeated hits
-		$CollisionShape2D.disabled = true
-		await get_tree().create_timer(0.2).timeout
-		$CollisionShape2D.disabled = false
+		# Remove hazard after hitting
+		queue_free()

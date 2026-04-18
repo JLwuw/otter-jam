@@ -2,7 +2,7 @@ class_name ComponentThrowHazard
 extends Node
 
 @export var hazard_scene: PackedScene
-@export var spawn_rate: float = 1
+@export var spawn_rate: float = 0.3
 @export var hazard_speed: float = 200
 @export var throw_distance: float = 200.0
 
