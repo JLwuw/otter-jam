@@ -8,6 +8,8 @@ extends CharacterBody2D
 @export var acceleration_factor: float = 3
 @export var drag: float = 0.5
 @export var max_distance: float = 200.0
+@export var turn_speed: float = 8.0
+@export var rotation_offset_degrees: float = 0.0
 
 var move_direction: Vector2 = Vector2.ZERO
 var has_direction: bool = false
@@ -20,6 +22,7 @@ var has_direction: bool = false
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
 @export var bullet_speed: float = 1000
+@export var bullet_spawn_offset: float = 28.0
 @export var min_fire_rate: float = 0.8 
 @export var max_fire_rate: float = 6
 @export var fire_rate_curve: Curve
@@ -30,7 +33,7 @@ var invuln_timer: float = 0
 var max_speed_sq: float = 0.0
 var speed_cap_inv: float = 0.0
 @onready var current_scene_root: Node = get_tree().current_scene
-var bullet_pool: BulletPool
+var bullet_pool: Node
 
 # Para progress bar en UI
 signal health_changed(current: int)
@@ -42,7 +45,7 @@ func _ready() -> void:
 		speed_cap_inv = 1.0 / SPEED_CAP
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
-	bullet_pool = current_scene_root.get_node_or_null("BulletPool") as BulletPool
+	bullet_pool = current_scene_root.get_node_or_null("BulletPool")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
@@ -57,12 +60,15 @@ func _physics_process(delta: float) -> void:
 		var target_velocity: Vector2 = move_direction * max_speed
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
 		velocity += accel * acceleration_factor * delta
+		var target_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
+		rotation = lerp_angle(rotation, target_rotation, turn_speed * delta)
 	
 	if velocity.length_squared() > max_speed_sq:
 		velocity = velocity.normalized() * max_speed 
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
 	move_and_slide()
+	handle_rink_contacts()
 
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
@@ -71,6 +77,32 @@ func _process(delta: float) -> void:
 func update_invuln_timer(delta: float) -> void:
 	if invuln_timer > 0.0:
 		invuln_timer -= delta
+
+
+func handle_rink_contacts() -> void:
+	var collision_count: int = get_slide_collision_count()
+	if collision_count <= 0:
+		return
+
+	for collision_index in range(collision_count):
+		var collision: KinematicCollision2D = get_slide_collision(collision_index)
+		if collision == null:
+			continue
+
+		var collider: Object = collision.get_collider()
+		if collider == null:
+			continue
+
+		var rink: Rink = null
+		if collider is Rink:
+			rink = collider as Rink
+		elif collider is Node and (collider as Node).get_parent() is Rink:
+			rink = (collider as Node).get_parent() as Rink
+
+		if rink == null:
+			continue
+
+		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), velocity.length())
 
 
 func handle_shooting(delta: float) -> void:
@@ -97,17 +129,22 @@ func shoot() -> void:
 		print("No bullet scene for player")
 		return
 
-	var bullet: Bullet = bullet_scene.instantiate()
 	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
+	var rotation_to_mouse: float = (get_global_mouse_position() - global_position).angle()
+	var spawn_position: Vector2 = global_position + direction * bullet_spawn_offset
+	var effective_bullet_speed: float = bullet_speed + max(0.0, velocity.dot(direction))
 	
-	if bullet_pool != null:
-		bullet_pool.get_bullet(Bullet.Team.PLAYER, global_position, direction, bullet_speed)
+	if bullet_pool != null and bullet_pool.has_method("get_bullet"):
+		bullet_pool.call("get_bullet", Bullet.Team.PLAYER, spawn_position, direction, effective_bullet_speed, rotation_to_mouse, bullet_scene)
 		return
 
+	var bullet: Bullet = bullet_scene.instantiate()
+
 	bullet.team = Bullet.Team.PLAYER
-	bullet.global_position = global_position
+	bullet.global_position = spawn_position
 	bullet.direction = direction
-	bullet.speed = bullet_speed
+	bullet.speed = effective_bullet_speed
+	bullet.rotation = rotation_to_mouse
 	current_scene_root.add_child(bullet)
 		
 func take_damage(amount: int = 1) -> void:
