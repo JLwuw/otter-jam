@@ -28,3 +28,9 @@ script = ExtResource("3_b2j4w")
 [node name="Throw Hazard Component" type="Node" parent="." unique_id=1450781344]
 script = ExtResource("4_m9n2v")
 hazard_scene = ExtResource("5_hazrd")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1451289300]
+rect = Rect2(-60, -60, 120, 120)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

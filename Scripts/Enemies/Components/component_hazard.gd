@@ -2,8 +2,8 @@ class_name Hazard
 extends Area2D
 
 @export var damage: int = 8
-@export var slow_amount: float = 0.35
-@export var slow_duration: float = 1.5
+@export var slow_amount: float = 0.80
+@export var slow_duration: float = 0.3
 
 var speed: float = 200.0
 var direction: Vector2 = Vector2.ZERO
