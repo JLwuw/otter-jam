@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://5c57qhdic4fp" path="res://Scripts/Enemies/Components/component_wander.gd" id="3_b2j4w"]
 [ext_resource type="Script" uid="uid://di8f07cj74h6x" path="res://Scripts/Enemies/Components/component_throw_hazard.gd" id="4_m9n2v"]
 [ext_resource type="PackedScene" uid="uid://dfmis8dojqufl" path="res://Scenes/Bullet/hazard.tscn" id="5_hazrd"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_ks16x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6w4k9"]
 
@@ -32,6 +33,10 @@ hazard_scene = ExtResource("5_hazrd")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1451289300]
 rect = Rect2(-60, -60, 120, 120)
+
+[node name="SpriteDirection" type="Node" parent="." unique_id=932480712]
+script = ExtResource("6_ks16x")
+metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

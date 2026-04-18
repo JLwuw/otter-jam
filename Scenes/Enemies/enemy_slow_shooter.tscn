@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_vqo77"]
 [ext_resource type="Script" uid="uid://cl8b8ngejaij8" path="res://Scripts/Enemies/Components/component_basic_shoot.gd" id="3_vqo77"]
 [ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_6cff3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
@@ -31,6 +32,10 @@ fire_rate = 0.75
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
 rect = Rect2(-28, -28, 56, 56)
+
+[node name="SpriteDirection" type="Node" parent="." unique_id=484852321]
+script = ExtResource("6_6cff3")
+metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
