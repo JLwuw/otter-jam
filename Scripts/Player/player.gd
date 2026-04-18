@@ -68,6 +68,7 @@ func _physics_process(delta: float) -> void:
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
 	move_and_slide()
+	handle_rink_contacts()
 
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
@@ -76,6 +77,32 @@ func _process(delta: float) -> void:
 func update_invuln_timer(delta: float) -> void:
 	if invuln_timer > 0.0:
 		invuln_timer -= delta
+
+
+func handle_rink_contacts() -> void:
+	var collision_count: int = get_slide_collision_count()
+	if collision_count <= 0:
+		return
+
+	for collision_index in range(collision_count):
+		var collision: KinematicCollision2D = get_slide_collision(collision_index)
+		if collision == null:
+			continue
+
+		var collider: Object = collision.get_collider()
+		if collider == null:
+			continue
+
+		var rink: Rink = null
+		if collider is Rink:
+			rink = collider as Rink
+		elif collider is Node and (collider as Node).get_parent() is Rink:
+			rink = (collider as Node).get_parent() as Rink
+
+		if rink == null:
+			continue
+
+		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), velocity.length())
 
 
 func handle_shooting(delta: float) -> void:
