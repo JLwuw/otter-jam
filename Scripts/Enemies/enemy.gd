@@ -14,9 +14,12 @@ var current_health: int = 3
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+signal died(toughness: int)
+
 func _ready() -> void:
 	current_health = max_health
 	set_enemy_active(screen_notifier.is_on_screen())
+	died.connect(ScoreManager._on_enemy_died)
 
 func take_damage(amount: int) -> void:
 	current_health -= amount
