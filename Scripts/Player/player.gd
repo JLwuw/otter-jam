@@ -16,7 +16,7 @@ var has_direction: bool = false
 
 @export_category("Health")
 @export var max_health: int = 5
-@export var invuln_time: float = 2
+@export var invuln_time: float = 0.3
 @export var base_fire_rate: float = 0.5
 
 @export_category("Shooting")
@@ -173,12 +173,19 @@ func die() -> void:
 	print("ggwp")
 
 func apply_slow(slow_amount: float, slow_duration: float) -> void:
-	# Instantly reduce current velocity
-	velocity *= (1.0 - slow_amount)
+	# Store original acceleration on first use
+	if not has_meta("original_accel"):
+		set_meta("original_accel", acceleration_factor)
+		set_meta("current_slow", 0.0)
 	
-	# Also temporarily reduce max speed
-	var original_max_speed: float = max_speed
-	max_speed *= (1.0 - slow_amount)
+	var original_accel = get_meta("original_accel")
 	
-	await get_tree().create_timer(slow_duration).timeout
-	max_speed = original_max_speed
+	# Only apply if this slow is stronger
+	if slow_amount > get_meta("current_slow"):
+		velocity *= (1.0 - slow_amount)
+		acceleration_factor = original_accel * (1.0 - slow_amount)
+		set_meta("current_slow", slow_amount)
+		
+		await get_tree().create_timer(slow_duration).timeout
+		set_meta("current_slow", 0.0)
+		acceleration_factor = original_accel
