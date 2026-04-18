@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bt3c4x5x1awdi"]
+
+[sub_resource type="Gradient" id="Gradient_ksi6v"]
+colors = PackedColorArray(0.024411837, 0.009229163, 0.23387015, 0.8039216, 0.10895493, 0.048745334, 0.5699267, 0.15686275)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oovwk"]
+gradient = SubResource("Gradient_ksi6v")
+
+[sub_resource type="Curve" id="Curve_a78tr"]
+_data = [Vector2(0, 1), 0.0, -0.020967921, 0, 0, Vector2(1, 0), -3.4887056, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ifdqg"]
+curve = SubResource("Curve_a78tr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_waib0"]
+particle_flag_disable_z = true
+angle_min = -77.399994
+angle_max = 104.500015
+spread = 180.0
+initial_velocity_min = 69.89
+initial_velocity_max = 112.899994
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -35.48
+linear_accel_max = -26.340002
+damping_max = 3.4950001
+scale_min = 16.13
+scale_max = 18.13
+scale_curve = SubResource("CurveTexture_ifdqg")
+color_ramp = SubResource("GradientTexture1D_oovwk")
+
+[node name="Pop" type="GPUParticles2D" unique_id=1585415213]
+amount = 40
+lifetime = 0.91
+explosiveness = 1.0
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_waib0")
