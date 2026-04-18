@@ -8,6 +8,7 @@ extends Node
 var available_by_scene: Dictionary[String, Array] = {}
 var pending_release: Dictionary[int, bool] = {}
 @onready var current_scene_root: Node = get_tree().current_scene
+const POOL_PARK_POSITION: Vector2 = Vector2(100000.0, 100000.0)
 
 func _ready() -> void:
 	if current_scene_root == null:
@@ -26,6 +27,17 @@ func warm_pool(count: int, scene_to_pool: PackedScene) -> void:
 		var bullet_node: Node = scene_to_pool.instantiate()
 		if bullet_node == null:
 			continue
+
+		var canvas_item: CanvasItem = bullet_node as CanvasItem
+		if canvas_item != null:
+			canvas_item.visible = false
+
+		var bullet_2d: Node2D = bullet_node as Node2D
+		if bullet_2d != null:
+			bullet_2d.global_position = POOL_PARK_POSITION
+			bullet_2d.rotation = 0.0
+
+		bullet_node.set_physics_process(false)
 
 		if bullet_node.has_method("set_pool"):
 			bullet_node.call("set_pool", self)
@@ -59,8 +71,15 @@ func get_bullet(team: Bullet.Team, spawn_position: Vector2, spawn_direction: Vec
 
 	var bullet_node: Node = available.pop_back() as Node
 	available_by_scene[scene_key] = available
+	if bullet_node.has_method("deactivate_for_pool"):
+		bullet_node.call("deactivate_for_pool")
 	if bullet_node.get_parent() != current_scene_root:
-		bullet_node.reparent(current_scene_root)
+		bullet_node.reparent(current_scene_root, false)
+
+	var bullet_2d: Node2D = bullet_node as Node2D
+	if bullet_2d != null:
+		bullet_2d.global_position = spawn_position
+		bullet_2d.rotation = spawn_rotation
 
 	if bullet_node.has_method("activate"):
 		bullet_node.call("activate", team, spawn_position, spawn_direction, spawn_speed, spawn_rotation)

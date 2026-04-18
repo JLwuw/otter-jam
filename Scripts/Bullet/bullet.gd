@@ -13,6 +13,7 @@ var direction: Vector2 = Vector2.ZERO
 var lifetime_remaining: float = 0.0
 var pool: Node
 var release_requested: bool = false
+const POOL_PARK_POSITION: Vector2 = Vector2(100000.0, 100000.0)
 
 func _ready() -> void:
 	if pool != null:
@@ -49,9 +50,15 @@ func _on_body_entered(body: Node) -> void:
 		despawn()
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	if not visible:
+		return
+
 	sprite.visible = true
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	if not visible:
+		return
+
 	# Bullets are short-lived projectiles; despawning them off-screen avoids wasted draw/update work.
 	if despawn_when_offscreen:
 		despawn()
@@ -80,6 +87,8 @@ func deactivate_for_pool() -> void:
 	release_requested = false
 	direction = Vector2.ZERO
 	lifetime_remaining = lifetime_seconds
+	global_position = POOL_PARK_POSITION
+	rotation = 0.0
 	sprite.visible = false
 	visible = false
 	set_physics_process(false)
@@ -91,6 +100,11 @@ func despawn() -> void:
 		return
 
 	release_requested = true
+	visible = false
+	sprite.visible = false
+	set_physics_process(false)
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 
 	if pool != null:
 		if pool.has_method("release_bullet"):

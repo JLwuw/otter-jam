@@ -98,7 +98,6 @@ func shoot() -> void:
 		print("No bullet scene for player")
 		return
 
-	var bullet: Bullet = bullet_scene.instantiate()
 	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
 	var rotation_to_mouse: float = (get_global_mouse_position() - global_position).angle()
 	var spawn_position: Vector2 = global_position + direction * bullet_spawn_offset
@@ -107,6 +106,8 @@ func shoot() -> void:
 	if bullet_pool != null and bullet_pool.has_method("get_bullet"):
 		bullet_pool.call("get_bullet", Bullet.Team.PLAYER, spawn_position, direction, effective_bullet_speed, rotation_to_mouse, bullet_scene)
 		return
+
+	var bullet: Bullet = bullet_scene.instantiate()
 
 	bullet.team = Bullet.Team.PLAYER
 	bullet.global_position = spawn_position
