@@ -12,5 +12,6 @@ func _ready() -> void:
 func set_enemy_active(is_active: bool) -> void:
 	super.set_enemy_active(is_active)
 	
-	shoot_component.set_process(is_active)
+	if shoot_component != null:
+		shoot_component.set_process(is_active)
 		

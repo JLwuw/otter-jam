@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://cl8b8ngejaij8" path="res://Scripts/Enemies/Components/component_basic_shoot.gd" id="3_vqo77"]
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="4_hitfx"]
 [ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
-[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_deathfx"]
-[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_6cff3"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="6_6cff3"]
+[ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_deathfx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
@@ -46,7 +46,7 @@ script = ExtResource("6_deathfx")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
 rect = Rect2(-28, -28, 56, 56)
 
-[node name="SpriteDirection" type="Node" parent="." unique_id=484852321]
+[node name="Sprite Rotation Component" type="Node" parent="." unique_id=484852321]
 script = ExtResource("6_6cff3")
 metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
