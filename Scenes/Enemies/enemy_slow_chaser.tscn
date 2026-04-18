@@ -12,8 +12,9 @@
 [node name="Enemy Slow Chaser" type="CharacterBody2D" unique_id=1506888642 groups=["enemies"]]
 scale = Vector2(3, 3)
 collision_layer = 2
-collision_mask = 15
+collision_mask = 31
 script = ExtResource("1_ul00a")
+unlock_time = 60
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=473309782]
 modulate = Color(0, 0, 1, 1)

@@ -58,7 +58,7 @@ turbulence_enabled = true
 radius = 19.0
 
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
-collision_mask = 14
+collision_mask = 30
 script = ExtResource("1_a3d8c")
 max_speed = 800.0
 acceleration_factor = 1.0
