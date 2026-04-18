@@ -37,7 +37,6 @@ rect = Rect2(-28, -28, 56, 56)
 
 [node name="SpriteDirection" type="Node" parent="." unique_id=1628195763]
 script = ExtResource("4_p2rew")
-metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
