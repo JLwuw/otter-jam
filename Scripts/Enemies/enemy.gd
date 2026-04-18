@@ -8,8 +8,11 @@ extends CharacterBody2D
 
 var current_health: int = 3
 
+signal died(toughness: int)
+
 func _ready() -> void:
 	current_health = max_health
+	died.connect(ScoreManager._on_enemy_died)
 
 func take_damage(amount: int) -> void:
 	current_health -= amount
@@ -17,4 +20,5 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
+	emit_signal("died", toughness)
 	queue_free()

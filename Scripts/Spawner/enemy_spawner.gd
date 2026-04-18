@@ -4,14 +4,16 @@ extends Node2D
 @export var player: Player
 
 @export_group("Spawn")
-@export var base_spawn_interval: float = 3.0
+@export var base_spawn_interval: float = 6.0
 @export var spawn_radius: float = 20.0
+@export var max_enemy_count: int = 5
 
 @export_group("Scaling")
-@export var base_budget: float = 5.0
-@export var budget_growth: float = 0.5
+@export var base_budget: float = 2.0
+@export var budget_growth: float = 0.1
 
 var time_elapsed: float = 0
+var active_enemies: Array[Node] = []
 
 func _ready() -> void:
 	$Timer.wait_time = base_spawn_interval
@@ -24,6 +26,9 @@ func get_current_budget() -> float:
 
 
 func spawn_with_budget() -> void:
+	if active_enemies.size() >= max_enemy_count:
+		return
+	
 	var budget: float = get_current_budget()
 	var available_enemies: Array[EnemyData] = EnemyDB.get_available_enemies(time_elapsed)
 	
@@ -43,9 +48,12 @@ func spawn_with_budget() -> void:
 		
 
 		var choice: EnemyData = valid.pick_random()
-		spawn_enemy(choice.scene)
+		await spawn_enemy(choice.scene)
+		
+		if active_enemies.size() >= max_enemy_count:
+			return
+			
 		budget -= choice.toughness
-
 
 func spawn_enemy(scene: PackedScene) -> void:
 	var enemy: Enemy = scene.instantiate()
@@ -55,10 +63,17 @@ func spawn_enemy(scene: PackedScene) -> void:
 	
 	enemy.global_position = global_position + offset
 	enemy.player = player
+	
+	active_enemies.append(enemy)
+	enemy.tree_exited.connect(_on_enemy_removed.bind(enemy))
+
 	get_tree().current_scene.add_child(enemy)
-	await get_tree().create_timer(0.1).timeout
+	
+	await get_tree().create_timer(0.3).timeout
 
 
 func _on_timer_timeout() -> void:
 	spawn_with_budget()
-	
+
+func _on_enemy_removed(enemy: Node) -> void:
+	active_enemies.erase(enemy)
