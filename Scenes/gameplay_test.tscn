@@ -38,3 +38,24 @@ offset_right = 148.0
 offset_bottom = 38.0
 theme_override_font_sizes/font_size = 18
 text = "FPS: --"
+
+[node name="ScoreLabel" type="Label" parent="DebugUI" unique_id=329183662]
+offset_left = 17.0
+offset_top = 40.0
+offset_right = 69.0
+offset_bottom = 63.0
+text = "Score: --"
+
+[node name="ComboLabel" type="Label" parent="DebugUI" unique_id=428956484]
+offset_left = 17.0
+offset_top = 69.0
+offset_right = 91.0
+offset_bottom = 92.0
+text = "Combo: --"
+
+[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
+offset_left = 19.0
+offset_top = 96.0
+offset_right = 59.0
+offset_bottom = 119.0
+text = "Combo Timer: --"
