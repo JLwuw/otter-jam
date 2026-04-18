@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 EnemyDB="*uid://6lxgcgtlxnbs"
+ScoreManager="*uid://su1n6vvdsw32"
 
 [debug]
 

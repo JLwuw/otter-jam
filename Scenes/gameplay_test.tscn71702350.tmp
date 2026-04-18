@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b6echlk833f2a"]
+
+[ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
+[ext_resource type="Script" uid="uid://cw60l7jw1fy3k" path="res://Scripts/gameplay_test.gd" id="1_n6585"]
+[ext_resource type="Script" uid="uid://cavvhlr7oonau" path="res://Scripts/Bullet/bullet_pool.gd" id="2_0f8g4"]
+[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/rink.tscn" id="5_6nxcd"]
+[ext_resource type="PackedScene" uid="uid://ba3g0t5t2s4lx" path="res://Scenes/enemy_spawner.tscn" id="6_gtphy"]
+[ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="7_5d3qw"]
+
+[node name="GameplayTest" type="Node2D" unique_id=1958848919]
+script = ExtResource("1_n6585")
+
+[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
+position = Vector2(-3078, -1937)
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
+position = Vector2(-6, 130)
+max_speed = 750.0
+bullet_speed = 800.0
+
+[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
+position = Vector2(-223, 64)
+player = NodePath("../Player")
+
+[node name="BulletPool" type="Node" parent="." unique_id=1411259080]
+script = ExtResource("2_0f8g4")
+bullet_scene = ExtResource("7_5d3qw")
+initial_size = 180
+expand_by = 60
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
+layer = 10
+
+[node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 148.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 18
+text = "FPS: --"
