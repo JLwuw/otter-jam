@@ -45,14 +45,11 @@ func spawn_with_budget() -> void:
 		if choice == null:
 			break
 		
-
-		var choice: EnemyData = valid.pick_random()
 		await spawn_enemy(choice.scene)
 		
 		if active_enemies.size() >= max_enemy_count:
 			return
 			
-
 		spawn_enemy(choice.scene)
 		budget -= choice.toughness
 
@@ -69,7 +66,6 @@ func pick_affordable_enemy(available_enemies: Array[EnemyData], budget: float) -
 
 	return choice
 
-
 func spawn_enemy(scene: PackedScene) -> void:
 	var enemy: Enemy = scene.instantiate()
 	
@@ -82,9 +78,6 @@ func spawn_enemy(scene: PackedScene) -> void:
 	active_enemies.append(enemy)
 	enemy.tree_exited.connect(_on_enemy_removed.bind(enemy))
 
-	get_tree().current_scene.add_child(enemy)
-	
-	await get_tree().create_timer(0.3).timeout
 	current_scene_root.add_child(enemy)
 	await get_tree().create_timer(0.1).timeout
 

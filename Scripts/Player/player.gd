@@ -95,6 +95,7 @@ func shoot() -> void:
 
 	var bullet: Bullet = bullet_scene.instantiate()
 	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
+	
 	if bullet_pool != null:
 		bullet_pool.get_bullet(Bullet.Team.PLAYER, global_position, direction, bullet_speed)
 		return
