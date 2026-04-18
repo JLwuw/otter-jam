@@ -16,7 +16,7 @@ var has_direction: bool = false
 
 @export_category("Health")
 @export var max_health: int = 5
-@export var invuln_time: float = 0.3
+@export var invuln_time: float = 2
 @export var base_fire_rate: float = 0.5
 
 @export_category("Shooting")
@@ -30,10 +30,12 @@ var has_direction: bool = false
 var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
+var is_invuln: bool = false
 var max_speed_sq: float = 0.0
 var speed_cap_inv: float = 0.0
 @onready var current_scene_root: Node = get_tree().current_scene
 var bullet_pool: Node
+@onready var sprite: Sprite2D = $Sprite2D
 
 # Para progress bar en UI
 signal health_changed(current: int)
@@ -77,6 +79,11 @@ func _process(delta: float) -> void:
 func update_invuln_timer(delta: float) -> void:
 	if invuln_timer > 0.0:
 		invuln_timer -= delta
+	elif is_invuln:
+		is_invuln = false
+		set_collision_layer_value(1, true)
+		set_collision_mask_value(2, true)
+		sprite.self_modulate = Color(1, 1, 1)
 
 
 func handle_rink_contacts() -> void:
@@ -157,6 +164,10 @@ func take_damage(amount: int = 1) -> void:
 	health_changed.emit(current_health)  # UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(2, false)
+	sprite.self_modulate = Color()
+	is_invuln = true
 		
 func die() -> void:
 	print("ggwp")

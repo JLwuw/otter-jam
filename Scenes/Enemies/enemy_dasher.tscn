@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b6b00kju5pepw"]
+
+[ext_resource type="Script" uid="uid://dq5sieg1rboe4" path="res://Scripts/Enemies/enemy_dasher.gd" id="1_jctw4"]
+[ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="1_rjdbp"]
+[ext_resource type="Script" uid="uid://ctes2a87u5w4p" path="res://Scripts/Enemies/Components/component_dash.gd" id="3_2hggw"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="4_2hggw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kl1sk"]
+
+[node name="Enemy Dasher" type="CharacterBody2D" unique_id=1693089183 groups=["enemies"]]
+script = ExtResource("1_jctw4")
+max_health = 5
+toughness = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1317588769]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_kl1sk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1438783000]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_rjdbp")
+
+[node name="ComponentDash" type="Node" parent="." unique_id=1786712199]
+script = ExtResource("3_2hggw")
+metadata/_custom_type_script = "uid://ctes2a87u5w4p"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=217337813]
+rect = Rect2(-28, -28, 56, 56)
+
+[node name="SpriteDirection" type="Node" parent="." unique_id=1423879024]
+script = ExtResource("4_2hggw")
+metadata/_custom_type_script = "uid://dqyj2gf1i6828"
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

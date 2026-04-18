@@ -7,13 +7,17 @@
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="4_hitfx"]
 [ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_deathfx"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_6cff3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
 [node name="Enemy Slow Shooter" type="CharacterBody2D" unique_id=727752382 groups=["enemies"]]
 scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 15
 script = ExtResource("1_fcceh")
 toughness = 3
+unlock_time = 60
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2145617784]
 modulate = Color(1, 0, 1, 1)
@@ -41,6 +45,10 @@ script = ExtResource("6_deathfx")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
 rect = Rect2(-28, -28, 56, 56)
+
+[node name="SpriteDirection" type="Node" parent="." unique_id=484852321]
+script = ExtResource("6_6cff3")
+metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btpd7vnp5ky0k"
-path="res://.godot/imported/Speed Bar BG.png-98d22ac608c6ceee161e078f998c895a.ctex"
+uid="uid://nk7yamca2ivx"
+path="res://.godot/imported/Speedometer BG.png-6f093146c13471d575f2655c05f8174a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/UI/Speed Bar BG.png"
-dest_files=["res://.godot/imported/Speed Bar BG.png-98d22ac608c6ceee161e078f998c895a.ctex"]
+source_file="res://Graphics/UI/Speedometer BG.png"
+dest_files=["res://.godot/imported/Speedometer BG.png-6f093146c13471d575f2655c05f8174a.ctex"]
 
 [params]
 

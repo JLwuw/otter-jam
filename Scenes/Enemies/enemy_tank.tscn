@@ -7,13 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://dfmis8dojqufl" path="res://Scenes/Bullet/hazard.tscn" id="5_hazrd"]
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_hitfx"]
 [ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_deathfx"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_ks16x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6w4k9"]
 
 [node name="Enemy Tank" type="CharacterBody2D" unique_id=1146190899 groups=["enemies"]]
+collision_layer = 2
+collision_mask = 15
 script = ExtResource("1_k8c9p")
 max_health = 7
 toughness = 2
+unlock_time = 60
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1447258476]
 modulate = Color(1, 1, 0, 1)
@@ -40,6 +44,10 @@ hazard_scene = ExtResource("5_hazrd")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1451289300]
 rect = Rect2(-60, -60, 120, 120)
+
+[node name="SpriteDirection" type="Node" parent="." unique_id=932480712]
+script = ExtResource("6_ks16x")
+metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
