@@ -34,7 +34,6 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	set_enemy_active(false)
 	
-	
 func set_enemy_active(is_active: bool) -> void:
 	sprite.visible = is_active
 
