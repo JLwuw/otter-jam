@@ -159,7 +159,12 @@ func die() -> void:
 	print("ggwp")
 
 func apply_slow(slow_amount: float, slow_duration: float) -> void:
-	var original_speed: float = max_speed
+	# Instantly reduce current velocity
+	velocity *= (1.0 - slow_amount)
+	
+	# Also temporarily reduce max speed
+	var original_max_speed: float = max_speed
 	max_speed *= (1.0 - slow_amount)
+	
 	await get_tree().create_timer(slow_duration).timeout
-	max_speed = original_speed
+	max_speed = original_max_speed
