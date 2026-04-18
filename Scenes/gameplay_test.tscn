@@ -16,10 +16,69 @@
 [ext_resource type="Texture2D" uid="uid://dip6o5exswevy" path="res://Graphics/UI/XP Bar Under.png" id="8_kpd0n"]
 [ext_resource type="Texture2D" uid="uid://cr61j1776lcpj" path="res://Graphics/UI/XP Bar Over.png" id="9_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
+[ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Scripts/Pixelmax-Regular.otf" id="17_vuhfc"]
+[ext_resource type="FontFile" uid="uid://c5lj8h0komj00" path="res://Graphics/UI/PixelifySans-VariableFont_wght.ttf" id="18_wl76b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
+font = ExtResource("17_vuhfc")
+
+[sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
+font = ExtResource("18_wl76b")
+font_size = 20
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
 label_update_interval = null
+
+[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
+position = Vector2(-3086, -1935)
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
+position = Vector2(-6, 130)
+max_speed = 750.0
+bullet_speed = 800.0
+
+[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
+position = Vector2(-105, -43)
+player = NodePath("../Player")
+
+[node name="BulletPool" type="Node" parent="." unique_id=1411259080]
+script = ExtResource("2_0f8g4")
+bullet_scene = ExtResource("7_5d3qw")
+initial_size = 180
+expand_by = 60
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
+layer = 10
+
+[node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 148.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 18
+text = "FPS: --"
+
+[node name="ScoreLabel" type="Label" parent="DebugUI" unique_id=329183662]
+offset_left = 17.0
+offset_top = 40.0
+offset_right = 69.0
+offset_bottom = 63.0
+text = "Score: --"
+
+[node name="ComboLabel" type="Label" parent="DebugUI" unique_id=428956484]
+offset_left = 17.0
+offset_top = 69.0
+offset_right = 91.0
+offset_bottom = 92.0
+text = "Combo: --"
+
+[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
+offset_left = 19.0
+offset_top = 96.0
+offset_right = 59.0
+offset_bottom = 119.0
+text = "Combo Timer: --"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=933685181]
 
@@ -90,52 +149,32 @@ texture_under = ExtResource("8_kpd0n")
 texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
 
-[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
-position = Vector2(-3086, -1935)
+[node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
-position = Vector2(-6, 130)
-max_speed = 750.0
-bullet_speed = 800.0
+[node name="SpeedBar" type="TextureProgressBar" parent="UI/RootUI/Speedometer" unique_id=1895266766]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
-position = Vector2(-105, -43)
-player = NodePath("../Player")
+[node name="KmhLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=1711935247]
+layout_mode = 0
+offset_left = 895.0
+offset_top = 510.0
+offset_right = 941.0
+offset_bottom = 527.0
+text = "km/h"
+label_settings = SubResource("LabelSettings_wl76b")
+horizontal_alignment = 1
 
-[node name="BulletPool" type="Node" parent="." unique_id=1411259080]
-script = ExtResource("2_0f8g4")
-bullet_scene = ExtResource("7_5d3qw")
-initial_size = 180
-expand_by = 60
-
-[node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
-layer = 10
-
-[node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 148.0
-offset_bottom = 38.0
-theme_override_font_sizes/font_size = 18
-text = "FPS: --"
-
-[node name="ScoreLabel" type="Label" parent="DebugUI" unique_id=329183662]
-offset_left = 17.0
-offset_top = 40.0
-offset_right = 69.0
-offset_bottom = 63.0
-text = "Score: --"
-
-[node name="ComboLabel" type="Label" parent="DebugUI" unique_id=428956484]
-offset_left = 17.0
-offset_top = 69.0
-offset_right = 91.0
-offset_bottom = 92.0
-text = "Combo: --"
-
-[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
-offset_left = 19.0
-offset_top = 96.0
-offset_right = 59.0
-offset_bottom = 119.0
-text = "Combo Timer: --"
+[node name="SpeedLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=313426342]
+layout_mode = 0
+offset_left = 896.0
+offset_top = 484.0
+offset_right = 939.0
+offset_bottom = 509.0
+text = "48"
+label_settings = SubResource("LabelSettings_wnwfe")
+horizontal_alignment = 1
