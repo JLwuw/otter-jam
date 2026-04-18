@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://0my6rj4rribm"]
+
+[ext_resource type="Script" uid="uid://byi7bmig1af8b" path="res://Scripts/Enemies/enemy_tank.gd" id="1_k8c9p"]
+[ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_8f5k1"]
+[ext_resource type="Script" uid="uid://5c57qhdic4fp" path="res://Scripts/Enemies/Components/component_wander.gd" id="3_b2j4w"]
+[ext_resource type="Script" uid="uid://di8f07cj74h6x" path="res://Scripts/Enemies/Components/component_throw_hazard.gd" id="4_m9n2v"]
+[ext_resource type="PackedScene" uid="uid://dfmis8dojqufl" path="res://Scenes/Bullet/hazard.tscn" id="5_hazrd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6w4k9"]
+
+[node name="Enemy Tank" type="CharacterBody2D" unique_id=1146190899 groups=["enemies"]]
+script = ExtResource("1_k8c9p")
+max_health = 7
+toughness = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1447258476]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_8f5k1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1448765432]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_6w4k9")
+
+[node name="Wander Component" type="Node" parent="." unique_id=1449273388]
+script = ExtResource("3_b2j4w")
+
+[node name="Throw Hazard Component" type="Node" parent="." unique_id=1450781344]
+script = ExtResource("4_m9n2v")
+hazard_scene = ExtResource("5_hazrd")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1451289300]
+rect = Rect2(-60, -60, 120, 120)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
