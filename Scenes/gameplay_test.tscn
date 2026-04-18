@@ -88,7 +88,6 @@ texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
 
 [node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
-visible = false
 position = Vector2(-3086, -1935)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
