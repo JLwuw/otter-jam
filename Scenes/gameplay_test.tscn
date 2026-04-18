@@ -17,10 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://cr61j1776lcpj" path="res://Graphics/UI/XP Bar Over.png" id="9_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
 [ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Fonts/Pixelmax-Regular.otf" id="17_vuhfc"]
-[ext_resource type="Texture2D" uid="uid://btpd7vnp5ky0k" path="res://Graphics/UI/Speed Bar BG.png" id="18_1b3g2"]
+[ext_resource type="Texture2D" uid="uid://bqr0vkp5dg3g0" path="res://Graphics/UI/Speed Bar Under.png" id="18_tom5b"]
+[ext_resource type="Texture2D" uid="uid://txy52lpifv0v" path="res://Graphics/UI/Speed Bar Over.png" id="19_8b8ff"]
 [ext_resource type="Shader" uid="uid://do0tt0i8nft6u" path="res://Scripts/Shaders/speed_dramatic.gdshader" id="19_qf2k8"]
-[ext_resource type="Texture2D" uid="uid://ck1jxp6bfl5mo" path="res://Graphics/UI/Speed Bar.png" id="19_tom5b"]
+[ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
+[ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -180,19 +182,28 @@ offset_right = 1185.5
 offset_bottom = 700.0
 scale = Vector2(0.4, 0.4)
 
+[node name="TextureRect" type="TextureRect" parent="UI/RootUI/Speedometer" unique_id=750446285]
+layout_mode = 0
+offset_left = -37.5
+offset_top = -77.5
+offset_right = 527.5
+offset_bottom = 488.787
+texture = ExtResource("23_8b8ff")
+
 [node name="SpeedBar" type="TextureProgressBar" parent="UI/RootUI/Speedometer" unique_id=1895266766]
 layout_mode = 0
-offset_left = 20.000013
+offset_left = 20.0
 offset_top = -24.99997
-offset_right = 264.0
-offset_bottom = 208.00003
+offset_right = 275.0
+offset_bottom = 216.00003
 scale = Vector2(1.2, 1.2)
 fill_mode = 4
 radial_initial_angle = 270.0
 radial_fill_degrees = 90.0
 radial_center_offset = Vector2(122, 122)
-texture_under = ExtResource("18_1b3g2")
-texture_progress = ExtResource("19_tom5b")
+texture_under = ExtResource("18_tom5b")
+texture_over = ExtResource("19_8b8ff")
+texture_progress = ExtResource("20_nk2r0")
 
 [node name="KmhLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=1711935247]
 layout_mode = 0
