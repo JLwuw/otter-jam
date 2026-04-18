@@ -9,6 +9,9 @@ extends CharacterBody2D
 @export var drag: float = 0.5
 @export var max_distance: float = 200.0
 
+var move_direction: Vector2 = Vector2.ZERO
+var has_direction: bool = false
+
 @export_category("Health")
 @export var max_health: int = 5
 @export var invuln_time: float = 0.3
@@ -25,20 +28,19 @@ var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
 
-func _physics_process(delta: float) -> void: 
-	var to_mouse: Vector2 = get_global_mouse_position() - global_position 
-	var distance_to_mouse: float = to_mouse.length() 
-	
-	if distance_to_mouse < 5: 
-		move_and_slide() 
-		return 
-	
-	
-	if distance_to_mouse > max_distance: 
-		to_mouse = to_mouse.normalized() * max_distance 
-	
-	var acceleration: Vector2 = velocity.lerp(to_mouse, delta * responsiveness) 
-	velocity += acceleration * delta * acceleration_factor 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("leftClick"):
+		var to_mouse: Vector2 = get_global_mouse_position() - global_position
+		
+		if to_mouse.length() > 5.0:
+			move_direction = to_mouse.normalized()
+			has_direction = true
+
+func _physics_process(delta: float) -> void:
+	if has_direction:
+		var target_velocity: Vector2 = move_direction * max_speed
+		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
+		velocity += accel * acceleration_factor * delta
 	
 	if velocity.length() > max_speed: 
 		velocity = velocity.normalized() * max_speed 
@@ -49,7 +51,6 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
 	handle_shooting(delta)
-	
 
 func update_invuln_timer(delta: float) -> void:
 	if invuln_timer > 0.0:
@@ -57,11 +58,13 @@ func update_invuln_timer(delta: float) -> void:
 
 
 func handle_shooting(delta: float) -> void:
-	var current_speed: float = velocity.length()
 	shoot_timer -= delta
+	if not Input.is_action_pressed("leftClick"):
+		return
 
 	if shoot_timer <= 0.0:
 		shoot()
+		var current_speed: float = velocity.length()
 		shoot_timer = calc_shoot_cooldown(current_speed)
 	
 func calc_shoot_cooldown(current_speed: float) -> float:
