@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b4navojpq1mqy"]
+
+[ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="1_hx0x6"]
+
+[sub_resource type="Gradient" id="Gradient_1q2w3"]
+offsets = PackedFloat32Array(0, 0.48, 1)
+colors = PackedColorArray(0.73333335, 0.23529412, 0.3882353, 1, 0.91764706, 0.3882353, 0.5803922, 0.5176471, 0.92941177, 0.4, 0.5921569, 0.2)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1q2w3"]
+gradient = SubResource("Gradient_1q2w3")
+
+[sub_resource type="Curve" id="Curve_1q2w3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1q2w3"]
+curve = SubResource("Curve_1q2w3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1q2w3"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 85.0
+initial_velocity_max = 145.0
+gravity = Vector3(0, 0, 0)
+damping_min = 10.0
+damping_max = 22.0
+scale_min = 0.0
+scale_max = 1.8
+scale_curve = SubResource("CurveTexture_1q2w3")
+color_ramp = SubResource("GradientTexture1D_1q2w3")
+
+[node name="RinkTouchParticles" type="GPUParticles2D" unique_id=1084537576]
+emitting = false
+amount = 18
+texture = ExtResource("1_hx0x6")
+lifetime = 0.35
+one_shot = true
+explosiveness = 1.0
+randomness = 0.45
+process_material = SubResource("ParticleProcessMaterial_1q2w3")

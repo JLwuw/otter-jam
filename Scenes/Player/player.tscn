@@ -19,6 +19,12 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.72156864)
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
 radius = 19.0
 
+[sub_resource type="Gradient" id="Gradient_0u5uq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.34509805)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jlvik"]
+gradient = SubResource("Gradient_0u5uq")
+
 [sub_resource type="Curve" id="Curve_0u5uq"]
 _limits = [-200.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 134.36603), 0.0, 0.0, 0, 0, Vector2(0.41610736, -200), 0.0, 0.0, 0, 0]
@@ -26,6 +32,13 @@ point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_2okw4"]
 curve = SubResource("Curve_0u5uq")
+
+[sub_resource type="Curve" id="Curve_gk6dx"]
+_data = [Vector2(0.026845634, 0.91049916), 0.0, 0.0, 0, 0, Vector2(0.16778524, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jhyir"]
+curve = SubResource("Curve_gk6dx")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jlvik"]
 particle_flag_disable_z = true
@@ -39,6 +52,9 @@ gravity = Vector3(0, 0, 0)
 linear_accel_min = -2.800002
 linear_accel_max = 2.7999978
 linear_accel_curve = SubResource("CurveTexture_2okw4")
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_jhyir")
+color_ramp = SubResource("GradientTexture1D_jlvik")
 turbulence_enabled = true
 
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
@@ -46,9 +62,15 @@ script = ExtResource("1_a3d8c")
 max_speed = 800.0
 acceleration_factor = 1.0
 drag = 0.25
+turn_speed = 3.0
+rotation_offset_degrees = 90.0
+bullet_speed = 1200.0
+max_fire_rate = 12.0
 fire_rate_curve = ExtResource("2_xpcdj")
 
 [node name="Line2D2" type="Line2D" parent="." unique_id=1120057671]
+show_behind_parent = true
+z_index = -1
 points = PackedVector2Array(-9, 14)
 width_curve = SubResource("Curve_jlvik")
 gradient = SubResource("Gradient_gk6dx")
@@ -56,6 +78,8 @@ script = ExtResource("7_0u5uq")
 length = 1200
 
 [node name="Line2D" type="Line2D" parent="." unique_id=284383964]
+show_behind_parent = true
+z_index = -1
 points = PackedVector2Array(11, 16)
 width_curve = SubResource("Curve_jlvik")
 gradient = SubResource("Gradient_gk6dx")
@@ -69,23 +93,27 @@ shape = SubResource("CircleShape2D_a3d8c")
 position_smoothing_enabled = true
 position_smoothing_speed = 30.0
 script = ExtResource("6_dd0ac")
+follow_stiffness = 8.0
+follow_damping = 3.0
 speed_for_max_zoom_out = 800.0
 zoom_out = Vector2(0.3, 0.3)
 
-[node name="IceR" type="GPUParticles2D" parent="." unique_id=1520918119]
-position = Vector2(-9, 14)
+[node name="IceR" type="GPUParticles2D" parent="." unique_id=1689528391]
+position = Vector2(11, 14)
 emitting = false
-amount = 15
+amount = 18
 texture = ExtResource("4_htcer")
+lifetime = 1.25
 process_material = SubResource("ParticleProcessMaterial_jlvik")
 script = ExtResource("5_dd0ac")
 min_emit_speed = 300.0
 
-[node name="IceL" type="GPUParticles2D" parent="." unique_id=795997758]
-position = Vector2(12, 13)
+[node name="IceL" type="GPUParticles2D" parent="." unique_id=1930301852]
+position = Vector2(-9, 14)
 emitting = false
-amount = 15
+amount = 18
 texture = ExtResource("4_htcer")
+lifetime = 1.25
 process_material = SubResource("ParticleProcessMaterial_jlvik")
 script = ExtResource("5_dd0ac")
 min_emit_speed = 300.0

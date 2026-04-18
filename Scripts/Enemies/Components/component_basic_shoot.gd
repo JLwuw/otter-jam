@@ -11,7 +11,7 @@ var shoot_timer: float = 0.0
 var has_warned_missing_player: bool = false
 var fire_interval: float = INF
 @onready var current_scene_root: Node = get_tree().current_scene
-var bullet_pool: BulletPool
+var bullet_pool: Node
 
 func _ready() -> void:
 	owner_body = get_parent() as CharacterBody2D
@@ -19,7 +19,7 @@ func _ready() -> void:
 		fire_interval = 1.0 / fire_rate
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
-	bullet_pool = current_scene_root.get_node_or_null("BulletPool") as BulletPool
+	bullet_pool = current_scene_root.get_node_or_null("BulletPool")
 
 func _process(delta: float) -> void:
 	if owner_body == null:
@@ -44,8 +44,8 @@ func shoot() -> void:
 		return
 
 	var dir: Vector2 = (player.global_position - owner_body.global_position).normalized()
-	if bullet_pool != null:
-		bullet_pool.get_bullet(Bullet.Team.ENEMY, owner_body.global_position, dir, bullet_speed)
+	if bullet_pool != null and bullet_pool.has_method("get_bullet"):
+		bullet_pool.call("get_bullet", Bullet.Team.ENEMY, owner_body.global_position, dir, bullet_speed, dir.angle(), bullet_scene)
 		return
 
 	var bullet: Bullet = bullet_scene.instantiate()
@@ -53,4 +53,5 @@ func shoot() -> void:
 	bullet.direction = dir
 	bullet.team = Bullet.Team.ENEMY
 	bullet.speed = bullet_speed
+	bullet.rotation = dir.angle()
 	current_scene_root.add_child(bullet)

@@ -2,6 +2,7 @@ class_name EnemySpawner
 extends Node2D
 
 @export var player: Player
+@onready var camera: Camera2D = player.get_node("Camera2D")
 
 @export_group("Spawn")
 @export var base_spawn_interval: float = 6.0
@@ -19,6 +20,7 @@ var active_enemies: Array[Node] = []
 @onready var spawn_timer: Timer = $Timer
 
 func _ready() -> void:
+	
 	spawn_timer.wait_time = base_spawn_interval
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
@@ -29,6 +31,46 @@ func _process(delta: float) -> void:
 func get_current_budget() -> float:
 	return base_budget + time_elapsed * budget_growth
 
+func get_camera_rect() -> Rect2:
+	var viewport_size: Vector2 = camera.get_viewport().get_visible_rect().size
+	var zoom: Vector2 = camera.zoom
+	
+	var size: Vector2 = viewport_size / zoom
+	var top_left: Vector2 = camera.global_position - size * 0.5
+	
+	return Rect2(top_left, size)
+	
+func is_on_screen(pos: Vector2) -> bool:
+	var rect: Rect2 = get_camera_rect()
+	return rect.has_point(pos)
+
+func get_closest_point_on_rect(rect: Rect2, point: Vector2) -> Vector2:
+	return Vector2(
+		clamp(point.x, rect.position.x, rect.end.x),
+		clamp(point.y, rect.position.y, rect.end.y)
+	)
+
+func push_outside_screen(pos: Vector2, margin: float = 20.0) -> Vector2:
+	var rect: Rect2 = get_camera_rect()
+
+	if not rect.has_point(pos):
+		return pos
+	
+	var center: Vector2 = rect.position + rect.size * 0.5
+	var dir: Vector2 = (pos - center).normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2.RIGHT.rotated(randf_range(0.0, TAU))
+
+	var tx: float = INF
+	var ty: float = INF
+	if absf(dir.x) > 0.0001:
+		tx = (rect.size.x * 0.5) / absf(dir.x)
+	if absf(dir.y) > 0.0001:
+		ty = (rect.size.y * 0.5) / absf(dir.y)
+
+	var t: float = minf(tx, ty)
+	var edge_point: Vector2 = center + dir * t
+	return edge_point + dir * margin
 
 func spawn_with_budget() -> void:
 	if active_enemies.size() >= max_enemy_count:
@@ -50,8 +92,7 @@ func spawn_with_budget() -> void:
 		
 		if active_enemies.size() >= max_enemy_count:
 			return
-			
-		spawn_enemy(choice.scene)
+		
 		budget -= choice.toughness
 
 
@@ -83,7 +124,10 @@ func spawn_enemy(scene: PackedScene) -> void:
 	
 	var offset: Vector2 = Vector2.RIGHT.rotated(angle) * spawn_radius
 	
-	enemy.global_position = player.global_position + offset
+	var spawn_pos: Vector2 = player.global_position + offset
+	spawn_pos = push_outside_screen(spawn_pos)
+
+	enemy.global_position = spawn_pos
 	enemy.player = player
 	
 	active_enemies.append(enemy)

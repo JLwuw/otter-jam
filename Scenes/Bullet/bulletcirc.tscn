@@ -1,34 +1,34 @@
-[gd_scene format=3 uid="uid://28syyhoybqas"]
+[gd_scene format=3 uid="uid://bk03ob16jbyap"]
 
-[ext_resource type="Script" uid="uid://c5esyfw5h2i4x" path="res://Scripts/Bullet/bullet.gd" id="1_k7rnr"]
-[ext_resource type="Texture2D" uid="uid://dmj8cj7ta86cw" path="res://Graphics/bullets.png" id="2_lv0gj"]
-[ext_resource type="PackedScene" uid="uid://wfcgr3e1o1f7" path="res://Scenes/Bullet/pew.tscn" id="2_nt0l2"]
+[ext_resource type="Script" uid="uid://c5esyfw5h2i4x" path="res://Scripts/Bullet/bullet.gd" id="1_t3y4n"]
+[ext_resource type="PackedScene" uid="uid://bt3c4x5x1awdi" path="res://Scenes/Bullet/pop.tscn" id="2_6332g"]
+[ext_resource type="Texture2D" uid="uid://dmj8cj7ta86cw" path="res://Graphics/bullets.png" id="2_mcvtk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nt0l2"]
-atlas = ExtResource("2_lv0gj")
-region = Rect2(64, 0, 64, 64)
+atlas = ExtResource("2_mcvtk")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gc84"]
-size = Vector2(4, 7)
+[sub_resource type="CircleShape2D" id="CircleShape2D_t3y4n"]
+radius = 4.2
 
 [node name="Bullet" type="Area2D" unique_id=143243005]
 scale = Vector2(5, 5)
-script = ExtResource("1_k7rnr")
+script = ExtResource("1_t3y4n")
 lifetime_seconds = 5.0
 despawn_when_offscreen = true
 rotation_offset_degrees = 90.0
-lifetime_end_particles = ExtResource("2_nt0l2")
+lifetime_end_particles = ExtResource("2_6332g")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1657239318]
 scale = Vector2(0.14257813, 0.14257813)
 texture = SubResource("AtlasTexture_nt0l2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=368397643]
-shape = SubResource("RectangleShape2D_0gc84")
+shape = SubResource("CircleShape2D_t3y4n")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=149310001]
-visible = false
-rect = Rect2(-5, -6, 10, 11)
+position = Vector2(-0.19999999, -0.99999994)
+rect = Rect2(-9.2, -7.9999995, 18.8, 17.999998)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
