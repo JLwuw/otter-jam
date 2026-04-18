@@ -18,9 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
 [ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Fonts/Pixelmax-Regular.otf" id="17_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://btpd7vnp5ky0k" path="res://Graphics/UI/Speed Bar BG.png" id="18_1b3g2"]
-[ext_resource type="FontFile" uid="uid://c5lj8h0komj00" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="18_wl76b"]
 [ext_resource type="Shader" uid="uid://do0tt0i8nft6u" path="res://Scripts/Shaders/speed_dramatic.gdshader" id="19_qf2k8"]
 [ext_resource type="Texture2D" uid="uid://ck1jxp6bfl5mo" path="res://Graphics/UI/Speed Bar.png" id="19_tom5b"]
+[ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -31,11 +31,11 @@ shader_parameter/vignette_strength = 0.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("17_vuhfc")
-font_size = 60
+font_size = 52
 
 [sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
-font = ExtResource("18_wl76b")
-font_size = 75
+font = ExtResource("21_1b3g2")
+font_size = 92
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
@@ -48,9 +48,10 @@ position = Vector2(-6, 130)
 max_speed = 750.0
 bullet_speed = 800.0
 
-[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
+[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_gtphy")]
 position = Vector2(-105, -43)
 player = NodePath("../Player")
+rink = NodePath("../Rink")
 
 [node name="BulletPool" type="Node" parent="." unique_id=1411259080]
 script = ExtResource("2_0f8g4")

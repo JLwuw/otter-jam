@@ -3,6 +3,8 @@ extends Node2D
 
 @export var player: Player
 @onready var camera: Camera2D = player.get_node("Camera2D")
+@export var rink: Rink
+var rink_rect: Rect2
 
 @export_group("Spawn")
 @export var base_spawn_interval: float = 6.0
@@ -20,10 +22,29 @@ var active_enemies: Array[Node] = []
 @onready var spawn_timer: Timer = $Timer
 
 func _ready() -> void:
-	
+	var rink_tilemap: TileMapLayer = rink.get_node("TileMapLayer")
+	rink_rect = get_tilemap_world_rect(rink_tilemap)
 	spawn_timer.wait_time = base_spawn_interval
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
+
+#func _draw() -> void:
+	#draw_rect(rink_rect, Color.GREEN, false, 2.0)
+
+func get_tilemap_world_rect(tilemap: TileMapLayer) -> Rect2:
+	var used_rect: Rect2i = tilemap.get_used_rect()
+	
+	var top_left: Vector2 = tilemap.to_global(tilemap.map_to_local(used_rect.position))
+	var bottom_right: Vector2 = tilemap.to_global(
+		tilemap.map_to_local(used_rect.position + used_rect.size)
+	)
+	
+	top_left.x += 90
+	top_left.y += 60
+	
+	bottom_right.y -= 30
+	
+	return Rect2(top_left, bottom_right - top_left).grow(-60)
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
@@ -126,6 +147,7 @@ func spawn_enemy(scene: PackedScene) -> void:
 	
 	var spawn_pos: Vector2 = player.global_position + offset
 	spawn_pos = push_outside_screen(spawn_pos)
+	spawn_pos = clamp_to_arena(spawn_pos, rink_rect)
 
 	enemy.global_position = spawn_pos
 	enemy.player = player
@@ -136,6 +158,14 @@ func spawn_enemy(scene: PackedScene) -> void:
 	current_scene_root.add_child(enemy)
 	await get_tree().create_timer(0.1).timeout
 
+func clamp_to_arena(pos: Vector2, rect: Rect2) -> Vector2:
+	var margin: float = 30.0  # Enemy collision margin
+	var clamped_rect: Rect2 = rect.grow(-margin)
+	
+	return Vector2(
+		clamp(pos.x, clamped_rect.position.x, clamped_rect.end.x),
+		clamp(pos.y, clamped_rect.position.y, clamped_rect.end.y)
+	)
 
 func _on_timer_timeout() -> void:
 	spawn_with_budget()
