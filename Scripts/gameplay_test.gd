@@ -3,7 +3,8 @@ extends Node2D
 var enemy_scenes: Array[PackedScene] = [
 	preload("res://Scenes/Enemies/enemy_slow_chaser.tscn"),
 	preload("res://Scenes/Enemies/enemy_slow_shooter.tscn"),
-	preload("res://Scenes/Enemies/enemy_tank.tscn")
+	preload("res://Scenes/Enemies/enemy_tank.tscn"),
+	preload("res://Scenes/Enemies/enemy_dasher.tscn")
 ]
 
 @export var label_update_interval: float = 0.01
@@ -88,15 +89,14 @@ func update_speed_fx(delta: float) -> void:
 		speed_fx_material.set_shader_parameter("velocity_dir", player.velocity.normalized())
 	
 # UI
-func _on_player_health_changed(current: int, maximum: int) -> void:
-	life_bar.max_value = maximum
+func _on_player_health_changed(current: int) -> void:
 	life_bar.value = current
 	
 func update_speedometer() -> void:
 	if player != null and speed_label != null:
 		var current_speed: float = player.velocity.length()
 
-		# Convertir a km/h y corregir
+		# Convertir a corregir
 		var speed_kmh: float = current_speed * 3.6 /10
 
 		speed_label.text = "%.0f" % speed_kmh
