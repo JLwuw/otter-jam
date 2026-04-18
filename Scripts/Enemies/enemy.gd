@@ -24,6 +24,7 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
+	emit_signal("died", toughness)
 	queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
