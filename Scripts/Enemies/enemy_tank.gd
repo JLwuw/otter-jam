@@ -1,13 +1,15 @@
 class_name EnemySlowTank
 extends Enemy
 
+@onready var wander_component: ComponentWander = $"Wander Component"
+@onready var throw_component: ComponentThrowHazard = $"Throw Hazard Component"
+
 func _ready() -> void:
 	super._ready()
-	$"Wander Component".owner_body = self
-	$"Throw Hazard Component".owner_body = self
 
 func set_enemy_active(is_active: bool) -> void:
 	super.set_enemy_active(is_active)
 	
-	$"Throw Hazard Component".set_process(is_active)
+	wander_component.set_active(is_active)
+	throw_component.set_process(is_active)
 		

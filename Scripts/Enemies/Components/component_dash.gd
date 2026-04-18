@@ -104,8 +104,8 @@ func perform_dash() -> void:
 func push_enemies_in_path() -> void:
 	# Get all slide collisions and push enemies toward the player
 	for i in range(owner_body.get_slide_collision_count()):
-		var collision = owner_body.get_slide_collision(i)
-		var collider = collision.get_collider()
+		var collision := owner_body.get_slide_collision(i)
+		var collider := collision.get_collider()
 		
 		# Check if collider is the player
 		if collider == player:

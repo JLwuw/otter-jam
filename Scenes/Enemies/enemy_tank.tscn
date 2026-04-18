@@ -5,7 +5,9 @@
 [ext_resource type="Script" uid="uid://5c57qhdic4fp" path="res://Scripts/Enemies/Components/component_wander.gd" id="3_b2j4w"]
 [ext_resource type="Script" uid="uid://di8f07cj74h6x" path="res://Scripts/Enemies/Components/component_throw_hazard.gd" id="4_m9n2v"]
 [ext_resource type="PackedScene" uid="uid://dfmis8dojqufl" path="res://Scenes/Bullet/hazard.tscn" id="5_hazrd"]
-[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_enemy_sprite.gd" id="6_ks16x"]
+[ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_hitfx"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="6_ks16x"]
+[ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_deathfx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6w4k9"]
 
@@ -21,6 +23,12 @@ modulate = Color(1, 1, 0, 1)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_8f5k1")
 
+[node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118203]
+script = ExtResource("6_hitfx")
+
+[node name="Enemy Death Impact Component" type="Node" parent="." unique_id=320118206]
+script = ExtResource("7_deathfx")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1448765432 groups=["enemies"]]
 scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_6w4k9")
@@ -35,7 +43,7 @@ hazard_scene = ExtResource("5_hazrd")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1451289300]
 rect = Rect2(-60, -60, 120, 120)
 
-[node name="SpriteDirection" type="Node" parent="." unique_id=932480712]
+[node name="Sprite Rotation Component" type="Node" parent="." unique_id=932480712]
 script = ExtResource("6_ks16x")
 metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 

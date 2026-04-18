@@ -18,9 +18,15 @@ var label_update_timer: float = 0.01
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
 @onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
+
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
+var shake_intensity: float = 0.0			# No modificar porfa
+var shake_duration: float = 0.0
+var shake_timer: float = 0.0
+@onready var speedometer_node: Control = $UI/RootUI/Speedometer
+
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
@@ -65,6 +71,8 @@ func _process(delta: float) -> void:
 	update_speed_fx(delta)
 	
 	update_speedometer()
+	
+	process_shake(delta)
 
 
 func update_speed_fx(delta: float) -> void:
@@ -92,12 +100,39 @@ func update_speed_fx(delta: float) -> void:
 func _on_player_health_changed(current: int) -> void:
 	life_bar.value = current
 	
+func start_shake(duration: float, intensity: float) -> void:
+	shake_duration = duration
+	shake_intensity = intensity
+	shake_timer = duration
+	
+func process_shake(delta: float):
+	# Guardar la posición original si no existe
+	if not has_meta("original_position"):
+		set_meta("original_position", speedometer_node.position)
+
+	var original_pos: Vector2 = get_meta("original_position")
+	
+	if shake_timer > 0:
+		shake_timer -= delta
+		var shake_offset: Vector2 = Vector2(
+			randf_range(-shake_intensity, shake_intensity),
+			randf_range(-shake_intensity, shake_intensity)
+		)
+		speedometer_node.position = speedometer_node.position.lerp(original_pos + shake_offset, 0.3)
+	else:
+		# Volver a posición original suavemente
+		speedometer_node.position = speedometer_node.position.lerp(original_pos, 0.1)
+	
 func update_speedometer() -> void:
 	if player != null and speed_label != null:
 		var current_speed: float = player.velocity.length()
-
-		# Convertir a corregir
 		var speed_kmh: float = current_speed * 3.6 /10
 
 		speed_label.text = "%.0f" % speed_kmh
 		speed_bar.value = current_speed
+
+		# Detectar velocidad máxima y activar shake
+		if current_speed >= speed_fx_max_speed * 0.95:  # 95% del máximo
+			if shake_timer <= 0:  # Evitar activar shake constantemente
+				start_shake(0.3, 5.0)  # duración, intensidad
+				

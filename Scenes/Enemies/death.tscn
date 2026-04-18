@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ccx851aiheqwn"]
+
+[ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="1_55ea6"]
+
+[sub_resource type="Gradient" id="Gradient_p2lie"]
+colors = PackedColorArray(1, 0, 0.42745098, 1, 1, 0, 0.42745098, 0.2509804)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jq2xs"]
+gradient = SubResource("Gradient_p2lie")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0tbx"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 24.199999
+initial_velocity_max = 83.34
+gravity = Vector3(0, 0, 0)
+damping_min = 36.828003
+damping_max = 46.236004
+scale_min = 0.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_jq2xs")
+hue_variation_min = -0.030000022
+hue_variation_max = 0.029999977
+
+[node name="Death" type="GPUParticles2D" unique_id=330134423]
+z_index = -2
+emitting = false
+amount = 50
+texture = ExtResource("1_55ea6")
+lifetime = 7.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_g0tbx")
