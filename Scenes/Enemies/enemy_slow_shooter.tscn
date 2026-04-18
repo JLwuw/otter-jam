@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="2_in5mm"]
 [ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_vqo77"]
 [ext_resource type="Script" uid="uid://cl8b8ngejaij8" path="res://Scripts/Enemies/Components/component_basic_shoot.gd" id="3_vqo77"]
-[ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="4_6cff3"]
+[ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb4pl"]
 
@@ -25,7 +25,7 @@ script = ExtResource("2_in5mm")
 
 [node name="Basic Shoot Component" type="Node" parent="." unique_id=1860826463]
 script = ExtResource("3_vqo77")
-bullet_scene = ExtResource("4_6cff3")
+bullet_scene = ExtResource("5_vqo77")
 fire_rate = 0.75
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1602035001]
