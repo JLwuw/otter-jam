@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b4hd3eftcw5qr"
-path="res://.godot/imported/Pixelmax-Regular.otf-e5abff92dff0875671872eb42ddbe92e.fontdata"
+uid="uid://c5lj8h0komj00"
+path="res://.godot/imported/PixelifySans-VariableFont_wght.ttf-ecd504d601b15dc473b9caf0868cf760.fontdata"
 
 [deps]
 
-source_file="res://Graphics/UI/Pixelmax-Regular.otf"
-dest_files=["res://.godot/imported/Pixelmax-Regular.otf-e5abff92dff0875671872eb42ddbe92e.fontdata"]
+source_file="res://Fonts/PixelifySans-VariableFont_wght.ttf"
+dest_files=["res://.godot/imported/PixelifySans-VariableFont_wght.ttf-ecd504d601b15dc473b9caf0868cf760.fontdata"]
 
 [params]
 
