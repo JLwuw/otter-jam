@@ -3,4 +3,5 @@ extends Enemy
 
 func _ready() -> void:
 	super._ready()
-	$"Player Chase Component".player = player
+	var chase_component: ComponentPlayerChase = $"Player Chase Component"
+	chase_component.player = player

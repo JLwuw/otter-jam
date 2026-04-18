@@ -12,9 +12,13 @@ extends Node2D
 @export var budget_growth: float = 0.5
 
 var time_elapsed: float = 0
+@onready var current_scene_root: Node = get_tree().current_scene
+@onready var spawn_timer: Timer = $Timer
 
 func _ready() -> void:
-	$Timer.wait_time = base_spawn_interval
+	spawn_timer.wait_time = base_spawn_interval
+	if current_scene_root == null:
+		current_scene_root = get_tree().root
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
@@ -32,19 +36,25 @@ func spawn_with_budget() -> void:
 		return
 	
 	while budget > 0:
-		var valid: Array[EnemyData] = []
-		
-		for enemy in available_enemies:
-			if enemy.toughness <= budget:
-				valid.append(enemy)
-		
-		if valid.is_empty():
+		var choice: EnemyData = pick_affordable_enemy(available_enemies, budget)
+		if choice == null:
 			break
-		
 
-		var choice: EnemyData = valid.pick_random()
 		spawn_enemy(choice.scene)
 		budget -= choice.toughness
+
+
+func pick_affordable_enemy(available_enemies: Array[EnemyData], budget: float) -> EnemyData:
+	var choice: EnemyData = null
+	var valid_count: int = 0
+
+	for enemy in available_enemies:
+		if enemy.toughness <= budget:
+			valid_count += 1
+			if randi() % valid_count == 0:
+				choice = enemy
+
+	return choice
 
 
 func spawn_enemy(scene: PackedScene) -> void:
@@ -55,7 +65,7 @@ func spawn_enemy(scene: PackedScene) -> void:
 	
 	enemy.global_position = global_position + offset
 	enemy.player = player
-	get_tree().current_scene.add_child(enemy)
+	current_scene_root.add_child(enemy)
 	await get_tree().create_timer(0.1).timeout
 
 

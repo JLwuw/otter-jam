@@ -5,12 +5,17 @@ extends GPUParticles2D
 
 var player: CharacterBody2D
 var particle_material: ParticleProcessMaterial
+var emit_speed_sq: float = 0.0
+var direction_update_speed_sq: float = 0.0
 
 func _ready() -> void:
 	player = get_parent() as CharacterBody2D
 	if process_material is ParticleProcessMaterial:
 		particle_material = (process_material as ParticleProcessMaterial).duplicate(true)
 		process_material = particle_material
+
+	emit_speed_sq = min_emit_speed * min_emit_speed
+	direction_update_speed_sq = min_speed_for_direction_update * min_speed_for_direction_update
 
 
 func _process(_delta: float) -> void:
@@ -19,12 +24,11 @@ func _process(_delta: float) -> void:
 		return
 
 	var speed_sq: float = player.velocity.length_squared()
-	var emit_speed_sq: float = min_emit_speed * min_emit_speed
 	emitting = speed_sq >= emit_speed_sq
 	if not emitting:
 		return
 
-	if speed_sq <= min_speed_for_direction_update * min_speed_for_direction_update:
+	if speed_sq <= direction_update_speed_sq:
 		return
 
 	var opposite_dir: Vector2 = -player.velocity.normalized()
