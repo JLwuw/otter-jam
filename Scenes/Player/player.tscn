@@ -5,9 +5,16 @@
 [ext_resource type="Curve" uid="uid://db2wsu2s0lwdt" path="res://Resources/Player/fire_rate_curve.tres" id="2_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="4_htcer"]
 [ext_resource type="Script" uid="uid://c6gp2f533dpeb" path="res://Scripts/Player/ice_emitter.gd" id="5_dd0ac"]
+[ext_resource type="Script" uid="uid://bxx4xqct8sv0b" path="res://Scripts/Camera/camera_2d_2.gd" id="6_dd0ac"]
+[ext_resource type="Script" uid="uid://4wp2nhdq2tk8" path="res://Scripts/Player/line_2d.gd" id="7_0u5uq"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
-radius = 19.0
+[sub_resource type="Curve" id="Curve_jlvik"]
+_data = [Vector2(0, 0.17179495), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_gk6dx"]
+offsets = PackedFloat32Array(0, 0.3271605)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.72156864)
 
 [sub_resource type="Curve" id="Curve_0u5uq"]
 _limits = [-200.0, 200.0, 0.0, 1.0]
@@ -31,9 +38,40 @@ linear_accel_max = 2.7999978
 linear_accel_curve = SubResource("CurveTexture_2okw4")
 turbulence_enabled = true
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
+radius = 19.0
+
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
 script = ExtResource("1_a3d8c")
 fire_rate_curve = ExtResource("2_xpcdj")
+
+[node name="Line2D2" type="Line2D" parent="." unique_id=1120057671]
+points = PackedVector2Array(-9, 14)
+width_curve = SubResource("Curve_jlvik")
+gradient = SubResource("Gradient_gk6dx")
+script = ExtResource("7_0u5uq")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=284383964]
+points = PackedVector2Array(11, 16)
+width_curve = SubResource("Curve_jlvik")
+gradient = SubResource("Gradient_gk6dx")
+script = ExtResource("7_0u5uq")
+
+[node name="IceR" type="GPUParticles2D" parent="." unique_id=1520918119]
+position = Vector2(-9, 14)
+amount = 15
+texture = ExtResource("4_htcer")
+process_material = SubResource("ParticleProcessMaterial_jlvik")
+script = ExtResource("5_dd0ac")
+min_emit_speed = 300.0
+
+[node name="IceL" type="GPUParticles2D" parent="." unique_id=795997758]
+position = Vector2(12, 13)
+amount = 15
+texture = ExtResource("4_htcer")
+process_material = SubResource("ParticleProcessMaterial_jlvik")
+script = ExtResource("5_dd0ac")
+min_emit_speed = 300.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2146350461]
 position = Vector2(9.536743e-07, -9.536743e-07)
@@ -45,19 +83,4 @@ shape = SubResource("CircleShape2D_a3d8c")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1631860778]
 position_smoothing_enabled = true
-
-[node name="IceR" type="GPUParticles2D" parent="." unique_id=1520918119]
-position = Vector2(-9, 14)
-amount = 20
-texture = ExtResource("4_htcer")
-process_material = SubResource("ParticleProcessMaterial_jlvik")
-script = ExtResource("5_dd0ac")
-min_emit_speed = 300.0
-
-[node name="IceL" type="GPUParticles2D" parent="." unique_id=795997758]
-position = Vector2(12, 13)
-amount = 20
-texture = ExtResource("4_htcer")
-process_material = SubResource("ParticleProcessMaterial_jlvik")
-script = ExtResource("5_dd0ac")
-min_emit_speed = 300.0
+script = ExtResource("6_dd0ac")

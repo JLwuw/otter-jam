@@ -4,37 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
 [ext_resource type="PackedScene" uid="uid://cv27k52wlpppn" path="res://Scenes/Enemies/enemy_slow_chaser.tscn" id="3_n6585"]
 [ext_resource type="PackedScene" uid="uid://d3o4a888rrucy" path="res://Scenes/Enemies/enemy_slow_shooter.tscn" id="4_6nxcd"]
-[ext_resource type="PackedScene" uid="uid://wlfg018oiue2" path="res://Scenes/arena.tscn" id="5_6nxcd"]
-[ext_resource type="Script" uid="uid://c6gp2f533dpeb" path="res://Scripts/Player/ice_emitter.gd" id="6_fj6jm"]
-[ext_resource type="Script" uid="uid://bxx4xqct8sv0b" path="res://Scripts/Camera/camera_2d_2.gd" id="7_d6u3u"]
-
-[sub_resource type="Curve" id="Curve_n6585"]
-_limits = [-200.0, 200.0, 0.0, 1.0]
-_data = [Vector2(0, 134.36603), 0.0, 0.0, 0, 0, Vector2(0.41610736, -200), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_2okw4"]
-curve = SubResource("Curve_n6585")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6nxcd"]
-particle_flag_disable_z = true
-angle_min = -301.0
-angle_max = 301.0
-direction = Vector3(0, 1, 0)
-spread = 10.0
-initial_velocity_min = 266.13
-initial_velocity_max = 362.91
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -2.800002
-linear_accel_max = 2.7999978
-linear_accel_curve = SubResource("CurveTexture_2okw4")
-turbulence_enabled = true
+[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/rink.tscn" id="5_6nxcd"]
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_2okw4")
 
-[node name="Arena" parent="." unique_id=370423158 instance=ExtResource("5_6nxcd")]
-position = Vector2(24, -10)
+[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
+position = Vector2(-3577, -1972)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
 position = Vector2(-6, 130)
