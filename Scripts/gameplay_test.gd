@@ -15,6 +15,11 @@ var label_update_timer: float = 0.01
 
 func _ready() -> void:
 	EnemyDB.init(enemy_scenes)
+	$Player.health_changed.connect(_on_player_health_changed)
+	
+	var life_bar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
+	life_bar.max_value = $Player.max_health
+	life_bar.value = $Player.current_health
 
 func _process(delta: float) -> void:
 	if fps_label == null:
@@ -37,4 +42,7 @@ func _process(delta: float) -> void:
 	var combo_timer: float = ScoreManager.combo_timer
 	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
 	
-	
+# UI
+func _on_player_health_changed(current: int):
+	var life_bar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
+	life_bar.value = current
