@@ -18,6 +18,15 @@
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
 [ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Scripts/Pixelmax-Regular.otf" id="17_vuhfc"]
 [ext_resource type="FontFile" uid="uid://c5lj8h0komj00" path="res://Graphics/UI/PixelifySans-VariableFont_wght.ttf" id="18_wl76b"]
+[ext_resource type="Shader" uid="uid://do0tt0i8nft6u" path="res://Scripts/Shaders/speed_dramatic.gdshader" id="19_qf2k8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
+shader = ExtResource("19_qf2k8")
+shader_parameter/strength = 0.0
+shader_parameter/velocity_dir = Vector2(1, 0)
+shader_parameter/blur_strength = 1.4
+shader_parameter/vignette_strength = 0.18999999575312
+shader_parameter/aberration_strength = 0.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("17_vuhfc")
@@ -47,6 +56,18 @@ script = ExtResource("2_0f8g4")
 bullet_scene = ExtResource("7_5d3qw")
 initial_size = 180
 expand_by = 60
+
+[node name="SpeedFX" type="CanvasLayer" parent="." unique_id=1341120691]
+layer = 0
+
+[node name="SpeedFXRect" type="ColorRect" parent="SpeedFX" unique_id=609622380]
+material = SubResource("ShaderMaterial_qf2k8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
