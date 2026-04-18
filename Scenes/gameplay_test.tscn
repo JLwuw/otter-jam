@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://dip6o5exswevy" path="res://Graphics/UI/XP Bar Under.png" id="8_kpd0n"]
 [ext_resource type="Texture2D" uid="uid://cr61j1776lcpj" path="res://Graphics/UI/XP Bar Over.png" id="9_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://mf151ptjbbbm" path="res://Graphics/UI/XP Bar Progress.png" id="10_wl76b"]
-[ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Fonts/Pixelmax-Regular.otf" id="17_vuhfc"]
 [ext_resource type="Texture2D" uid="uid://bqr0vkp5dg3g0" path="res://Graphics/UI/Speed Bar Under.png" id="18_tom5b"]
 [ext_resource type="Texture2D" uid="uid://txy52lpifv0v" path="res://Graphics/UI/Speed Bar Over.png" id="19_8b8ff"]
 [ext_resource type="Shader" uid="uid://do0tt0i8nft6u" path="res://Scripts/Shaders/speed_dramatic.gdshader" id="19_qf2k8"]
@@ -32,8 +31,8 @@ shader_parameter/blur_strength = 0.0
 shader_parameter/vignette_strength = 0.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
-font = ExtResource("17_vuhfc")
-font_size = 52
+font = ExtResource("21_1b3g2")
+font_size = 68
 
 [sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
 font = ExtResource("21_1b3g2")
@@ -207,10 +206,10 @@ texture_progress = ExtResource("20_nk2r0")
 
 [node name="KmhLabel" type="Label" parent="UI/RootUI/Speedometer" unique_id=1711935247]
 layout_mode = 0
-offset_left = 127.50005
-offset_top = 164.99997
+offset_left = 127.50006
+offset_top = 150.0
 offset_right = 298.50006
-offset_bottom = 227.99997
+offset_bottom = 224.0
 text = "km/h"
 label_settings = SubResource("LabelSettings_wl76b")
 horizontal_alignment = 1

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bf2b4dypb3cy8"]
+
+[ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="1_klylv"]
+[ext_resource type="Script" uid="uid://btn5g1sil3bn7" path="res://Scripts/title_screen.gd" id="1_p3fck"]
+[ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_4gxqj"]
+
+[node name="TitleScreen" type="Control" unique_id=502329976]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p3fck")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1132915500]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 113.0
+offset_right = 244.0
+offset_bottom = 181.0
+texture = ExtResource("1_klylv")
+
+[node name="BtnsCol" type="VBoxContainer" parent="." unique_id=1900655575]
+layout_mode = 0
+offset_left = 159.0
+offset_top = 213.0
+offset_right = 388.0
+offset_bottom = 423.0
+theme_override_constants/separation = 11
+
+[node name="PlayBtn" type="Button" parent="BtnsCol" unique_id=994732661]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_4gxqj")
+text = "Play"
+
+[node name="HowtoPlayBtn" type="MenuButton" parent="BtnsCol" unique_id=906231822]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_4gxqj")
+text = "How to Play"
+
+[node name="QuitBtn" type="Button" parent="BtnsCol" unique_id=715132463]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_4gxqj")
+text = "Quit"
