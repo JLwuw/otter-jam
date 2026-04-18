@@ -34,8 +34,10 @@ scale_curve = SubResource("CurveTexture_vi6ph")
 color_ramp = SubResource("GradientTexture1D_5ug8y")
 
 [node name="Pew" type="GPUParticles2D" unique_id=794192534]
+emitting = false
 amount = 20
 texture = ExtResource("1_hx0x6")
 lifetime = 0.77
+one_shot = true
 explosiveness = 0.95
 process_material = SubResource("ParticleProcessMaterial_gklx6")
