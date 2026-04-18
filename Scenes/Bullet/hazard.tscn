@@ -1,20 +1,44 @@
 [gd_scene format=3 uid="uid://dfmis8dojqufl"]
 
 [ext_resource type="Script" uid="uid://cigpp240g8vci" path="res://Scripts/Enemies/Components/component_hazard.gd" id="1_a9b2c"]
-[ext_resource type="Texture2D" uid="uid://ch2x7fo5gi32j" path="res://icon.svg" id="2_d3e4f"]
+[ext_resource type="Texture2D" uid="uid://fh78pkfcxqkx" path="res://Graphics/iceball.png" id="2_olki1"]
+[ext_resource type="PackedScene" uid="uid://bsu3ed0myajq2" path="res://Scenes/Bullet/plop.tscn" id="3_w2h78"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2h78"]
+atlas = ExtResource("2_olki1")
+region = Rect2(160, 0, 160, 160)
+
+[sub_resource type="Curve" id="Curve_olki1"]
+_data = [Vector2(0, 0.95057034), 0.0, 0.28305885, 0, 0, Vector2(0.4353234, 1), 0.049801365, 0.049801365, 0, 0, Vector2(1, 0.821504), -0.26114446, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_608c2"]
+atlas = ExtResource("2_olki1")
+region = Rect2(0, 0, 160, 160)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hazard"]
 radius = 16.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hazard_landed"]
+radius = 14.769055
+
 [node name="Hazard" type="Area2D" unique_id=201456789]
 scale = Vector2(4, 4)
 script = ExtResource("1_a9b2c")
+landed_texture = SubResource("AtlasTexture_w2h78")
+destroy_particles_scene = ExtResource("3_w2h78")
+lifetime = 60.0
+pre_landing_scale_curve = SubResource("Curve_olki1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=301567890]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_d3e4f")
+texture = SubResource("AtlasTexture_608c2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=401678901]
+[node name="AirborneCollisionShape2D" type="CollisionShape2D" parent="." unique_id=401678901]
 shape = SubResource("CircleShape2D_hazard")
+
+[node name="LandedCollisionShape2D" type="CollisionShape2D" parent="." unique_id=401678902]
+shape = SubResource("CircleShape2D_hazard_landed")
+disabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
