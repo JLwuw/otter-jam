@@ -115,9 +115,6 @@ func _release_bullet_deferred(bullet_node: Node, instance_id: int) -> void:
 	if bullet_node.has_method("deactivate_for_pool"):
 		bullet_node.call("deactivate_for_pool")
 
-	if bullet_node.get_parent() != self:
-		bullet_node.reparent(self)
-
 	if not available.has(bullet_node):
 		available.append(bullet_node)
 

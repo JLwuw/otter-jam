@@ -84,6 +84,8 @@ func handle_rink_contacts() -> void:
 	if collision_count <= 0:
 		return
 
+	var current_speed: float = velocity.length()
+
 	for collision_index in range(collision_count):
 		var collision: KinematicCollision2D = get_slide_collision(collision_index)
 		if collision == null:
@@ -102,7 +104,8 @@ func handle_rink_contacts() -> void:
 		if rink == null:
 			continue
 
-		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), velocity.length())
+		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), current_speed)
+		break
 
 
 func handle_shooting(delta: float) -> void:

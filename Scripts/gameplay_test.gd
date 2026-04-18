@@ -13,14 +13,17 @@ var label_update_timer: float = 0.01
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
 @onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
+@onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
+@onready var player: Player = $Player as Player
 
 func _ready() -> void:
 	EnemyDB.init(enemy_scenes)
-	$Player.health_changed.connect(_on_player_health_changed)
-	
-	var life_bar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
-	life_bar.max_value = $Player.max_health
-	life_bar.value = $Player.current_health
+	if player != null:
+		player.health_changed.connect(_on_player_health_changed)
+
+	if player != null:
+		life_bar.max_value = player.max_health
+		life_bar.value = player.current_health
 
 func _process(delta: float) -> void:
 	if fps_label == null:
@@ -44,6 +47,6 @@ func _process(delta: float) -> void:
 	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
 	
 # UI
-func _on_player_health_changed(current: int):
-	var life_bar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
+func _on_player_health_changed(current: int, maximum: int) -> void:
+	life_bar.max_value = maximum
 	life_bar.value = current

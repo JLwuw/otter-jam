@@ -3,9 +3,17 @@ extends Node2D
 
 @onready var touch_particles_scene: PackedScene = load("res://Scenes/Rink/rink_touch_particles.tscn") as PackedScene
 @export var touch_particles_min_speed: float = 120.0
+@export var touch_particles_cooldown: float = 0.04
+var touch_particles_cooldown_timer: float = 0.0
+
+func _process(delta: float) -> void:
+	touch_particles_cooldown_timer = max(0.0, touch_particles_cooldown_timer - delta)
 
 func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZERO, player_speed: float = 0.0) -> void:
 	if player_speed < touch_particles_min_speed:
+		return
+
+	if touch_particles_cooldown_timer > 0.0:
 		return
 
 	if touch_particles_scene == null:
@@ -27,6 +35,7 @@ func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZE
 	scene_root.add_child(particles)
 	particles.restart()
 	particles.emitting = true
+	touch_particles_cooldown_timer = touch_particles_cooldown
 
 	if particles.one_shot:
 		particles.finished.connect(Callable(particles, "queue_free"), CONNECT_ONE_SHOT)
