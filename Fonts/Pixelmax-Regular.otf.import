@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://km8ltiqtdsoc"
-path="res://.godot/imported/Pixelmax-Regular.otf-8965e0bc4c82bfc3645ef318352fe76a.fontdata"
+path="res://.godot/imported/Pixelmax-Regular.otf-d1e15ec637863f1f5fca09dc0f6f6bed.fontdata"
 
 [deps]
 
-source_file="res://Scripts/Pixelmax-Regular.otf"
-dest_files=["res://.godot/imported/Pixelmax-Regular.otf-8965e0bc4c82bfc3645ef318352fe76a.fontdata"]
+source_file="res://Fonts/Pixelmax-Regular.otf"
+dest_files=["res://.godot/imported/Pixelmax-Regular.otf-d1e15ec637863f1f5fca09dc0f6f6bed.fontdata"]
 
 [params]
 
