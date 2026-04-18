@@ -71,8 +71,6 @@ func get_bullet(team: Bullet.Team, spawn_position: Vector2, spawn_direction: Vec
 
 	var bullet_node: Node = available.pop_back() as Node
 	available_by_scene[scene_key] = available
-	if bullet_node.has_method("deactivate_for_pool"):
-		bullet_node.call("deactivate_for_pool")
 	if bullet_node.get_parent() != current_scene_root:
 		bullet_node.reparent(current_scene_root, false)
 

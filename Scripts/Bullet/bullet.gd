@@ -36,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
 
 func _on_body_entered(body: Node) -> void:
+	print("Collision with bullet: ", body.name)
 	if release_requested:
 		return
 
