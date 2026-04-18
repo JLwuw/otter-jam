@@ -1,30 +1,25 @@
 extends Node
 
-var enemy_data: Array[PackedScene] = []
+var enemy_data_list: Array[EnemyData] = []
 
 func init(enemy_scenes: Array[PackedScene]) -> void:
-	enemy_data.clear()
+	enemy_data_list.clear()
 	
 	for scene in enemy_scenes:
 		var enemy: Enemy = scene.instantiate()
-		
-		if not enemy.has_variable("toughness"):
-			continue
-		
-		
-		enemy_data.append({
-			"scene": scene,
-			"toughness": enemy.toughness,
-			"unlock_time": enemy.unlock_time
-		})
-		
+		var enemy_data: EnemyData = EnemyData.new(
+			scene,
+			enemy.toughness,
+			enemy.unlock_time
+		)
+		enemy_data_list.append(enemy_data)
 		enemy.queue_free()
 
-func get_available_enemies(time_elapsed: float) -> Array:
-	var available: Array = []
+func get_available_enemies(time_elapsed: float) -> Array[EnemyData]:
+	var available: Array[EnemyData] = []
 	
-	for data in enemy_data:
-		if time_elapsed >= data["unlock_time"]:
-			available.append(data)
+	for enemy in enemy_data_list:
+		if time_elapsed >= enemy.unlock_time:
+			available.append(enemy)
 	
 	return available

@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export var max_health: int = 3
 @export var toughness: int = 1
-@export var unlock_timer: int = 0
+@export var unlock_time: int = 0
 @export var player: Player
 
 var current_health: int = 3
