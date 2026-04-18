@@ -43,6 +43,10 @@ func _ready() -> void:
 		current_scene_root = get_tree().root
 	bullet_pool = current_scene_root.get_node_or_null("BulletPool")
 
+# Para progress bar en UI
+signal health_changed(current: int, maximum: int)
+signal xp_changed(current: int, maximum: int)
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
 		var to_mouse: Vector2 = get_global_mouse_position() - global_position
@@ -120,6 +124,7 @@ func take_damage(amount: int = 1) -> void:
 	if invuln_timer > 0: return
 	print("Taking damage!")
 	current_health -= amount
+	health_changed.emit(current_health, max_health)  # UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 		

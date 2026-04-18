@@ -9,8 +9,6 @@ extends CharacterBody2D
 
 var current_health: int = 3
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var chase_component: ComponentPlayerChase = get_node_or_null("Player Chase Component")
-@onready var shoot_component: ComponentBasicShoot = get_node_or_null("Basic Shoot Component")
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
@@ -35,15 +33,9 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	set_enemy_active(false)
-
+	
 func set_enemy_active(is_active: bool) -> void:
 	sprite.visible = is_active
-
-	if chase_component != null:
-		chase_component.set_physics_process(is_active)
-
-	if shoot_component != null:
-		shoot_component.set_process(is_active)
 
 	if disable_collision_when_offscreen and collision_shape != null:
 		collision_shape.disabled = not is_active
