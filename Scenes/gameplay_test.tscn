@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cw60l7jw1fy3k" path="res://Scripts/gameplay_test.gd" id="1_n6585"]
 [ext_resource type="Script" uid="uid://cavvhlr7oonau" path="res://Scripts/Bullet/bullet_pool.gd" id="2_0f8g4"]
 [ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="3_2okw4"]
+[ext_resource type="Texture2D" uid="uid://bj7w1si78q6gg" path="res://Graphics/UI/Character Box.png" id="3_kpd0n"]
 [ext_resource type="Texture2D" uid="uid://dcbb6egq48r5h" path="res://Graphics/UI/XP Icon.png" id="4_gtphy"]
 [ext_resource type="Texture2D" uid="uid://7kvuic2ffbek" path="res://Graphics/UI/Life Bar Under.png" id="5_5q62e"]
 [ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/rink.tscn" id="5_6nxcd"]
@@ -18,6 +19,7 @@
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
+label_update_interval = null
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=933685181]
 
@@ -48,6 +50,7 @@ anchors_preset = -1
 offset_top = 54.5
 offset_right = 203.0
 offset_bottom = 259.5
+texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
 layout_mode = 0
