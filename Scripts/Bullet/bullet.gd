@@ -36,7 +36,6 @@ func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
 
 func _on_body_entered(body: Node) -> void:
-	print("Collision with bullet: ", body.name)
 	if release_requested:
 		return
 
@@ -60,7 +59,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if not visible:
 		return
 
-	# Bullets are short-lived projectiles; despawning them off-screen avoids wasted draw/update work.
 	if despawn_when_offscreen:
 		despawn()
 		return
@@ -83,6 +81,9 @@ func activate(new_team: Team, spawn_position: Vector2, spawn_direction: Vector2,
 	set_physics_process(true)
 	monitoring = true
 	monitorable = true
+	# Re-set on next frame to override any pending deferred disables from pool warm-up
+	call_deferred("set", "monitoring", true)
+	call_deferred("set", "monitorable", true)
 
 func deactivate_for_pool() -> void:
 	release_requested = false
