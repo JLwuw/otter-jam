@@ -3,8 +3,8 @@ extends Node
 
 @export_group("Movement")
 @export var responsiveness: float = 55
-@export var acceleration_factor: float = 15
-@export var max_speed: float = 100
+@export var acceleration_factor: float = 30
+@export var max_speed: float = 200
 @export var drag: float = 0.5
 
 var owner_body: CharacterBody2D

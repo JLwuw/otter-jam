@@ -5,8 +5,9 @@ extends Node2D
 
 @export_group("Spawn")
 @export var base_spawn_interval: float = 6.0
-@export var spawn_radius: float = 20.0
-@export var max_enemy_count: int = 5
+@export var spawn_radius: float = 600
+@export var max_enemy_count: int = 400
+@export var forbidden_angle_deg: float = 45.0
 
 @export_group("Scaling")
 @export var base_budget: float = 2.0
@@ -68,11 +69,21 @@ func pick_affordable_enemy(available_enemies: Array[EnemyData], budget: float) -
 
 func spawn_enemy(scene: PackedScene) -> void:
 	var enemy: Enemy = scene.instantiate()
+	var move_dir: Vector2 = player.velocity.normalized()
 	
-	var angle: float = randf() * TAU
+	var base_angle: float = move_dir.angle()
+	var half_cone: float = deg_to_rad(forbidden_angle_deg / 2.0)
+
+	var angle: float
+
+	if randf() < 0.5:
+		angle = randf_range(base_angle + half_cone, base_angle + PI)
+	else:
+		angle = randf_range(base_angle - PI, base_angle - half_cone)
+	
 	var offset: Vector2 = Vector2.RIGHT.rotated(angle) * spawn_radius
 	
-	enemy.global_position = global_position + offset
+	enemy.global_position = player.global_position + offset
 	enemy.player = player
 	
 	active_enemies.append(enemy)

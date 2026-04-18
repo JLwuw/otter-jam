@@ -7,6 +7,7 @@ var combo_timer: float = 0.0
 
 const TOUGHNESS_MULT: float = 5.0
 const TIME_MULT: float = 0.1
+const COMBO_DURATION: float = 5.0
 
 func _process(delta: float) -> void:
 	elapsed_time += delta
@@ -17,7 +18,7 @@ func _process(delta: float) -> void:
 
 func _on_enemy_died(toughness: int) -> void:
 	combo += 1
-	combo_timer = 2.0
+	combo_timer = COMBO_DURATION
 	
 	var final_points: float = toughness * combo * TOUGHNESS_MULT
 	score += final_points

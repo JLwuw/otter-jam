@@ -19,8 +19,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if fps_label == null:
 		return
-	
-	
 
 	label_update_timer -= delta
 	if label_update_timer > 0.0:

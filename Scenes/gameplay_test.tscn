@@ -19,7 +19,7 @@ max_speed = 750.0
 bullet_speed = 800.0
 
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
-position = Vector2(-223, 64)
+position = Vector2(-105, -43)
 player = NodePath("../Player")
 
 [node name="BulletPool" type="Node" parent="." unique_id=1411259080]
