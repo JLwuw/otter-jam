@@ -134,26 +134,26 @@ func _disable_node_processing(node: Node) -> void:
 
 
 func _disable_all_collisions() -> void:
-	collision_layer = 0
-	collision_mask = 0
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
 	for child: Node in get_children():
 		_disable_collisions_recursive(child)
 
 
 func _disable_collisions_recursive(node: Node) -> void:
 	if node is CollisionShape2D:
-		(node as CollisionShape2D).disabled = true
+		(node as CollisionShape2D).set_deferred("disabled", true)
 	elif node is CollisionPolygon2D:
-		(node as CollisionPolygon2D).disabled = true
+		(node as CollisionPolygon2D).set_deferred("disabled", true)
 	elif node is CollisionObject2D:
 		var collision_object: CollisionObject2D = node as CollisionObject2D
-		collision_object.collision_layer = 0
-		collision_object.collision_mask = 0
+		collision_object.set_deferred("collision_layer", 0)
+		collision_object.set_deferred("collision_mask", 0)
 
 		if collision_object is Area2D:
 			var area: Area2D = collision_object as Area2D
-			area.monitoring = false
-			area.monitorable = false
+			area.set_deferred("monitoring", false)
+			area.set_deferred("monitorable", false)
 
 	for child: Node in node.get_children():
 		_disable_collisions_recursive(child)

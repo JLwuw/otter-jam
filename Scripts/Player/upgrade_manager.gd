@@ -1,7 +1,7 @@
 class_name UpgradeManager
 extends Node
 
-@export var available_upgrades: Array[Upgrade] = []
+@export var available_upgrades: Array = []
 
 signal upgrade_offered(upgrades: Array[Upgrade], count: int)
 signal upgrade_selected(upgrade: Upgrade)
@@ -16,31 +16,47 @@ func offer_random_upgrades(count: int = 3) -> Array[Upgrade]:
 		return []
 	
 	var selected: Array[Upgrade] = []
-	var pool: Array[Upgrade] = available_upgrades.duplicate()
+	var pool: Array = available_upgrades.duplicate()
 	
 	for i in range(count):
 		if pool.is_empty():
 			break
 		
 		var choice_idx: int = _weighted_random_select(pool)
-		var upgrade: Upgrade = pool[choice_idx]
+		var upgrade: Upgrade = pool[choice_idx] as Upgrade
+		if upgrade == null:
+			print("WARNING: Invalid upgrade resource in available_upgrades at index ", choice_idx)
+			pool.remove_at(choice_idx)
+			continue
+
 		selected.append(upgrade)
 		pool.remove_at(choice_idx)
 	
 	upgrade_offered.emit(selected, count)
 	return selected
 
-func _weighted_random_select(upgrades: Array[Upgrade]) -> int:
+func _weighted_random_select(upgrades: Array) -> int:
 	var total_weight: float = 0.0
-	for upgrade in upgrades:
-		var rarity: float = Upgrade.rarity_by_type.get(upgrade.upgrade_type, 1.0)
+	for upgrade: Variant in upgrades:
+		var typed_upgrade: Upgrade = upgrade as Upgrade
+		if typed_upgrade == null:
+			continue
+
+		var rarity: float = Upgrade.rarity_by_type.get(typed_upgrade.upgrade_type, 1.0)
 		total_weight += (1.0 / rarity)
+
+	if total_weight <= 0.0:
+		return 0
 	
 	var roll: float = randf() * total_weight
 	var accumulated: float = 0.0
 	
 	for i in range(upgrades.size()):
-		var rarity: float = Upgrade.rarity_by_type.get(upgrades[i].upgrade_type, 1.0)
+		var typed_upgrade: Upgrade = upgrades[i] as Upgrade
+		if typed_upgrade == null:
+			continue
+
+		var rarity: float = Upgrade.rarity_by_type.get(typed_upgrade.upgrade_type, 1.0)
 		accumulated += (1.0 / rarity)
 		if roll <= accumulated:
 			return i
