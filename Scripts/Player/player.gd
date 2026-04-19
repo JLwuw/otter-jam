@@ -10,6 +10,7 @@ extends CharacterBody2D
 @export var max_distance: float = 200.0
 @export var turn_speed: float = 8.0
 @export var rotation_offset_degrees: float = 0.0
+@export var move_hold_delay: float = 0.5
 
 var move_direction: Vector2 = Vector2.ZERO
 var has_direction: bool = false
@@ -28,7 +29,12 @@ var has_direction: bool = false
 @export var right_muzzle_path: NodePath = NodePath("MuzzleRight")
 @export var min_fire_rate: float = 0.8 
 @export var max_fire_rate: float = 6
+@export var min_burst_count: int = 1
+@export var max_burst_count: int = 4
+@export var burst_start_speed: float = 120.0
+@export var burst_shot_interval: float = 0.045
 @export var fire_rate_curve: Curve
+
 
 @export_category("Animation")
 @export var move_speed_threshold: float = 120.0
@@ -66,6 +72,8 @@ var right_muzzle: Node2D
 @onready var animated_otter: AnimatedSprite2D = $AnimatedOtter
 @onready var animated_gun: AnimatedSprite2D = $AnimatedGun
 var shoot_anim_timer: float = 0.0
+var move_hold_timer: float = 0.0
+var is_firing_burst: bool = false
 
 # Para progress bar en UI
 signal health_changed(current: int)
@@ -89,13 +97,19 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
-		var to_mouse: Vector2 = get_global_mouse_position() - global_position
-		
-		if to_mouse.length() > 5.0:
-			move_direction = to_mouse.normalized()
-			has_direction = true
+		_try_shoot_on_click()
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("leftClick"):
+		move_hold_timer += delta
+		if move_hold_timer >= move_hold_delay:
+			var to_mouse: Vector2 = get_global_mouse_position() - global_position
+			if to_mouse.length() > 5.0:
+				move_direction = to_mouse.normalized()
+				has_direction = true
+	else:
+		move_hold_timer = 0.0
+
 	if has_direction:
 		var target_velocity: Vector2 = move_direction * max_speed
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
@@ -112,7 +126,7 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
-	handle_shooting(delta)
+	_update_shoot_cooldown(delta)
 	if shoot_anim_timer > 0.0:
 		shoot_anim_timer -= delta
 	update_animation_state()
@@ -209,16 +223,40 @@ func handle_rink_contacts() -> void:
 		break
 
 
-func handle_shooting(delta: float) -> void:
+func _update_shoot_cooldown(delta: float) -> void:
 	shoot_timer -= delta
-	if not Input.is_action_pressed("leftClick"):
+
+func _try_shoot_on_click() -> void:
+	if shoot_timer > 0.0 or is_firing_burst:
 		return
 
-	if shoot_timer <= 0.0:
+	var current_speed: float = velocity.length()
+	var burst_count: int = _get_burst_count(current_speed)
+	_fire_speed_burst(burst_count)
+	shoot_anim_timer = max(shoot_anim_hold_time, burst_shot_interval * max(0, burst_count - 1) + 0.05)
+	shoot_timer = calc_shoot_cooldown(current_speed)
+
+func _get_burst_count(current_speed: float) -> int:
+	var safe_max_burst: int = max(min_burst_count, max_burst_count)
+	if safe_max_burst <= min_burst_count:
+		return min_burst_count
+
+	if current_speed <= burst_start_speed:
+		return min_burst_count
+
+	var speed_range: float = max(1.0, max_speed - burst_start_speed)
+	var speed_percent: float = clamp((current_speed - burst_start_speed) / speed_range, 0.0, 1.0)
+
+	return int(round(lerp(float(min_burst_count), float(safe_max_burst), speed_percent)))
+
+func _fire_speed_burst(burst_count: int) -> void:
+	var safe_burst_count: int = max(1, burst_count)
+	is_firing_burst = true
+	for burst_index in range(safe_burst_count):
 		shoot()
-		shoot_anim_timer = shoot_anim_hold_time
-		var current_speed: float = velocity.length()
-		shoot_timer = calc_shoot_cooldown(current_speed)
+		if burst_index < safe_burst_count - 1 and burst_shot_interval > 0.0:
+			await get_tree().create_timer(burst_shot_interval).timeout
+	is_firing_burst = false
 	
 func calc_shoot_cooldown(current_speed: float) -> float:
 	if fire_rate_curve == null:
