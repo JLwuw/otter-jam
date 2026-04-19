@@ -260,4 +260,4 @@ func _on_main_menu_pressed() -> void:
 	AudioController.stop_all_sfx()
 	AudioController.stop_music()
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")  # ajusta el path
