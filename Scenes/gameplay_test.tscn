@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6echlk833f2a"]
 
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_6kpuu"]
-[ext_resource type="Texture2D" uid="uid://b8yukr88p8t1c" path="res://Graphics/UI/Bars Box.png" id="1_6nxcd"]
+[ext_resource type="Texture2D" uid="uid://bwx1m385t365w" path="res://Graphics/UI/Bars Box.png" id="1_6nxcd"]
 [ext_resource type="Script" uid="uid://cw60l7jw1fy3k" path="res://Scripts/gameplay_test.gd" id="1_n6585"]
 [ext_resource type="Script" uid="uid://cavvhlr7oonau" path="res://Scripts/Bullet/bullet_pool.gd" id="2_0f8g4"]
 [ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="3_2okw4"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
@@ -135,18 +135,18 @@ scale = Vector2(0.4, 0.4)
 [node name="BarsBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1422941206]
 layout_mode = 0
 offset_left = 135.0
-offset_top = 84.99997
+offset_top = 74.99997
 offset_right = 814.99994
-offset_bottom = 261.99997
+offset_bottom = 265.99997
 texture = ExtResource("1_6nxcd")
 
 [node name="CharacterBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1253607656]
 layout_mode = 1
 anchors_preset = -1
 offset_left = -82.49999
-offset_top = 54.5
-offset_right = 198.5
-offset_bottom = 332.5
+offset_top = 35.00003
+offset_right = 219.5
+offset_bottom = 337.00003
 texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
