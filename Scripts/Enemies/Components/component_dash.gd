@@ -7,11 +7,11 @@ extends Node
 @export var chase_speed: float = 400.0
 
 @export_group("Dash")
-@export var dash_speed: float = 1200.0
+@export var dash_speed: float = 1100.0
 @export var dash_cooldown: float = 2.0
 @export var dash_duration: float = 0.8
 @export var dash_trigger_distance: float = 300.0  # Distance at which to start dashing
-@export var prediction_distance: float = 100.0  # How far ahead to predict player movement
+@export var prediction_distance: float = 150.0  # How far ahead to predict player movement
 @export var drag: float = 0.5
 @export var push_force: float = 1000.0  # Force to push other enemies toward player
 @export var player_push_force: float = 800.0  # Force to push player

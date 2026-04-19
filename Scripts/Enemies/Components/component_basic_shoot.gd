@@ -3,7 +3,7 @@ extends Node
 
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 1.5
-@export var bullet_speed: float = 200
+@export var bullet_speed: float = 600
 
 var player: Node2D
 var owner_body: CharacterBody2D
