@@ -128,9 +128,9 @@ scale = Vector2(0.4, 0.4)
 
 [node name="BarsBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1422941206]
 layout_mode = 0
-offset_left = 122.5
+offset_left = 135.0
 offset_top = 84.99997
-offset_right = 776.5
+offset_right = 814.99994
 offset_bottom = 261.99997
 texture = ExtResource("1_6nxcd")
 
@@ -218,7 +218,7 @@ label_settings = SubResource("LabelSettings_p4h6w")
 
 [node name="XPLbl" type="Label" parent="UI/RootUI/PlayerInfo/CounterCol" unique_id=452327313]
 layout_mode = 2
-text = "15/1000"
+text = "2000/4568"
 label_settings = SubResource("LabelSettings_fua5m")
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
