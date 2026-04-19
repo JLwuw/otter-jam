@@ -35,3 +35,10 @@ func _on_enemy_died(toughness: int) -> void:
 
 func get_final_score() -> int:
 	return int(round(score + elapsed_time * TIME_MULT))
+	
+
+func reset() -> void:
+	score = 0
+	elapsed_time = 0
+	combo = 0
+	combo_timer = 0
