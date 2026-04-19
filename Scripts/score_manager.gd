@@ -1,10 +1,17 @@
 extends Node
 
+enum Difficulty {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 var score: float = 0
 var elapsed_time: float = 0.0
 var combo: int = 0
 var combo_timer: float = 0.0
 var is_active: bool = false
+var difficulty_selected: Difficulty = Difficulty.EASY
 
 const TOUGHNESS_MULT: float = 5.0
 const TIME_MULT: float = 0.1
