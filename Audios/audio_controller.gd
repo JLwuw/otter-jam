@@ -2,6 +2,7 @@ extends Node2D
 
 # Music players
 @onready var menu_music: AudioStreamPlayer = $MenuMusic
+@onready var selection_music: AudioStreamPlayer = $SelectionMusic
 @onready var music: AudioStreamPlayer = $Music
 
 # SFX players
@@ -26,12 +27,19 @@ extends Node2D
 func play_menu_music() -> void:
 	menu_music.play()
 
+func play_selection_music() -> void:
+	menu_music.stop()
+	selection_music.play()
+
 func play_music() -> void:
 	menu_music.stop()
+	selection_music.stop()
 	music.play()
 
 func stop_music() -> void:
 	music.stop()
+	menu_music.stop()
+	selection_music.stop()
 	menu_music.stop()
 
 func stop_all_sfx() -> void:

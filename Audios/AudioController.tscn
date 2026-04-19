@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://d3jufx4socsjn"]
 
 [ext_resource type="Script" uid="uid://1bgov0sfxcpl" path="res://Audios/audio_controller.gd" id="1_f24kh"]
-[ext_resource type="AudioStream" uid="uid://dqofk22i8qwcr" path="res://Audios/Music/MenuSong.mp3" id="2_8v7ln"]
+[ext_resource type="AudioStream" uid="uid://bw4mhfjbnqpxw" path="res://Audios/Music/SelectionMusic.mp3" id="2_su4s0"]
 [ext_resource type="AudioStream" uid="uid://doj1v1mh00t1k" path="res://Audios/Music/WhatsApp Audio 2026-04-19 at 8.43.28 AM.mp3" id="3_8v7ln"]
+[ext_resource type="AudioStream" uid="uid://cdru1ju5siqc3" path="res://Audios/Music/700322__victor_natas__ending-on-a-happy-note.wav" id="3_o8prn"]
 [ext_resource type="AudioStream" uid="uid://ddsschara4k5h" path="res://Audios/sfx/654375__njjjjjjjjjjjjjjjjjjjjjjjj__single-gunshot.wav" id="4_x47md"]
 [ext_resource type="AudioStream" uid="uid://cftuek6d4msml" path="res://Audios/sfx/138481__justinvoke__bullet-blood-4.wav" id="5_4v1gg"]
 [ext_resource type="AudioStream" uid="uid://dlq1erkv0c3uh" path="res://Audios/sfx/98189__fabianofa__paintball_shoot1.wav" id="5_x47md"]
@@ -19,7 +20,11 @@
 script = ExtResource("1_f24kh")
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=1649273502]
-stream = ExtResource("2_8v7ln")
+stream = ExtResource("2_su4s0")
+volume_db = -12.0
+
+[node name="SelectionMusic" type="AudioStreamPlayer" parent="." unique_id=386751453]
+stream = ExtResource("3_o8prn")
 volume_db = -12.0
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1370137264]
@@ -28,22 +33,22 @@ volume_db = -4.0
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=948968781]
 stream = ExtResource("4_x47md")
-volume_db = -6.296
+volume_db = -12.521
 pitch_scale = 1.93
 
 [node name="Shoot2" type="AudioStreamPlayer" parent="." unique_id=1583317839]
 stream = ExtResource("4_x47md")
-volume_db = -7.69
+volume_db = -12.0
 pitch_scale = 1.44
 
 [node name="Shoot3" type="AudioStreamPlayer" parent="." unique_id=1802538750]
 stream = ExtResource("5_x47md")
-volume_db = -7.69
+volume_db = -12.0
 pitch_scale = 1.48
 
 [node name="Shoot4" type="AudioStreamPlayer" parent="." unique_id=492846876]
 stream = ExtResource("6_4v1gg")
-volume_db = -4.395
+volume_db = -5.0
 pitch_scale = 2.9
 
 [node name="EnemyHit" type="AudioStreamPlayer" parent="." unique_id=253040032]

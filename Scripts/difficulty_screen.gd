@@ -13,7 +13,7 @@ var speed_fx_strength: float = 0.0
 func _ready() -> void:
 	speed_fx_rect = get_node_or_null("SpeedFX/SpeedFXRect") as ColorRect
 	AudioController.stop_all_sfx()
-	AudioController.play_menu_music()
+	AudioController.play_selection_music()
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
 
