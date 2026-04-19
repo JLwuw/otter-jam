@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
+[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -45,6 +46,11 @@ font_size = 68
 [sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
 font = ExtResource("21_1b3g2")
 font_size = 92
+
+[sub_resource type="Environment" id="Environment_p4h6w"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.1
 
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
@@ -272,3 +278,6 @@ offset_top = 99.0
 offset_right = 125.0
 offset_bottom = 122.0
 text = "XP Required: --"
+
+[node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
+environment = SubResource("Environment_p4h6w")
