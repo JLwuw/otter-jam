@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# VS Code settings (local environment paths)
+.vscode/settings.json
+
