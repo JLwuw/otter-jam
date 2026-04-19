@@ -1,12 +1,5 @@
 extends Node2D
 
-var enemy_scenes: Array[PackedScene] = [
-	preload("res://Scenes/Enemies/enemy_slow_chaser.tscn"),
-	preload("res://Scenes/Enemies/enemy_slow_shooter.tscn"),
-	preload("res://Scenes/Enemies/enemy_tank.tscn"),
-	preload("res://Scenes/Enemies/enemy_dasher.tscn")
-]
-
 @export var label_update_interval: float = 0.01
 @export_category("Speed FX")
 @export var speed_fx_max_speed: float = 750.0
@@ -53,9 +46,9 @@ var speed_fx_strength: float = 0.0
 func _ready() -> void:
 	AudioController.stop_music()
 	AudioController.play_music()
-	EnemyDB.init(enemy_scenes)
+	ScoreManager.reset()
 	ScoreManager.is_active = true
-	
+
 	match ScoreManager.difficulty_selected:
 		ScoreManager.Difficulty.EASY:
 			print("Easy Mode!")

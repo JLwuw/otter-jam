@@ -4,6 +4,8 @@
 
 [node name="Enemy Spawner" type="Node2D" unique_id=2131718947]
 script = ExtResource("1_4l55s")
+max_enemy_count = 20
+forbidden_angle_deg = 10.0
 base_budget = 5.0
 
 [node name="Timer" type="Timer" parent="." unique_id=1209407879]

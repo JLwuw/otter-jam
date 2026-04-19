@@ -2,7 +2,16 @@ extends Node
 
 var enemy_data_list: Array[EnemyData] = []
 
-func init(enemy_scenes: Array[PackedScene]) -> void:
+var enemy_scenes: Array[PackedScene] = [
+	preload("res://Scenes/Enemies/enemy_slow_chaser.tscn"),
+	preload("res://Scenes/Enemies/enemy_slow_shooter.tscn"),
+	preload("res://Scenes/Enemies/enemy_tank.tscn"),
+	preload("res://Scenes/Enemies/enemy_dasher.tscn")
+]
+
+
+
+func _ready() -> void:
 	enemy_data_list.clear()
 	
 	for scene in enemy_scenes:
