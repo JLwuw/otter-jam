@@ -2,8 +2,6 @@ class_name Hazard
 extends StaticBody2D
 
 @export var damage: int = 8
-@export var slow_amount: float = 0.95
-@export var slow_duration: float = 0.5
 @export var landed_texture: Texture2D
 @export var destroy_particles_scene: PackedScene
 @export var lifetime: float = 4.0
@@ -70,7 +68,6 @@ func _ready() -> void:
 	if landed_collision_shape != null:
 		landed_collision_shape.disabled = true
 	lifetime_remaining = lifetime
-	$Sprite2D.self_modulate = Color(0.9, 0.1, 0.1)
 	current_health = health
 	set_process(true)
 
@@ -104,11 +101,8 @@ func _process(delta: float) -> void:
 			_apply_landed_state()
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		body.take_damage(damage)
-		body.apply_slow(slow_amount, slow_duration)
-		# Remove hazard after hitting
-		queue_free()
+	# Player damage is handled via PlayerDetector.
+	return
 
 func _on_player_detector_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
@@ -117,8 +111,6 @@ func _on_player_detector_body_entered(body: Node) -> void:
 			body.call("take_damage", damage)
 		if body.has_method("apply_slow"):
 			body.call("apply_slow", slow_amount, slow_duration)
-		body.take_damage(damage)
-		body.apply_slow(slow_amount, slow_duration)
 		# Remove hazard after hitting
 		_destroy_hazard()
 

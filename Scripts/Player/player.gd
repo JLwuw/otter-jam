@@ -23,9 +23,24 @@ var has_direction: bool = false
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
 @export var bullet_speed: float = 1000
 @export var bullet_spawn_offset: float = 28.0
+@export var muzzle_lateral_offset: float = 10.0
+@export var left_muzzle_path: NodePath = NodePath("MuzzleLeft")
+@export var right_muzzle_path: NodePath = NodePath("MuzzleRight")
 @export var min_fire_rate: float = 0.8 
 @export var max_fire_rate: float = 6
 @export var fire_rate_curve: Curve
+
+@export_category("Animation")
+@export var move_speed_threshold: float = 120.0
+@export var idle_speed_threshold: float = 8.0
+@export var low_speed_animation: StringName = &"start"
+@export var high_speed_animation: StringName = &"walk"
+@export var gun_idle_animation: StringName = &"idle"
+@export var gun_shoot_animation: StringName = &"fire"
+@export var gun_shoot_animation_speed: float = 1.6
+@export var shoot_anim_hold_time: float = 0.12
+@export var gun_aim_turn_speed: float = 14.0
+@export var gun_aim_offset_degrees: float = 0.0
 
 var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
@@ -35,7 +50,11 @@ var max_speed_sq: float = 0.0
 var speed_cap_inv: float = 0.0
 @onready var current_scene_root: Node = get_tree().current_scene
 var bullet_pool: Node
-@onready var sprite: Sprite2D = $Sprite2D
+var left_muzzle: Node2D
+var right_muzzle: Node2D
+@onready var animated_otter: AnimatedSprite2D = $AnimatedOtter
+@onready var animated_gun: AnimatedSprite2D = $AnimatedGun
+var shoot_anim_timer: float = 0.0
 
 # Para progress bar en UI
 signal health_changed(current: int)
@@ -48,6 +67,10 @@ func _ready() -> void:
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
 	bullet_pool = current_scene_root.get_node_or_null("BulletPool")
+	left_muzzle = get_node_or_null(left_muzzle_path) as Node2D
+	right_muzzle = get_node_or_null(right_muzzle_path) as Node2D
+	_set_otter_idle_pose()
+	_play_if_valid(animated_gun, gun_idle_animation)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
@@ -75,6 +98,61 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
 	handle_shooting(delta)
+	if shoot_anim_timer > 0.0:
+		shoot_anim_timer -= delta
+	update_animation_state()
+	update_gun_aim(delta)
+
+func update_animation_state() -> void:
+	if animated_otter != null:
+		var current_speed: float = velocity.length()
+		if current_speed <= idle_speed_threshold:
+			_set_otter_idle_pose()
+		elif current_speed >= move_speed_threshold:
+			_play_if_valid(animated_otter, high_speed_animation)
+		else:
+			_play_if_valid(animated_otter, low_speed_animation)
+
+	if animated_gun == null:
+		return
+
+	if shoot_anim_timer > 0.0:
+		animated_gun.speed_scale = gun_shoot_animation_speed
+		_play_if_valid(animated_gun, gun_shoot_animation)
+	else:
+		animated_gun.speed_scale = 1.0
+		_play_if_valid(animated_gun, gun_idle_animation)
+
+func _set_otter_idle_pose() -> void:
+	if animated_otter == null or animated_otter.sprite_frames == null:
+		return
+	if not animated_otter.sprite_frames.has_animation(low_speed_animation):
+		return
+	if animated_otter.animation != low_speed_animation:
+		animated_otter.play(low_speed_animation)
+	animated_otter.frame = 0
+	animated_otter.pause()
+
+func update_gun_aim(delta: float) -> void:
+	if animated_gun == null:
+		return
+
+	if Input.is_action_pressed("leftClick"):
+		var to_mouse: Vector2 = get_global_mouse_position() - animated_gun.global_position
+		if to_mouse.length_squared() > 0.001:
+			var target_rotation: float = to_mouse.angle() + deg_to_rad(gun_aim_offset_degrees)
+			animated_gun.global_rotation = lerp_angle(animated_gun.global_rotation, target_rotation, gun_aim_turn_speed * delta)
+	else:
+		animated_gun.rotation = lerp_angle(animated_gun.rotation, 0.0, gun_aim_turn_speed * delta)
+
+func _play_if_valid(target: AnimatedSprite2D, animation_name: StringName) -> void:
+	if target == null or target.sprite_frames == null:
+		return
+	if not target.sprite_frames.has_animation(animation_name):
+		return
+	if target.animation == animation_name and target.is_playing():
+		return
+	target.play(animation_name)
 
 func update_invuln_timer(delta: float) -> void:
 	if invuln_timer > 0.0:
@@ -83,7 +161,8 @@ func update_invuln_timer(delta: float) -> void:
 		is_invuln = false
 		set_collision_layer_value(1, true)
 		set_collision_mask_value(2, true)
-		sprite.self_modulate = Color(1, 1, 1)
+		if animated_otter != null:
+			animated_otter.self_modulate = Color(1, 1, 1)
 
 
 func handle_rink_contacts() -> void:
@@ -122,6 +201,7 @@ func handle_shooting(delta: float) -> void:
 
 	if shoot_timer <= 0.0:
 		shoot()
+		shoot_anim_timer = shoot_anim_hold_time
 		var current_speed: float = velocity.length()
 		shoot_timer = calc_shoot_cooldown(current_speed)
 	
@@ -141,15 +221,30 @@ func shoot() -> void:
 
 	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
 	var rotation_to_mouse: float = (get_global_mouse_position() - global_position).angle()
-	var spawn_position: Vector2 = global_position + direction * bullet_spawn_offset
 	var effective_bullet_speed: float = bullet_speed + max(0.0, velocity.dot(direction))
-	
+	for spawn_position in _get_bullet_spawn_positions(direction):
+		_spawn_bullet(spawn_position, direction, effective_bullet_speed, rotation_to_mouse)
+
+func _get_bullet_spawn_positions(direction: Vector2) -> Array[Vector2]:
+	var positions: Array[Vector2] = []
+
+	if left_muzzle != null and right_muzzle != null:
+		positions.append(left_muzzle.global_position)
+		positions.append(right_muzzle.global_position)
+		return positions
+
+	var forward_position: Vector2 = global_position + direction * bullet_spawn_offset
+	var side: Vector2 = direction.orthogonal().normalized() * muzzle_lateral_offset
+	positions.append(forward_position - side)
+	positions.append(forward_position + side)
+	return positions
+
+func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet_speed: float, rotation_to_mouse: float) -> void:
 	if bullet_pool != null and bullet_pool.has_method("get_bullet"):
 		bullet_pool.call("get_bullet", Bullet.Team.PLAYER, spawn_position, direction, effective_bullet_speed, rotation_to_mouse, bullet_scene)
 		return
 
 	var bullet: Bullet = bullet_scene.instantiate()
-
 	bullet.team = Bullet.Team.PLAYER
 	bullet.global_position = spawn_position
 	bullet.direction = direction
@@ -166,7 +261,8 @@ func take_damage(amount: int = 1) -> void:
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(2, false)
-	sprite.self_modulate = Color()
+	if animated_otter != null:
+		animated_otter.self_modulate = Color(1.0, 1.0, 1.0, 0.6)
 	is_invuln = true
 		
 func die() -> void:

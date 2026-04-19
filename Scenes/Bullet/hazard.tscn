@@ -44,7 +44,6 @@ disabled = true
 
 [node name="PlayerDetector" type="Area2D" parent="." unique_id=648877515]
 collision_layer = 0
-collision_mask = 1
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerDetector" unique_id=1594763233]
 scale = Vector2(1.2, 1.2)
