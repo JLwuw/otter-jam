@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bttw28xgext45"]
 
 [ext_resource type="Script" uid="uid://c6apsrrec6tji" path="res://Scripts/Player/player.gd" id="1_a3d8c"]
+[ext_resource type="PackedScene" uid="uid://ca4gbky704gq8" path="res://Scenes/UI/lvup.tscn" id="2_06tpx"]
 [ext_resource type="Curve" uid="uid://db2wsu2s0lwdt" path="res://Resources/Player/fire_rate_curve.tres" id="2_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="4_htcer"]
 [ext_resource type="Script" uid="uid://c6gp2f533dpeb" path="res://Scripts/Player/ice_emitter.gd" id="5_dd0ac"]
@@ -11,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://tq1ewnmf1b4h" path="res://Graphics/Otter/NutriaIntercaladoFinal.png" id="8_jlvik"]
 [ext_resource type="Texture2D" uid="uid://bhi4uqf1ydrp" path="res://Graphics/Otter/GunFinal.png" id="10_oikmp"]
 [ext_resource type="Script" uid="uid://ej1xphc4v2ig" path="res://Scripts/Player/upgrade_manager.gd" id="11_74mp2"]
-[ext_resource type="Script" uid="uid://betcfc8eype1d" path="res://Scripts/Player/upgrade.gd" id="12_06tpx"]
 [ext_resource type="Resource" uid="uid://cc520ind8t6m5" path="res://Resources/Upgrades/upgrade_max_speed.tres" id="17_ks1b7"]
 
 [sub_resource type="Curve" id="Curve_jlvik"]
@@ -420,6 +420,7 @@ drag = 0.25
 turn_speed = 3.0
 rotation_offset_degrees = 90.0
 move_hold_delay = 0.3
+level_up_particles_scene = ExtResource("2_06tpx")
 bullet_speed = 1200.0
 left_muzzle_path = NodePath("AnimatedGun/MuzzleLeft")
 right_muzzle_path = NodePath("AnimatedGun/MuzzleRight")

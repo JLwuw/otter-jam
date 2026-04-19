@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ccx851aiheqwn"]
 
 [ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="1_55ea6"]
+[ext_resource type="Texture2D" uid="uid://ckfn0hqcrigar" path="res://Graphics/minfects.png" id="2_p2lie"]
 
 [sub_resource type="Gradient" id="Gradient_p2lie"]
 colors = PackedColorArray(1, 0, 0.42745098, 1, 1, 0, 0.42745098, 0.2509804)
@@ -24,6 +25,32 @@ color_ramp = SubResource("GradientTexture1D_jq2xs")
 hue_variation_min = -0.030000022
 hue_variation_max = 0.029999977
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq2xs"]
+atlas = ExtResource("2_p2lie")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="Gradient" id="Gradient_hw61q"]
+offsets = PackedFloat32Array(0.647541, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2nfby"]
+gradient = SubResource("Gradient_hw61q")
+
+[sub_resource type="Curve" id="Curve_001eb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.13109577), -3.1101391, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mbn6b"]
+curve = SubResource("Curve_001eb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y7s82"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -20, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_mbn6b")
+color_ramp = SubResource("GradientTexture1D_2nfby")
+
 [node name="Death" type="GPUParticles2D" unique_id=330134423]
 z_index = -2
 emitting = false
@@ -33,3 +60,14 @@ lifetime = 7.5
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_g0tbx")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1072507419]
+z_index = 6
+texture_filter = 1
+scale = Vector2(10, 10)
+emitting = false
+amount = 1
+texture = SubResource("AtlasTexture_jq2xs")
+lifetime = 1.39
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_y7s82")
