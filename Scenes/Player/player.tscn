@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c6apsrrec6tji" path="res://Scripts/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="PackedScene" uid="uid://ca4gbky704gq8" path="res://Scenes/UI/lvup.tscn" id="2_06tpx"]
 [ext_resource type="Curve" uid="uid://db2wsu2s0lwdt" path="res://Resources/Player/fire_rate_curve.tres" id="2_xpcdj"]
+[ext_resource type="Curve" uid="uid://45ykhry8jxt5" path="res://Resources/Player/xp_curve.tres" id="4_7g0yx"]
 [ext_resource type="Texture2D" uid="uid://8venrhk2w7qu" path="res://Graphics/star.png" id="4_htcer"]
 [ext_resource type="Script" uid="uid://c6gp2f533dpeb" path="res://Scripts/Player/ice_emitter.gd" id="5_dd0ac"]
 [ext_resource type="Script" uid="uid://bxx4xqct8sv0b" path="res://Scripts/Camera/camera_2d_2.gd" id="6_dd0ac"]
@@ -430,7 +431,10 @@ fire_rate_curve = ExtResource("2_xpcdj")
 move_speed_threshold = 400.0
 gun_shoot_animation_speed = 4.0
 gun_aim_offset_degrees = 90.0
+xp_curve = ExtResource("4_7g0yx")
 level_cap = 100
+xp_growth_factor = 3.0
+combo_weight = 0.5
 
 [node name="Line2D2" type="Line2D" parent="." unique_id=1120057671]
 show_behind_parent = true

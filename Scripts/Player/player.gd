@@ -19,6 +19,8 @@ var has_direction: bool = false
 @export var max_health: int = 5
 @export var invuln_time: float = 0.3
 @export var base_fire_rate: float = 0.5
+@export var health_regen_interval: float = 20.0
+@onready var health_regen_timer: float = health_regen_interval
 
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
@@ -37,7 +39,6 @@ var has_direction: bool = false
 @export var burst_shot_interval: float = 0.045
 @export var fire_rate_curve: Curve
 @export var damage: int = 1
-
 
 @export_category("Animation")
 @export var move_speed_threshold: float = 120.0
@@ -143,18 +144,32 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:	
 	update_animation_state()
 	update_invuln_timer(delta)
+	update_regen_timer(delta)
 	
 	if !is_dead:
 		_update_shoot_cooldown(delta)
 		if shoot_anim_timer > 0.0:
 			shoot_anim_timer -= delta
 		update_gun_aim(delta)
-	_update_shoot_cooldown(delta)
-	border_hit_cooldown -= delta
-	if shoot_anim_timer > 0.0:
-		shoot_anim_timer -= delta
-	update_animation_state()
-	update_gun_aim(delta)
+		_update_shoot_cooldown(delta)
+		border_hit_cooldown -= delta
+		if shoot_anim_timer > 0.0:
+			shoot_anim_timer -= delta
+		update_animation_state()
+		update_gun_aim(delta)
+		
+
+func update_regen_timer(delta: float) -> void:
+	if health_regen_timer > 0:
+		health_regen_timer -= delta
+		
+		if health_regen_timer <= 0:
+			heal(1)
+			health_regen_timer = health_regen_interval
+
+func heal(amount: int = 1) -> void:
+	current_health = max(max_health, current_health + amount)
+	health_changed.emit(current_health, max_health)
 
 func update_animation_state() -> void:
 	if is_dead:
