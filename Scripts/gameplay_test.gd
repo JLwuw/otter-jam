@@ -1,12 +1,5 @@
 extends Node2D
 
-var enemy_scenes: Array[PackedScene] = [
-	preload("res://Scenes/Enemies/enemy_slow_chaser.tscn"),
-	preload("res://Scenes/Enemies/enemy_slow_shooter.tscn"),
-	preload("res://Scenes/Enemies/enemy_tank.tscn"),
-	preload("res://Scenes/Enemies/enemy_dasher.tscn")
-]
-
 @export var label_update_interval: float = 0.01
 @export_category("Speed FX")
 @export var speed_fx_max_speed: float = 750.0
@@ -14,17 +7,20 @@ var enemy_scenes: Array[PackedScene] = [
 @export var speed_fx_lerp_speed: float = 6.0
 var label_update_timer: float = 0.01
 
+# Debug UI
 @onready var fps_label: Label = $DebugUI/FPSLabel
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
-@onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
 @onready var level_label: Label = $DebugUI/LevelLabel
 @onready var xp_label: Label = $DebugUI/XPLabel
 @onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
 
+# UI
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var xp_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/XPBar
-@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/VBoxContainer/LvlNum
+@onready var life_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/LifeLbl
+@onready var xp_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/XPLbl
+@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/LvlCol/LvlNum
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
 @onready var combo_meter_label: Label = $UI/RootUI/ComboMeter/ComboLabel
@@ -35,13 +31,52 @@ var shake_timer: float = 0.0
 var shake_target: Control = null  # ← nuevo
 @onready var speedometer_node: Control = $UI/RootUI/Speedometer
 
+# Game Over Screen
+@onready var game_over_screen: CanvasLayer = $GameOverScreen
+@onready var game_over_score_label: Label = $GameOverScreen/ScoreLabel
+
+@export var enemy_spawner_scene: PackedScene = preload("res://Scenes/enemy_spawner.tscn")
+@onready var current_scene_root: Node = get_tree().current_scene
+
+# Pause Screen
+@onready var pause_menu: CanvasLayer = $PauseMenu
+
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
 var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
-	EnemyDB.init(enemy_scenes)
+	AudioController.stop_music()
+	AudioController.play_music()
+	ScoreManager.reset()
+	ScoreManager.is_active = true
+
+	match ScoreManager.difficulty_selected:
+		ScoreManager.Difficulty.EASY:
+			print("Easy Mode!")
+			
+		ScoreManager.Difficulty.MEDIUM:
+			print("Medium Mode!")
+			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner.player = $Player
+			enemy_spawner.rink = $Rink
+			enemy_spawner.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner)
+			
+		ScoreManager.Difficulty.HARD:
+			print("Hard Mode!")
+			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner.player = $Player
+			enemy_spawner.rink = $Rink
+			enemy_spawner.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner)
+			var enemy_spawner2: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner2.player = $Player
+			enemy_spawner2.rink = $Rink
+			enemy_spawner2.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner2)
+
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
 
@@ -54,11 +89,24 @@ func _ready() -> void:
 		player.xp_changed.connect(_on_player_xp_changed)
 		xp_bar.max_value = player.xp_for_next_level
 		xp_bar.value = player.current_xp
+		
+	life_lbl.text = "%d/%d" % [player.current_health, player.max_health]
+	xp_lbl.text = "%d/%d" % [player.current_xp, player.xp_for_next_level]
 	
 	player.level_up.connect(_on_player_level_up)
 	lvl_label.text = str(player.current_level)
 	
 	player.damaged.connect(_on_player_damaged)
+	
+	game_over_screen.hide()
+	$GameOverScreen/BtnsCol/RetryBtn.pressed.connect(_on_play_again_pressed)
+	player.died.connect(_on_player_died)
+	$GameOverScreen/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
+	
+	pause_menu.hide()
+	$PauseMenu/BtnsCol/ContinueBtn.pressed.connect(toggle_pause)
+	$PauseMenu/BtnsCol/RestartBtn.pressed.connect(_on_play_again_pressed)
+	$PauseMenu/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -89,10 +137,7 @@ func _process(delta: float) -> void:
 	var combo: int = ScoreManager.combo
 	combo_label.text = "Combo: %.0f" % combo
 	combo_meter_label.text = "x%d" % combo  			# UI
-	
-	var combo_timer: float = ScoreManager.combo_timer
-	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
-	combo_timer_bar.value = combo_timer					# UI
+	combo_timer_bar.value = ScoreManager.combo_timer
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level
@@ -108,6 +153,18 @@ func _process(delta: float) -> void:
 	update_speedometer()
 	
 	process_shake(delta)
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):  # ESC por defecto
+		toggle_pause()
+		
+func toggle_pause() -> void:
+	var paused: bool = not get_tree().paused
+	get_tree().paused = paused
+	if paused:
+		pause_menu.show()
+	else:
+		pause_menu.hide()
 
 func update_speed_fx(delta: float) -> void:
 	if speed_fx_material == null or player == null:
@@ -132,8 +189,9 @@ func update_speed_fx(delta: float) -> void:
 	
 # UI
 func _on_player_health_changed(current: int, max_health: int) -> void:
-	life_bar.value = current
 	life_bar.max_value = max_health
+	life_bar.value = current
+	life_lbl.text = "%d/%d" % [current, max_health]
 	
 func _on_player_damaged() -> void:
 	start_shake($UI/RootUI/PlayerInfo, 0.4, 6.0)
@@ -141,6 +199,7 @@ func _on_player_damaged() -> void:
 func _on_player_xp_changed(current: int, max_xp: int) -> void:
 	xp_bar.value = current
 	xp_bar.max_value = max_xp
+	xp_lbl.text = "%d/%d" % [current, max_xp]
 	
 func _on_player_level_up(level: int) -> void:
 	lvl_label.text = str(level)
@@ -182,3 +241,24 @@ func update_speedometer() -> void:
 			if shake_timer <= 0:  # Evitar activar shake constantemente
 				start_shake(speedometer_node, 0.3, 5.0)  # duración, intensidad
 				
+
+func _on_player_died() -> void:
+	game_over_score_label.text = "Score: %d" % ScoreManager.get_final_score()
+	await get_tree().create_timer(1.5).timeout
+	game_over_screen.show()
+
+	var overlay: ColorRect = $GameOverScreen/Overlay
+	var tween: Tween = create_tween()
+	tween.tween_property(overlay, "color:a", 0.92, 0.92)
+
+func _on_play_again_pressed() -> void:
+	AudioController.stop_all_sfx()
+	AudioController.stop_music()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
+	
+func _on_main_menu_pressed() -> void:
+	AudioController.stop_all_sfx()
+	AudioController.stop_music()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")  # ajusta el path

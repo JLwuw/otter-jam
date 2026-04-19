@@ -44,6 +44,7 @@ var has_direction: bool = false
 @export var idle_speed_threshold: float = 8.0
 @export var low_speed_animation: StringName = &"start"
 @export var high_speed_animation: StringName = &"walk"
+@export var death_animation: StringName = &"death"
 @export var gun_idle_animation: StringName = &"idle"
 @export var gun_shoot_animation: StringName = &"fire"
 @export var gun_shoot_animation_speed: float = 1.6
@@ -76,11 +77,16 @@ var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
 
+var is_dead: bool = false
+var played_dead_animation: bool = false
+var border_hit_cooldown: float = 0.0
+
 # Para UI
 signal health_changed(current: int, max: int)
 signal damaged
 signal xp_changed(current: int, max_xp: int)
 signal level_up(level: int)
+signal died
 
 func _ready() -> void:
 	if SPEED_CAP > 0.0:
@@ -95,10 +101,17 @@ func _ready() -> void:
 	_initialize_leveling()
 
 func _input(event: InputEvent) -> void:
+	if is_dead: return
+	
 	if event.is_action_pressed("leftClick"):
 		_try_shoot_on_click()
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		velocity *= 0.8
+		move_and_slide()
+		return
+	
 	if Input.is_action_pressed("leftClick"):
 		move_hold_timer += delta
 		if move_hold_timer >= move_hold_delay:
@@ -120,18 +133,30 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.normalized() * max_speed 
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
+	AudioController.play_player_movement()
 	move_and_slide()
 	handle_rink_contacts()
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void:	
+	update_animation_state()
 	update_invuln_timer(delta)
+	
+	if !is_dead:
+		_update_shoot_cooldown(delta)
+		if shoot_anim_timer > 0.0:
+			shoot_anim_timer -= delta
+		update_gun_aim(delta)
 	_update_shoot_cooldown(delta)
+	border_hit_cooldown -= delta
 	if shoot_anim_timer > 0.0:
 		shoot_anim_timer -= delta
 	update_animation_state()
 	update_gun_aim(delta)
 
 func update_animation_state() -> void:
+	if is_dead:
+		return
+
 	if animated_otter != null:
 		var current_speed: float = velocity.length()
 		if current_speed <= idle_speed_threshold:
@@ -195,6 +220,7 @@ func update_invuln_timer(delta: float) -> void:
 
 func handle_rink_contacts() -> void:
 	var collision_count: int = get_slide_collision_count()
+	
 	if collision_count <= 0:
 		return
 
@@ -217,7 +243,9 @@ func handle_rink_contacts() -> void:
 
 		if rink == null:
 			continue
-
+		if border_hit_cooldown <= 0.0:
+			AudioController.play_border_hit()
+			border_hit_cooldown = 0.5
 		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), current_speed)
 
 
@@ -275,6 +303,7 @@ func shoot() -> void:
 	var effective_bullet_speed: float = bullet_speed + max(0.0, velocity.dot(direction))
 	for spawn_position in _get_bullet_spawn_positions(direction):
 		_spawn_bullet(spawn_position, direction, effective_bullet_speed, rotation_to_mouse)
+	AudioController.play_shoot()
 
 func _get_bullet_spawn_positions(direction: Vector2) -> Array[Vector2]:
 	var positions: Array[Vector2] = []
@@ -305,11 +334,15 @@ func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet
 	current_scene_root.add_child(bullet)
 
 func take_damage(amount: int = 1) -> void:
+	if is_dead:
+		return
+	
 	if invuln_timer > 0: return
 	print("Taking damage!")
 	current_health -= amount
 	health_changed.emit(current_health, max_health)  # UI
-	damaged.emit()									# UI
+	damaged.emit()			# UI
+	AudioController.play_health_loss()		
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)
@@ -317,8 +350,18 @@ func take_damage(amount: int = 1) -> void:
 	if animated_otter != null:
 		animated_otter.self_modulate = Color(1.0, 1.0, 1.0, 0.6)
 	is_invuln = true
+	$Camera2D.current_shake = 20
 		
 func die() -> void:
+	if is_dead: return
+	is_dead = true
+	animated_otter.play(death_animation)
+	died.emit()
+	ScoreManager.is_active = false
+	$EnemyDetector.monitorable = false
+	$EnemyDetector.monitoring = false
+	set_collision_layer_value(1,  false)
+	
 	print("ggwp")
 
 func apply_slow(slow_amount: float, slow_duration: float) -> void:
@@ -406,6 +449,7 @@ func _level_up() -> void:
 	current_level += 1
 	_update_xp_requirement()
 	
+	xp_changed.emit(current_xp, xp_for_next_level)
 	level_up.emit(current_level)
 	_play_level_up_particles()
 	
@@ -442,7 +486,7 @@ func upgrade_max_hp(amount: int, index: int = 0) -> void:
 	_spawn_upgrade_popup("MAX HP", amount, index)
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
-	health_changed.emit(max_health, max_health)
+	health_changed.emit(current_health, max_health)	
 
 func upgrade_bullet_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Bullet Speed!")

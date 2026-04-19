@@ -20,14 +20,15 @@ script = ExtResource("1_p3fck")
 
 [node name="Placeholder Icon" type="Label" parent="." unique_id=1774034061]
 layout_mode = 0
-offset_left = 210.0
+offset_left = 165.0
 offset_top = 111.0
-offset_right = 422.0
+offset_right = 377.0
 offset_bottom = 177.0
 text = "OTTER JAM"
 label_settings = SubResource("LabelSettings_twnyg")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1132915500]
+visible = false
 layout_mode = 0
 offset_left = 111.0
 offset_top = 114.0
@@ -55,7 +56,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_4gxqj")
 theme_override_font_sizes/font_size = 25
-text = "How to Play"
+text = "How to play"
 
 [node name="QuitBtn" type="Button" parent="BtnsCol" unique_id=715132463]
 layout_mode = 2
@@ -65,6 +66,7 @@ theme_override_font_sizes/font_size = 25
 text = "Quit"
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
+visible = false
 
 [node name="Overlay" type="ColorRect" parent="TutorialPopUp" unique_id=1986860957]
 offset_left = -36.0

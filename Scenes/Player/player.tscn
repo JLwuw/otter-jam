@@ -243,9 +243,9 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_fcwna")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 0.5,
@@ -286,7 +286,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"start",
-"speed": 5.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 0.5,
@@ -327,7 +327,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 14.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v37cr"]
@@ -484,8 +484,7 @@ z_index = 2
 texture_filter = 1
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_h8ma5")
-animation = &"walk"
-frame_progress = 0.60390997
+animation = &"death"
 
 [node name="AnimatedGun" type="AnimatedSprite2D" parent="." unique_id=1882997915]
 z_index = 3

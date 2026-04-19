@@ -6,11 +6,14 @@ extends Node2D
 @export var speed_fx_lerp_speed: float = 6.0
 
 @onready var player: Player = $Player as Player
-@onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
+var speed_fx_rect: ColorRect
 var speed_fx_material: ShaderMaterial
 var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
+	speed_fx_rect = get_node_or_null("SpeedFX/SpeedFXRect") as ColorRect
+	AudioController.stop_all_sfx()
+	AudioController.play_selection_music()
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
 
@@ -39,22 +42,18 @@ func update_speed_fx(delta: float) -> void:
 		speed_fx_material.set_shader_parameter("velocity_dir", player.velocity.normalized())
 
 func select_difficulty(difficulty: String) -> void:
-	match difficulty:
-		#"easy":
-			#GameSettings.difficulty = "easy"	# ajusta a tu sistema
-		#"normal":
-			#GameSettings.difficulty = "normal"
-		#"hard":
-			#GameSettings.difficulty = "hard"
-			
-		"easy":							# PLACEHOLDERS !!
-			print("set to easy")
+	match difficulty:			
+		"easy":
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.EASY
 		"normal":
-			print("set to normal")
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.MEDIUM
 		"hard":
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.HARD
+	
 			print("set to hard")
+	AudioController.stop_all_sfx()
+	await AudioController.fade_out_music()
 	get_tree().change_scene_to_file("res://Scenes/gameplay_test.tscn")
-
 
 func _on_easy_zone_body_entered(body: Node2D) -> void:
 	if body is Player:
