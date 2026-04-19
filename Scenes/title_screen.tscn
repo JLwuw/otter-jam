@@ -5,6 +5,10 @@
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_4gxqj"]
 [ext_resource type="Texture2D" uid="uid://jft2gsfi3yya" path="res://Graphics/UI/Ulti Box.png" id="4_twnyg"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_twnyg"]
+font = ExtResource("3_4gxqj")
+font_size = 60
+
 [node name="TitleScreen" type="Control" unique_id=502329976]
 layout_mode = 3
 anchors_preset = 15
@@ -14,12 +18,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p3fck")
 
+[node name="Placeholder Icon" type="Label" parent="." unique_id=1774034061]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 111.0
+offset_right = 422.0
+offset_bottom = 177.0
+text = "OTTER JAM"
+label_settings = SubResource("LabelSettings_twnyg")
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1132915500]
 layout_mode = 0
-offset_left = 161.0
-offset_top = 113.0
-offset_right = 244.0
-offset_bottom = 181.0
+offset_left = 111.0
+offset_top = 114.0
+offset_right = 194.0
+offset_bottom = 182.0
 texture = ExtResource("1_klylv")
 
 [node name="BtnsCol" type="VBoxContainer" parent="." unique_id=1900655575]
@@ -52,6 +65,7 @@ theme_override_font_sizes/font_size = 25
 text = "Quit"
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
+visible = false
 
 [node name="Overlay" type="ColorRect" parent="TutorialPopUp" unique_id=1986860957]
 offset_left = -36.0
