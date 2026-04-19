@@ -75,8 +75,9 @@ func _ready() -> void:
 	player.damaged.connect(_on_player_damaged)
 	
 	game_over_screen.hide()
-	$GameOverScreen/BtnsCol/PlayBtn.pressed.connect(_on_play_again_pressed)
-	# player.died.connect(_on_player_died)
+	$GameOverScreen/BtnsCol/RetryBtn.pressed.connect(_on_play_again_pressed)
+	player.died.connect(_on_player_died)
+	$GameOverScreen/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -200,8 +201,16 @@ func update_speedometer() -> void:
 				
 
 func _on_player_died() -> void:
-	game_over_screen.show()
 	game_over_score_label.text = "Score: %d" % ScoreManager.get_final_score()
+	await get_tree().create_timer(1.5).timeout
+	game_over_screen.show()
+
+	var overlay: ColorRect = $GameOverScreen/Overlay
+	var tween: Tween = create_tween()
+	tween.tween_property(overlay, "color:a", 0.8, 0.8)
 
 func _on_play_again_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/GameplayTest/gameplay_test.tscn")  # ajusta el path
+	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
+	
+func _on_main_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")

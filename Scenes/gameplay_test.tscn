@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
@@ -361,12 +361,12 @@ text = "XP Required: --"
 
 [node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=921391486]
 
-[node name="ColorRect" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
+[node name="Overlay" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
 offset_left = -12.0
 offset_top = -9.0
 offset_right = 976.0
 offset_bottom = 556.0
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0)
 
 [node name="GameOverText" type="RichTextLabel" parent="GameOverScreen" unique_id=429451329]
 anchors_preset = 5
@@ -417,14 +417,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 11
 
-[node name="PlayBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1516135890]
+[node name="RetryBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1516135890]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("21_1b3g2")
 theme_override_font_sizes/font_size = 25
 text = "Retry"
 
-[node name="QuitBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1019591651]
+[node name="MainMenuBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1019591651]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("21_1b3g2")
