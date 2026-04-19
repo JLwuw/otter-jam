@@ -60,5 +60,5 @@ pitch_scale = 1.16
 
 [node name="BorderHit" type="AudioStreamPlayer" parent="." unique_id=1248319710]
 stream = ExtResource("9_fiq3r")
-volume_db = -0.732
+volume_db = -0.506
 pitch_scale = 2.58

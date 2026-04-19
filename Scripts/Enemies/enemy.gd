@@ -32,13 +32,17 @@ func _ready() -> void:
 func take_damage(amount: int) -> void:
 	emit_signal("damaged", amount)
 	current_health -= amount
+	if AudioController != null:
+		AudioController.play_enemy_hit()
 	if current_health <= 0:
 		die()
+	
 
 func die() -> void:
 	if is_dying:
 		return
-
+	if AudioController != null:
+		AudioController.play_enemy_death()
 	is_dying = true
 	emit_signal("died", toughness)
 	_disable_dash_behavior()

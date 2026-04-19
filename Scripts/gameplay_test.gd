@@ -14,6 +14,7 @@ var enemy_scenes: Array[PackedScene] = [
 @export var speed_fx_lerp_speed: float = 6.0
 var label_update_timer: float = 0.01
 
+# Debug UI
 @onready var fps_label: Label = $DebugUI/FPSLabel
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
@@ -21,6 +22,7 @@ var label_update_timer: float = 0.01
 @onready var xp_label: Label = $DebugUI/XPLabel
 @onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
 
+# UI
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var xp_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/XPBar
 @onready var life_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/LifeLbl
@@ -36,6 +38,10 @@ var shake_timer: float = 0.0
 var shake_target: Control = null  # ← nuevo
 @onready var speedometer_node: Control = $UI/RootUI/Speedometer
 
+# Game Over Screen
+@onready var game_over_screen: CanvasLayer = $GameOverScreen
+@onready var game_over_score_label: Label = $GameOverScreen/ScoreLabel
+
 @export var enemy_spawner_scene: PackedScene = preload("res://Scenes/enemy_spawner.tscn")
 @onready var current_scene_root: Node = get_tree().current_scene
 
@@ -45,6 +51,8 @@ var speed_fx_material: ShaderMaterial
 var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
+	AudioController.stop_music()
+	AudioController.play_music()
 	EnemyDB.init(enemy_scenes)
 	ScoreManager.is_active = true
 	
@@ -93,6 +101,11 @@ func _ready() -> void:
 	lvl_label.text = str(player.current_level)
 	
 	player.damaged.connect(_on_player_damaged)
+	
+	game_over_screen.hide()
+	$GameOverScreen/BtnsCol/RetryBtn.pressed.connect(_on_play_again_pressed)
+	player.died.connect(_on_player_died)
+	$GameOverScreen/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -214,3 +227,18 @@ func update_speedometer() -> void:
 			if shake_timer <= 0:  # Evitar activar shake constantemente
 				start_shake(speedometer_node, 0.3, 5.0)  # duración, intensidad
 				
+
+func _on_player_died() -> void:
+	game_over_score_label.text = "Score: %d" % ScoreManager.get_final_score()
+	await get_tree().create_timer(1.5).timeout
+	game_over_screen.show()
+
+	var overlay: ColorRect = $GameOverScreen/Overlay
+	var tween: Tween = create_tween()
+	tween.tween_property(overlay, "color:a", 0.8, 0.8)
+
+func _on_play_again_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
+	
+func _on_main_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
