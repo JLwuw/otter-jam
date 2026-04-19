@@ -55,7 +55,10 @@ color_ramp = SubResource("GradientTexture1D_jlvik")
 turbulence_enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
-radius = 19.0
+radius = 21.540659
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detector"]
+radius = 21.540659
 
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
 collision_mask = 30
@@ -123,3 +126,13 @@ texture = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1340601154]
 shape = SubResource("CircleShape2D_a3d8c")
+
+[node name="EnemyDetector" type="Area2D" parent="." unique_id=-1744152540]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector" unique_id=-1744152539]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CircleShape2D_detector")
+
+[connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]

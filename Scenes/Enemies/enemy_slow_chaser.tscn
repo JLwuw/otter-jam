@@ -14,7 +14,6 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 31
 script = ExtResource("1_ul00a")
-unlock_time = 60
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=473309782]
 modulate = Color(0, 0, 1, 1)
@@ -22,6 +21,7 @@ scale = Vector2(0.16503906, 0.16503906)
 texture = ExtResource("2_kbahv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1374992332]
+scale = Vector2(1.3, 1.3)
 shape = SubResource("CircleShape2D_3pdns")
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=1006373814]
