@@ -1,94 +1,94 @@
-[gd_scene format=3 uid="uid://b6b00kju5pepw"]
+[gd_scene format=3 uid="uid://bppj37j5xbvk3"]
 
-[ext_resource type="Script" uid="uid://dq5sieg1rboe4" path="res://Scripts/Enemies/enemy_dasher.gd" id="1_jctw4"]
-[ext_resource type="Script" uid="uid://ctes2a87u5w4p" path="res://Scripts/Enemies/Components/component_dash.gd" id="3_2hggw"]
-[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="4_2hggw"]
-[ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="5_qowop"]
-[ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_gsudo"]
-[ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_0wcx7"]
-[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="8_anim"]
-[ext_resource type="Texture2D" uid="uid://yd6lcrkde2bn" path="res://Graphics/Enemies/PinguinoDash.png" id="8_gbk5u"]
-[ext_resource type="Texture2D" uid="uid://es620nbmeu4q" path="res://Graphics/Enemies/PinguinoDeath.png" id="9_cnj5c"]
-[ext_resource type="Texture2D" uid="uid://cxndlemenydcu" path="res://Graphics/Enemies/PinguinoCaminata.png" id="10_gbxm0"]
+[ext_resource type="Script" uid="uid://dq5sieg1rboe4" path="res://Scripts/Enemies/enemy_dasher.gd" id="1_0d5ce"]
+[ext_resource type="Script" uid="uid://ctes2a87u5w4p" path="res://Scripts/Enemies/Components/component_dash.gd" id="2_5kppm"]
+[ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="3_tc2g5"]
+[ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="4_w4qmf"]
+[ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="5_phw1o"]
+[ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_ssala"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="7_bu23o"]
+[ext_resource type="Texture2D" uid="uid://yd6lcrkde2bn" path="res://Graphics/Enemies/PinguinoDash.png" id="8_08k0k"]
+[ext_resource type="Texture2D" uid="uid://es620nbmeu4q" path="res://Graphics/Enemies/PinguinoDeath.png" id="9_00l2s"]
+[ext_resource type="Texture2D" uid="uid://cxndlemenydcu" path="res://Graphics/Enemies/PinguinoCaminata.png" id="10_sycfw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a72dd"]
-atlas = ExtResource("8_gbk5u")
+atlas = ExtResource("8_08k0k")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ule48"]
-atlas = ExtResource("8_gbk5u")
+atlas = ExtResource("8_08k0k")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iklwj"]
-atlas = ExtResource("8_gbk5u")
+atlas = ExtResource("8_08k0k")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhqw7"]
-atlas = ExtResource("8_gbk5u")
+atlas = ExtResource("8_08k0k")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d88pj"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vlaxg"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hh3m"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_luchg"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqqhm"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y2a5v"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i601r"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vvh47"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wqugo"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(512, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1dhq"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(576, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5b4p"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(640, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dhba"]
-atlas = ExtResource("9_cnj5c")
+atlas = ExtResource("9_00l2s")
 region = Rect2(704, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n65op"]
-atlas = ExtResource("10_gbxm0")
+atlas = ExtResource("10_sycfw")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_25na4"]
-atlas = ExtResource("10_gbxm0")
+atlas = ExtResource("10_sycfw")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_87a1s"]
-atlas = ExtResource("10_gbxm0")
+atlas = ExtResource("10_sycfw")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e7ljy"]
-atlas = ExtResource("10_gbxm0")
+atlas = ExtResource("10_sycfw")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kmddv"]
@@ -177,43 +177,44 @@ texture_filter = 1
 scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 31
-script = ExtResource("1_jctw4")
-max_health = 10
+script = ExtResource("1_0d5ce")
+max_health = 20
 toughness = 5
-unlock_time = 35
+unlock_time = 150
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=217337813]
 rect = Rect2(-53.666668, -53.66667, 107.333336, 107.33334)
 
 [node name="Dash Component" type="Node" parent="." unique_id=1786712199]
-script = ExtResource("3_2hggw")
-dash_speed = 900.0
+script = ExtResource("2_5kppm")
+dash_speed = 1000.0
 dash_duration = 0.5
-dash_trigger_distance = 350.0
 
 [node name="Sprite Rotation Component" type="Node" parent="." unique_id=1423879024]
-script = ExtResource("4_2hggw")
+script = ExtResource("3_tc2g5")
 rotation_offset_degrees = 270.0
 metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=1454679778]
-script = ExtResource("5_qowop")
+script = ExtResource("4_w4qmf")
 
 [node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=844876498]
-script = ExtResource("6_gsudo")
+script = ExtResource("5_phw1o")
 
 [node name="Enemy Death Impact Component" type="Node" parent="." unique_id=1579944941]
-script = ExtResource("7_0wcx7")
+script = ExtResource("6_ssala")
 
 [node name="Enemy Animation Component" type="Node" parent="." unique_id=1579944942]
-script = ExtResource("8_anim")
+script = ExtResource("7_bu23o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=361869112]
+modulate = Color(1, 0, 1, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_kmddv")
 animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1317588769]
+visible = false
 scale = Vector2(4, 4)
 shape = SubResource("CircleShape2D_kl1sk")
 

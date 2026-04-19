@@ -1,7 +1,7 @@
 extends Control
 
 @onready var tutorial_popup: CanvasLayer = $TutorialPopUp
-@onready var howto_btn: Button = $BtnsCol/HowtoPlayBtn
+@onready var howto_btn: TextureButton = $BtnsCol/HowtoPlayBtn
 @onready var close_btn: Button = $TutorialPopUp/Box/CloseBtn
 
 func _ready() -> void:

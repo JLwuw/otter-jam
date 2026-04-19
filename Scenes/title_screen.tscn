@@ -1,15 +1,31 @@
 [gd_scene format=3 uid="uid://bf2b4dypb3cy8"]
 
-[ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="1_klylv"]
 [ext_resource type="Script" uid="uid://btn5g1sil3bn7" path="res://Scripts/title_screen.gd" id="1_p3fck"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_4gxqj"]
+[ext_resource type="Texture2D" uid="uid://dcdhcdea5j63i" path="res://Graphics/Enemies/OsoPolarWalking.png" id="3_k1y01"]
+[ext_resource type="Texture2D" uid="uid://cx3cmskx8e2wx" path="res://Graphics/UI/Title BG.png" id="3_o1e67"]
+[ext_resource type="Texture2D" uid="uid://c5p5g6tjjegnh" path="res://Graphics/UI/red otter studios logo.png" id="3_ycay6"]
+[ext_resource type="Texture2D" uid="uid://yd6lcrkde2bn" path="res://Graphics/Enemies/PinguinoDash.png" id="4_4blwa"]
+[ext_resource type="Texture2D" uid="uid://juqvdg3f6p6d" path="res://Graphics/UI/Play Btn.png" id="4_0061g"]
 [ext_resource type="Texture2D" uid="uid://jft2gsfi3yya" path="res://Graphics/UI/Ulti Box.png" id="4_twnyg"]
+[ext_resource type="Texture2D" uid="uid://bobn7jue15qbp" path="res://Graphics/UI/How to play Btn.png" id="5_8mikk"]
+[ext_resource type="Texture2D" uid="uid://ber626twqrat7" path="res://Graphics/UI/Play Btn Pressed.png" id="5_o1e67"]
+[ext_resource type="Texture2D" uid="uid://bmbinrhal6l2" path="res://Graphics/Enemies/TurttleWalk.png" id="5_vqgqr"]
+[ext_resource type="Texture2D" uid="uid://bm2kwopxefe8o" path="res://Graphics/UI/How to play Btn Pressed.png" id="6_sqelc"]
+[ext_resource type="Texture2D" uid="uid://mc5k0x4c6h2d" path="res://Graphics/UI/Play Btn Hover.png" id="6_ycay6"]
+[ext_resource type="Texture2D" uid="uid://d2k57cnape1yi" path="res://Graphics/UI/How to play Btn Hover.png" id="7_w5sh6"]
+[ext_resource type="Texture2D" uid="uid://chl03n1uc6pmk" path="res://Graphics/UI/Quit Btn.png" id="8_o1e67"]
+[ext_resource type="Texture2D" uid="uid://cv2a1m17tvghe" path="res://Graphics/UI/Quit Btn Pressed.png" id="11_bsy20"]
+[ext_resource type="Texture2D" uid="uid://ic5m2wctfma8" path="res://Graphics/UI/Quit Btn Hover.png" id="12_07cxn"]
+[ext_resource type="Texture2D" uid="uid://dovvkpgh5gfry" path="res://Graphics/Otter/NutriFinal.png" id="15_bsy20"]
+[ext_resource type="Texture2D" uid="uid://f7i6duuyoug1" path="res://Graphics/UI/Tutorial BG.png" id="18_4blwa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_twnyg"]
 font = ExtResource("3_4gxqj")
 font_size = 60
 
 [node name="TitleScreen" type="Control" unique_id=502329976]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,82 +34,134 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p3fck")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1642418647]
+layout_mode = 0
+offset_left = 49.0
+offset_top = -33.0
+offset_right = 1000.0
+offset_bottom = 583.0
+color = Color(0.85490197, 0.92156863, 0.972549, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1281482079]
+position = Vector2(868, 460.00006)
+rotation = -0.3962185
+scale = Vector2(2.3111603, 2.3111603)
+texture = ExtResource("15_bsy20")
+region_enabled = true
+region_rect = Rect2(393.86942, 0, 43.645477, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1697758570]
+position = Vector2(867.99994, 144.99998)
+rotation = 3.330836
+scale = Vector2(1.794461, 1.794461)
+texture = ExtResource("3_k1y01")
+region_enabled = true
+region_rect = Rect2(393.86942, 0, 167.13058, 194)
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1836020858]
+position = Vector2(615.99994, 416.99997)
+rotation = -1.523754
+scale = Vector2(1.794461, 1.794461)
+texture = ExtResource("4_4blwa")
+region_enabled = true
+region_rect = Rect2(0, -1, 65, 68)
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=1877546765]
+position = Vector2(653.99994, 194.00002)
+rotation = -3.6291847
+scale = Vector2(2.2177684, 2.2177687)
+texture = ExtResource("5_vqgqr")
+region_enabled = true
+region_rect = Rect2(0, -1, 80, 81)
+
+[node name="BG" type="TextureRect" parent="." unique_id=681960493]
+layout_mode = 0
+offset_left = -103.0
+offset_top = -28.999998
+offset_right = 1614.4999
+offset_bottom = 1508.4999
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_o1e67")
+
+[node name="RedOtterLogo" type="TextureRect" parent="." unique_id=1465388368]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 434.99997
+offset_right = 1024.0002
+offset_bottom = 1115.0002
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_ycay6")
+
 [node name="Placeholder Icon" type="Label" parent="." unique_id=1774034061]
 layout_mode = 0
-offset_left = 165.0
-offset_top = 111.0
-offset_right = 377.0
-offset_bottom = 177.0
+offset_left = 114.0
+offset_top = 130.0
+offset_right = 326.0
+offset_bottom = 196.0
 text = "OTTER JAM"
 label_settings = SubResource("LabelSettings_twnyg")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1132915500]
-visible = false
-layout_mode = 0
-offset_left = 111.0
-offset_top = 114.0
-offset_right = 194.0
-offset_bottom = 182.0
-texture = ExtResource("1_klylv")
-
 [node name="BtnsCol" type="VBoxContainer" parent="." unique_id=1900655575]
 layout_mode = 0
-offset_left = 159.0
-offset_top = 213.0
-offset_right = 388.0
-offset_bottom = 423.0
-theme_override_constants/separation = 11
+offset_left = 136.0
+offset_top = 235.0
+offset_right = 647.0
+offset_bottom = 553.0
+scale = Vector2(0.4, 0.4)
+theme_override_constants/separation = 34
 
-[node name="PlayBtn" type="Button" parent="BtnsCol" unique_id=994732661]
+[node name="PlayBtn" type="TextureButton" parent="BtnsCol" unique_id=1263224851]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_4gxqj")
-theme_override_font_sizes/font_size = 25
-text = "Play"
+size_flags_horizontal = 0
+texture_normal = ExtResource("4_0061g")
+texture_pressed = ExtResource("5_o1e67")
+texture_hover = ExtResource("6_ycay6")
 
-[node name="HowtoPlayBtn" type="Button" parent="BtnsCol" unique_id=708867790]
+[node name="HowtoPlayBtn" type="TextureButton" parent="BtnsCol" unique_id=508027331]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_4gxqj")
-theme_override_font_sizes/font_size = 25
-text = "How to play"
+size_flags_horizontal = 0
+texture_normal = ExtResource("5_8mikk")
+texture_pressed = ExtResource("6_sqelc")
+texture_hover = ExtResource("7_w5sh6")
 
-[node name="QuitBtn" type="Button" parent="BtnsCol" unique_id=715132463]
+[node name="QuitBtn" type="TextureButton" parent="BtnsCol" unique_id=177993440]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_4gxqj")
-theme_override_font_sizes/font_size = 25
-text = "Quit"
+size_flags_horizontal = 0
+texture_normal = ExtResource("8_o1e67")
+texture_pressed = ExtResource("11_bsy20")
+texture_hover = ExtResource("12_07cxn")
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
-visible = false
-
-[node name="Overlay" type="ColorRect" parent="TutorialPopUp" unique_id=1986860957]
-offset_left = -36.0
-offset_top = -24.0
-offset_right = 999.0
-offset_bottom = 587.0
-color = Color(0, 0, 0, 0.6627451)
 
 [node name="Box" type="Panel" parent="TutorialPopUp" unique_id=705000720]
+offset_top = -2.0
 offset_right = 960.0
-offset_bottom = 540.0
+offset_bottom = 542.0
+
+[node name="TutorialBG" type="TextureRect" parent="TutorialPopUp/Box" unique_id=1525271372]
+layout_mode = 1
+offset_left = 53.0
+offset_top = 12.0
+offset_right = 1781.0
+offset_bottom = 1036.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("18_4blwa")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TutorialPopUp/Box" unique_id=1762047062]
 layout_mode = 0
-offset_left = 99.0
-offset_top = 22.0
-offset_right = 872.0
-offset_bottom = 520.0
+offset_left = 129.0
+offset_top = 56.0
+offset_right = 858.0
+offset_bottom = 539.82666
 
 [node name="TutorialText" type="RichTextLabel" parent="TutorialPopUp/Box/VBoxContainer" unique_id=503833110]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("3_4gxqj")
 theme_override_fonts/bold_font = ExtResource("3_4gxqj")
 theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 38
+theme_override_font_sizes/bold_font_size = 33
 bbcode_enabled = true
-text = "[center][font_size=55]How to Play[/font_size][/center]
+text = "[center][font_size=48]How to Play[/font_size][/center]
 You, an [color=#f19cb5]otter[/color], woke up in a strange, [color=#d1d3fd]icy[/color] land. Your mission is simple: survive. 
 Make use of your provided weapon to battle your enemies, level up, and you might come out on top.
 
@@ -105,17 +173,16 @@ You have unlimited ammo, aim steady with your mouse.
 
 [b]Watch out for enemies![/b]
 You have [color=#f19cb5]5 hp[/color], make each hit count.
-
-
-[font_size=55]     Good luck...[/font_size]"
+ 
+[font_size=48]     Good luck...[/font_size]"
 fit_content = true
 
 [node name="CloseBtn" type="Button" parent="TutorialPopUp/Box" unique_id=2132163511]
 layout_mode = 0
 offset_left = 736.0
-offset_top = 447.0
+offset_top = 449.0
 offset_right = 804.0
-offset_bottom = 481.0
+offset_bottom = 483.0
 size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("3_4gxqj")
 text = "Close"

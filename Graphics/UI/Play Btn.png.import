@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwx1m385t365w"
-path="res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"
+uid="uid://juqvdg3f6p6d"
+path="res://.godot/imported/Play Btn.png-aaae8ddd25a45e3b52d9fb4b047069f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/UI/Bars Box.png"
-dest_files=["res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"]
+source_file="res://Graphics/UI/Play Btn.png"
+dest_files=["res://.godot/imported/Play Btn.png-aaae8ddd25a45e3b52d9fb4b047069f7.ctex"]
 
 [params]
 

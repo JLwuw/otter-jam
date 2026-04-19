@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwx1m385t365w"
-path="res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"
+uid="uid://f7i6duuyoug1"
+path="res://.godot/imported/Tutorial BG.png-8e5a1a2d1e4964cdaaf9936114062296.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/UI/Bars Box.png"
-dest_files=["res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"]
+source_file="res://Graphics/UI/Tutorial BG.png"
+dest_files=["res://.godot/imported/Tutorial BG.png-8e5a1a2d1e4964cdaaf9936114062296.ctex"]
 
 [params]
 

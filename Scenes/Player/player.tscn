@@ -421,6 +421,7 @@ drag = 0.25
 turn_speed = 3.0
 rotation_offset_degrees = 90.0
 move_hold_delay = 0.3
+health_regen_interval = 15.0
 level_up_particles_scene = ExtResource("2_06tpx")
 bullet_speed = 1200.0
 left_muzzle_path = NodePath("AnimatedGun/MuzzleLeft")

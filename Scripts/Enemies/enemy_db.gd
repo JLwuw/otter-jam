@@ -6,10 +6,12 @@ var enemy_scenes: Array[PackedScene] = [
 	preload("res://Scenes/Enemies/enemy_slow_chaser.tscn"),
 	preload("res://Scenes/Enemies/enemy_slow_shooter.tscn"),
 	preload("res://Scenes/Enemies/enemy_tank.tscn"),
-	preload("res://Scenes/Enemies/enemy_dasher.tscn")
+	preload("res://Scenes/Enemies/enemy_dasher.tscn"),
+	preload("res://Scenes/Enemies/enemy_slow_chaser_hard.tscn"),
+	preload("res://Scenes/Enemies/enemy_slow_shooter_hard.tscn"),
+	preload("res://Scenes/Enemies/enemy_dasher_hard.tscn"),
+	preload("res://Scenes/Enemies/enemy_tank_hard.tscn")
 ]
-
-
 
 func _ready() -> void:
 	enemy_data_list.clear()

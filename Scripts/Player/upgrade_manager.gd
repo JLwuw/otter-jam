@@ -159,5 +159,6 @@ func get_upgrade_per_level(level: int) -> Array[Upgrade]:
 			print("WARNING: Level not defined in get_upgrade_per_level")
 			return [
 				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40)
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 1)
 			]

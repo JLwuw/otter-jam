@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export_category("Movement")
 @export var SPEED_CAP: float = 1000
-@export var max_speed: float = 500.0
+@export var max_speed: float = 750.0
 @export var responsiveness: float = 45
 @export var acceleration_factor: float = 3
 @export var drag: float = 0.5
@@ -17,7 +17,7 @@ var has_direction: bool = false
 
 @export_category("Health")
 @export var max_health: int = 5
-@export var invuln_time: float = 0.3
+@export var invuln_time: float = 1.5
 @export var base_fire_rate: float = 0.5
 @export var health_regen_interval: float = 20.0
 @onready var health_regen_timer: float = health_regen_interval
@@ -55,9 +55,9 @@ var has_direction: bool = false
 
 @export_category("Leveling")
 @export var xp_curve: Curve 
-@export var level_cap: int = 10
-@export var xp_growth_factor: float = 20
-@export var combo_weight: float = 1
+@export var level_cap: int = 50
+@export var xp_growth_factor: float = 10.0
+@export var combo_weight: float = 1.0
 @export var enemy_weight: float = 1.5
 
 var current_xp: int = 0
@@ -160,6 +160,9 @@ func _process(delta: float) -> void:
 		
 
 func update_regen_timer(delta: float) -> void:
+	if current_health == max_health:
+		health_regen_timer = health_regen_interval
+
 	if health_regen_timer > 0:
 		health_regen_timer -= delta
 		
@@ -168,7 +171,7 @@ func update_regen_timer(delta: float) -> void:
 			health_regen_timer = health_regen_interval
 
 func heal(amount: int = 1) -> void:
-	current_health = max(max_health, current_health + amount)
+	current_health = min(max_health, current_health + amount)
 	health_changed.emit(current_health, max_health)
 
 func update_animation_state() -> void:

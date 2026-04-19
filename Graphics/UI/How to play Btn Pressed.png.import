@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwx1m385t365w"
-path="res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"
+uid="uid://bm2kwopxefe8o"
+path="res://.godot/imported/How to play Btn Pressed.png-b7d464e54f616c9225a667af45cec105.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/UI/Bars Box.png"
-dest_files=["res://.godot/imported/Bars Box.png-e0ce75ea639a2d61f0156947810e00d4.ctex"]
+source_file="res://Graphics/UI/How to play Btn Pressed.png"
+dest_files=["res://.godot/imported/How to play Btn Pressed.png-b7d464e54f616c9225a667af45cec105.ctex"]
 
 [params]
 
