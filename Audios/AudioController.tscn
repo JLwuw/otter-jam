@@ -1,33 +1,55 @@
 [gd_scene format=3 uid="uid://d3jufx4socsjn"]
 
 [ext_resource type="Script" uid="uid://1bgov0sfxcpl" path="res://Audios/audio_controller.gd" id="1_f24kh"]
-[ext_resource type="AudioStream" uid="uid://cnpyv5rpkyyt6" path="res://Audios/Music/WhatsApp Audio 2026-04-19 at 8.43.40 AM.mp3" id="2_jlygt"]
+[ext_resource type="AudioStream" uid="uid://bw4mhfjbnqpxw" path="res://Audios/Music/SelectionMusic.mp3" id="2_su4s0"]
 [ext_resource type="AudioStream" uid="uid://doj1v1mh00t1k" path="res://Audios/Music/WhatsApp Audio 2026-04-19 at 8.43.28 AM.mp3" id="3_8v7ln"]
+[ext_resource type="AudioStream" uid="uid://cdru1ju5siqc3" path="res://Audios/Music/700322__victor_natas__ending-on-a-happy-note.wav" id="3_o8prn"]
 [ext_resource type="AudioStream" uid="uid://ddsschara4k5h" path="res://Audios/sfx/654375__njjjjjjjjjjjjjjjjjjjjjjjj__single-gunshot.wav" id="4_x47md"]
 [ext_resource type="AudioStream" uid="uid://cftuek6d4msml" path="res://Audios/sfx/138481__justinvoke__bullet-blood-4.wav" id="5_4v1gg"]
+[ext_resource type="AudioStream" uid="uid://dlq1erkv0c3uh" path="res://Audios/sfx/98189__fabianofa__paintball_shoot1.wav" id="5_x47md"]
+[ext_resource type="AudioStream" uid="uid://bdbbxhxd2qeme" path="res://Audios/sfx/773873__mrgungus__shotgun-shoot.wav" id="6_4v1gg"]
 [ext_resource type="AudioStream" uid="uid://dc6pd38ncam86" path="res://Audios/sfx/555412__tonsil5__zombie-death-1.wav" id="6_nveyp"]
 [ext_resource type="AudioStream" uid="uid://dqm8xepem4ngy" path="res://Audios/sfx/366289-lostmaiden-seashell-dragged-on-tile-floor_od7OZRCY.wav" id="7_su4s0"]
 [ext_resource type="AudioStream" uid="uid://bg6d7uupjpyh" path="res://Audios/sfx/85846__mwlandi__meat-slap-2.mp3" id="8_o8prn"]
 [ext_resource type="AudioStream" uid="uid://csr47pmlinj04" path="res://Audios/sfx/28077__klankschap__bonk.wav" id="9_fiq3r"]
+[ext_resource type="AudioStream" uid="uid://df7ax7pcbuvms" path="res://Audios/sfx/121620__jjwallace__flash-character-die.mp3" id="9_nveyp"]
+[ext_resource type="AudioStream" uid="uid://de3py5vkbltrm" path="res://Audios/sfx/751340__qubodup__slime-death.mp3" id="10_su4s0"]
+[ext_resource type="AudioStream" uid="uid://d3iqsirck27np" path="res://Audios/sfx/348270__metekavruk__oops2.mp3" id="13_o8prn"]
 
 [node name="AudioController" type="Node2D" unique_id=1462690670]
 script = ExtResource("1_f24kh")
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=1649273502]
-stream = ExtResource("2_jlygt")
+stream = ExtResource("2_su4s0")
+volume_db = -12.0
+
+[node name="SelectionMusic" type="AudioStreamPlayer" parent="." unique_id=386751453]
+stream = ExtResource("3_o8prn")
+volume_db = -12.0
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1370137264]
 stream = ExtResource("3_8v7ln")
+volume_db = -4.0
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=948968781]
 stream = ExtResource("4_x47md")
-volume_db = -6.296
+volume_db = -12.521
 pitch_scale = 1.93
 
 [node name="Shoot2" type="AudioStreamPlayer" parent="." unique_id=1583317839]
 stream = ExtResource("4_x47md")
-volume_db = -7.69
+volume_db = -12.0
 pitch_scale = 1.44
+
+[node name="Shoot3" type="AudioStreamPlayer" parent="." unique_id=1802538750]
+stream = ExtResource("5_x47md")
+volume_db = -12.0
+pitch_scale = 1.48
+
+[node name="Shoot4" type="AudioStreamPlayer" parent="." unique_id=492846876]
+stream = ExtResource("6_4v1gg")
+volume_db = -5.0
+pitch_scale = 2.9
 
 [node name="EnemyHit" type="AudioStreamPlayer" parent="." unique_id=253040032]
 stream = ExtResource("5_4v1gg")
@@ -45,6 +67,15 @@ pitch_scale = 1.38
 stream = ExtResource("6_nveyp")
 pitch_scale = 1.17
 
+[node name="EnemyDeath3" type="AudioStreamPlayer" parent="." unique_id=1294719259]
+stream = ExtResource("9_nveyp")
+volume_db = -6.985
+pitch_scale = 1.37
+
+[node name="EnemyDeath4" type="AudioStreamPlayer" parent="." unique_id=2033203880]
+stream = ExtResource("10_su4s0")
+pitch_scale = 1.57
+
 [node name="PlayerMovement" type="AudioStreamPlayer" parent="." unique_id=555011019]
 stream = ExtResource("7_su4s0")
 volume_db = -0.627
@@ -57,6 +88,11 @@ pitch_scale = 1.54
 [node name="HealthLoss2" type="AudioStreamPlayer" parent="." unique_id=2139142359]
 stream = ExtResource("8_o8prn")
 pitch_scale = 1.16
+
+[node name="HealthLoss3" type="AudioStreamPlayer" parent="." unique_id=1061541516]
+stream = ExtResource("13_o8prn")
+volume_db = -10.478
+pitch_scale = 0.8
 
 [node name="BorderHit" type="AudioStreamPlayer" parent="." unique_id=1248319710]
 stream = ExtResource("9_fiq3r")
