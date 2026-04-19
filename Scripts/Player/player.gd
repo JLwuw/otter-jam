@@ -408,7 +408,7 @@ func _level_up() -> void:
 	
 	if upgrade_manager != null:
 		await get_tree().process_frame  # Let signals propagate first
-		var upgrades_offered: Array[Upgrade] = upgrade_manager.offer_random_upgrades(1)
+		var upgrades_offered: Array[Upgrade] = upgrade_manager.get_upgrade_per_level(current_level)
 		if upgrades_offered.is_empty():
 			print("WARNING: no upgrades available on level up")
 		for upgrade in upgrades_offered:
