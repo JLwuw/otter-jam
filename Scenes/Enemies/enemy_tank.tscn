@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_hitfx"]
 [ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="6_ks16x"]
 [ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_deathfx"]
-[ext_resource type="Script" uid="uid://8iddeee25ag6" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="8_anim"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="8_anim"]
 [ext_resource type="Texture2D" uid="uid://cav64dc43gewv" path="res://Graphics/Enemies/OsoPolarDeath.png" id="9_515yg"]
 [ext_resource type="Texture2D" uid="uid://dcdhcdea5j63i" path="res://Graphics/Enemies/OsoPolarWalking.png" id="10_ungqm"]
 
@@ -202,8 +202,8 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 31
 script = ExtResource("1_k8c9p")
-max_health = 7
-toughness = 3
+max_health = 50
+toughness = 10
 unlock_time = 60
 
 [node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118203]

@@ -160,6 +160,9 @@ func _process(delta: float) -> void:
 		
 
 func update_regen_timer(delta: float) -> void:
+	if current_health == max_health:
+		health_regen_timer = health_regen_interval
+
 	if health_regen_timer > 0:
 		health_regen_timer -= delta
 		
@@ -168,7 +171,7 @@ func update_regen_timer(delta: float) -> void:
 			health_regen_timer = health_regen_interval
 
 func heal(amount: int = 1) -> void:
-	current_health = max(max_health, current_health + amount)
+	current_health = min(max_health, current_health + amount)
 	health_changed.emit(current_health, max_health)
 
 func update_animation_state() -> void:

@@ -199,6 +199,7 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 31
 script = ExtResource("1_ul00a")
+max_health = 10
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=1006373814]
 script = ExtResource("3_p7rkd")
