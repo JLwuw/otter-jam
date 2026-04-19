@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://7vk1xxcqwx4a"]
+
+[ext_resource type="Script" path="res://Scripts/Risks/risk_falling.gd" id="1_risk_falling"]
+[ext_resource type="PackedScene" uid="uid://bsu3ed0myajq2" path="res://Scenes/Bullet/plop.tscn" id="3_particles"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_icicle"]
+size = Vector2(16, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_airborne"]
+radius = 50.0
+height = 128.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_crater"]
+radius = 70.0
+
+[node name="Icicle" type="StaticBody2D" groups=["enemies"]]
+collision_layer = 16
+script = ExtResource("1_risk_falling")
+destroy_particles_scene = ExtResource("3_particles")
+damage = 2
+lifetime = 30.0
+slow_amount = 0.5
+slow_duration = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.7, 1, 1, 1)
+scale = Vector2(4, 12)
+texture = SubResource("PlaceholderTexture2D_icicle")
+
+[node name="AirborneCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_airborne")
+
+[node name="LandedCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_crater")
+disabled = true
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CapsuleShape2D_airborne")
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
