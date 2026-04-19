@@ -410,8 +410,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eksi1"]
-radius = 21.282053
-height = 42.564106
+radius = 8.0
+height = 38.666668
 
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
 scale = Vector2(3, 3)
