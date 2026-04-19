@@ -430,3 +430,9 @@ func upgrade_bullet_speed(amount: int) -> void:
 func upgrade_damage(amount: int) -> void:
 	print("Upgrading Damage!")
 	damage += amount
+
+func upgrade_bullet_count(amount: int) -> void:
+	print("Upgrading Bullet Count!")
+	min_burst_count += amount
+	max_burst_count += amount
+	
