@@ -108,9 +108,9 @@ func update_speed_fx(delta: float) -> void:
 		speed_fx_material.set_shader_parameter("velocity_dir", player.velocity.normalized())
 	
 # UI
-func _on_player_health_changed(current: int, max: int) -> void:
+func _on_player_health_changed(current: int, max_health: int) -> void:
 	life_bar.value = current
-	life_bar.max_value = max
+	life_bar.max_value = max_health
 	
 func start_shake(duration: float, intensity: float) -> void:
 	shake_duration = duration
