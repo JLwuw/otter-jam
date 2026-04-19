@@ -64,4 +64,9 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		
 		Upgrade.Type.BULLET_COUNT:
 			player.upgrade_bullet_count(upgrade.amount)
+		
+		Upgrade.Type.MAX_SPEED:
+			player.upgrade_max_speed(upgrade.amount)
+		_:
+			print("WARNING: upgrade type: ", upgrade.upgrade_type, " not found in apply upgrade")
 	

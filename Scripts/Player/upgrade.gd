@@ -5,14 +5,16 @@ enum Type {
 	MAX_HP,
 	DAMAGE,
 	BULLET_SPEED,
-	BULLET_COUNT
+	BULLET_COUNT,
+	MAX_SPEED,
 }
 
 static var rarity_by_type: Dictionary[Type, float] = {
 	Type.MAX_HP: 1.0,
-	Type.BULLET_SPEED: 0.6,
-	Type.DAMAGE: 0.4,
-	Type.BULLET_COUNT: 0.5
+	Type.BULLET_SPEED: 0.1,
+	Type.DAMAGE: 0.1,
+	Type.BULLET_COUNT: 0.1,
+	Type.MAX_SPEED: 1.0
 }
 
 static var upgrade_info: Dictionary = {

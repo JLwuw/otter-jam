@@ -23,11 +23,16 @@ var label_update_timer: float = 0.01
 @onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
 
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
+@onready var xp_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/XPBar
+@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/VBoxContainer/LvlNum
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
+@onready var combo_meter_label: Label = $UI/RootUI/ComboMeter/ComboLabel
+@onready var combo_timer_bar: ProgressBar = $UI/RootUI/ComboMeter/ComboTimerBar
 var shake_intensity: float = 0.0			# No modificar porfa
 var shake_duration: float = 0.0
 var shake_timer: float = 0.0
+var shake_target: Control = null  # ← nuevo
 @onready var speedometer_node: Control = $UI/RootUI/Speedometer
 
 @onready var player: Player = $Player as Player
@@ -40,15 +45,31 @@ func _ready() -> void:
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
 
+	## UI
 	if player != null:
 		life_bar.max_value = player.max_health
 		life_bar.value = player.current_health
+	
+	if player != null:
+		player.xp_changed.connect(_on_player_xp_changed)
+		xp_bar.max_value = player.xp_for_next_level
+		xp_bar.value = player.current_xp
+	
+	player.level_up.connect(_on_player_level_up)
+	lvl_label.text = str(player.current_level)
+	
+	player.damaged.connect(_on_player_damaged)
+	
+	if speed_bar != null:
+		speed_bar.max_value = player.max_speed
+		
+	combo_timer_bar.max_value = ScoreManager.COMBO_DURATION
+	combo_timer_bar.value = 0.0
 
+	## FX
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
 		
-	if speed_bar != null:
-		speed_bar.max_value = player.max_speed
 
 func _process(delta: float) -> void:
 	if fps_label == null:
@@ -67,9 +88,11 @@ func _process(delta: float) -> void:
 	
 	var combo: int = ScoreManager.combo
 	combo_label.text = "Combo: %.0f" % combo
+	combo_meter_label.text = "x%d" % combo  			# UI
 	
 	var combo_timer: float = ScoreManager.combo_timer
 	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
+	combo_timer_bar.value = combo_timer					# UI
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level
@@ -112,29 +135,40 @@ func _on_player_health_changed(current: int, max_health: int) -> void:
 	life_bar.value = current
 	life_bar.max_value = max_health
 	
-func start_shake(duration: float, intensity: float) -> void:
+func _on_player_damaged() -> void:
+	start_shake($UI/RootUI/PlayerInfo, 0.4, 6.0)
+	
+func _on_player_xp_changed(current: int, max_xp: int) -> void:
+	xp_bar.value = current
+	xp_bar.max_value = max_xp
+	
+func _on_player_level_up(level: int) -> void:
+	lvl_label.text = str(level)
+	
+func start_shake(target: Control, duration: float, intensity: float) -> void:
+	shake_target = target
 	shake_duration = duration
 	shake_intensity = intensity
 	shake_timer = duration
-	
-func process_shake(delta: float) -> void:
-	# Guardar la posición original si no existe
-	if not has_meta("original_position"):
-		set_meta("original_position", speedometer_node.position)
+	if not shake_target.has_meta("original_position"):
+		shake_target.set_meta("original_position", shake_target.position)
 
-	var original_pos: Vector2 = get_meta("original_position")
-	
+func process_shake(delta: float) -> void:
+	if shake_target == null:
+		return
+
+	var original_pos: Vector2 = shake_target.get_meta("original_position")
+
 	if shake_timer > 0:
 		shake_timer -= delta
 		var shake_offset: Vector2 = Vector2(
 			randf_range(-shake_intensity, shake_intensity),
 			randf_range(-shake_intensity, shake_intensity)
 		)
-		speedometer_node.position = speedometer_node.position.lerp(original_pos + shake_offset, 0.3)
+		shake_target.position = shake_target.position.lerp(original_pos + shake_offset, 0.3)
 	else:
-		# Volver a posición original suavemente
-		speedometer_node.position = speedometer_node.position.lerp(original_pos, 0.1)
-	
+		shake_target.position = shake_target.position.lerp(original_pos, 0.1)
+
 func update_speedometer() -> void:
 	if player != null and speed_label != null:
 		var current_speed: float = player.velocity.length()
@@ -146,5 +180,5 @@ func update_speedometer() -> void:
 		# Detectar velocidad máxima y activar shake
 		if current_speed >= speed_fx_max_speed * 0.95:  # 95% del máximo
 			if shake_timer <= 0:  # Evitar activar shake constantemente
-				start_shake(0.3, 5.0)  # duración, intensidad
+				start_shake(speedometer_node, 0.3, 5.0)  # duración, intensidad
 				
