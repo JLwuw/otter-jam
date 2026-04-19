@@ -27,6 +27,8 @@ var label_update_timer: float = 0.01
 @onready var lvl_label: Label = $UI/RootUI/PlayerInfo/VBoxContainer/LvlNum
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
+@onready var combo_meter_label: Label = $UI/RootUI/ComboMeter/ComboLabel
+@onready var combo_timer_bar: ProgressBar = $UI/RootUI/ComboMeter/ComboTimerBar
 var shake_intensity: float = 0.0			# No modificar porfa
 var shake_duration: float = 0.0
 var shake_timer: float = 0.0
@@ -61,6 +63,9 @@ func _ready() -> void:
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
 		
+	combo_timer_bar.max_value = ScoreManager.COMBO_DURATION
+	combo_timer_bar.value = 0.0
+
 	## FX
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
@@ -83,9 +88,11 @@ func _process(delta: float) -> void:
 	
 	var combo: int = ScoreManager.combo
 	combo_label.text = "Combo: %.0f" % combo
+	combo_meter_label.text = "x%d" % combo  			# UI
 	
 	var combo_timer: float = ScoreManager.combo_timer
 	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
+	combo_timer_bar.value = combo_timer					# UI
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level
