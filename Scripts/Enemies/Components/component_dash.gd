@@ -1,6 +1,9 @@
 class_name ComponentDash
 extends Node
 
+signal dash_started
+signal dash_ended
+
 @export_group("Movement")
 @export var responsiveness: float = 55
 @export var acceleration_factor: float = 30
@@ -53,6 +56,7 @@ func _physics_process(delta: float) -> void:
 		if dash_timer <= 0 or dash_hit_player:
 			dash_active = false
 			dash_hit_player = false
+			emit_signal("dash_ended")
 		else:
 			# Apply homing during dash
 			var player_direction: Vector2 = (player.global_position - owner_body.global_position).normalized()
@@ -100,6 +104,24 @@ func perform_dash() -> void:
 	dash_hit_player = false
 	dash_timer = dash_duration
 	dash_cooldown_timer = dash_cooldown
+	emit_signal("dash_started")
+
+
+func disable_dash_behavior() -> void:
+	var was_dashing: bool = dash_active
+	dash_active = false
+	dash_hit_player = false
+	dash_timer = 0.0
+	dash_cooldown_timer = dash_cooldown
+
+	if owner_body != null:
+		owner_body.velocity = Vector2.ZERO
+
+	set_process(false)
+	set_physics_process(false)
+
+	if was_dashing:
+		emit_signal("dash_ended")
 
 func push_enemies_in_path() -> void:
 	# Get all slide collisions and push enemies toward the player
@@ -118,9 +140,12 @@ func push_enemies_in_path() -> void:
 			# Stop dashing after hitting player
 			dash_hit_player = true
 		# Check if collider is an enemy
-		elif collider and collider.is_in_group("enemies") and collider != owner_body:
-			var push_direction: Vector2 = (player.global_position - collider.global_position).normalized()
-			
-			# Apply push force
-			if collider is CharacterBody2D:
-				collider.velocity = push_direction * push_force
+		else:
+			var node_collider: Node = collider as Node
+			if node_collider == null or not node_collider.is_in_group("enemies") or node_collider == owner_body:
+				continue
+
+			if node_collider is CharacterBody2D:
+				var enemy_body: CharacterBody2D = node_collider as CharacterBody2D
+				var push_direction: Vector2 = (player.global_position - enemy_body.global_position).normalized()
+				enemy_body.velocity = push_direction * push_force
