@@ -39,6 +39,7 @@ scale = Vector2(0.415, 0.415)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("2_s0mie")]
 position = Vector2(-198, 1286)
+xp_growth_factor = 10.0
 
 [node name="SelectDiffLabel" type="Label" parent="." unique_id=731092994]
 visible = false

@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://cavvhlr7oonau" path="res://Scripts/Bullet/bullet_pool.gd" id="2_0f8g4"]
 [ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="3_2okw4"]
 [ext_resource type="Texture2D" uid="uid://bj7w1si78q6gg" path="res://Graphics/UI/Character Box.png" id="3_kpd0n"]
-[ext_resource type="Curve" uid="uid://45ykhry8jxt5" path="res://Resources/Player/xp_curve.tres" id="4_fua5m"]
 [ext_resource type="Texture2D" uid="uid://dcbb6egq48r5h" path="res://Graphics/UI/XP Icon.png" id="4_gtphy"]
 [ext_resource type="Texture2D" uid="uid://7kvuic2ffbek" path="res://Graphics/UI/Life Bar Under.png" id="5_5q62e"]
 [ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="5_6nxcd"]
@@ -87,9 +86,7 @@ position = Vector2(-3095, -1935)
 position = Vector2(-6, 130)
 max_speed = 750.0
 bullet_speed = 800.0
-xp_curve = ExtResource("4_fua5m")
-xp_growth_factor = 3.0
-combo_weight = 0.5
+level_cap = 50
 
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_gtphy")]
 position = Vector2(-105, -43)
