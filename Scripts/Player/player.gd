@@ -471,7 +471,7 @@ func upgrade_max_hp(amount: int, index: int = 0) -> void:
 	_spawn_upgrade_popup("MAX HP", amount, index)
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
-	health_changed.emit(max_health, max_health)
+	health_changed.emit(current_health, max_health)	
 
 func upgrade_bullet_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Bullet Speed!")

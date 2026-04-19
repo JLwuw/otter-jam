@@ -41,6 +41,14 @@ font_size = 68
 font = ExtResource("21_1b3g2")
 font_size = 133
 
+[sub_resource type="LabelSettings" id="LabelSettings_p4h6w"]
+font = ExtResource("21_1b3g2")
+font_size = 65
+
+[sub_resource type="LabelSettings" id="LabelSettings_fua5m"]
+font = ExtResource("21_1b3g2")
+font_size = 40
+
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("21_1b3g2")
 font_size = 68
@@ -120,10 +128,10 @@ scale = Vector2(0.4, 0.4)
 
 [node name="BarsBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1422941206]
 layout_mode = 0
-offset_left = 78.500015
-offset_top = 88.50003
-offset_right = 660.5
-offset_bottom = 248.50003
+offset_left = 135.0
+offset_top = 84.99997
+offset_right = 814.99994
+offset_bottom = 261.99997
 texture = ExtResource("1_6nxcd")
 
 [node name="CharacterBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1253607656]
@@ -137,9 +145,9 @@ texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
 layout_mode = 0
-offset_left = 200.5
+offset_left = 532.49994
 offset_top = 112.5
-offset_right = 283.50003
+offset_right = 615.5
 offset_bottom = 215.0
 
 [node name="LifeIcon" type="TextureRect" parent="UI/RootUI/PlayerInfo/IconsCol" unique_id=640860895]
@@ -152,11 +160,11 @@ texture = ExtResource("4_gtphy")
 
 [node name="BarsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=1610906567]
 layout_mode = 0
-offset_left = 290.0
-offset_top = 120.0
-offset_right = 633.0
-offset_bottom = 229.0
-theme_override_constants/separation = -2
+offset_left = 207.5
+offset_top = 122.5
+offset_right = 550.5
+offset_bottom = 231.5
+theme_override_constants/separation = 19
 
 [node name="LifeBar" type="TextureProgressBar" parent="UI/RootUI/PlayerInfo/BarsCol" unique_id=1407275385]
 layout_mode = 2
@@ -165,6 +173,7 @@ value = 2.0
 texture_under = ExtResource("5_5q62e")
 texture_over = ExtResource("6_f1xxd")
 texture_progress = ExtResource("7_eh7ec")
+texture_progress_offset = Vector2(0, 2.425)
 
 [node name="XPBar" type="TextureProgressBar" parent="UI/RootUI/PlayerInfo/BarsCol" unique_id=1990581771]
 layout_mode = 2
@@ -172,8 +181,9 @@ value = 25.0
 texture_under = ExtResource("8_kpd0n")
 texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
+texture_progress_offset = Vector2(0, 2.425)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
+[node name="LvlCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 72.5
@@ -181,17 +191,35 @@ offset_right = 133.0
 offset_bottom = 260.5
 theme_override_constants/separation = -29
 
-[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=1824286944]
+[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/LvlCol" unique_id=1824286944]
 layout_mode = 2
 text = "Lvl"
 label_settings = SubResource("LabelSettings_tom5b")
 horizontal_alignment = 1
 
-[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=876506288]
+[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/LvlCol" unique_id=876506288]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_8b8ff")
 horizontal_alignment = 1
+
+[node name="CounterCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=845952610]
+layout_mode = 0
+offset_left = 630.0
+offset_top = 109.999985
+offset_right = 757.50006
+offset_bottom = 214.99998
+theme_override_constants/separation = -9
+
+[node name="LifeLbl" type="Label" parent="UI/RootUI/PlayerInfo/CounterCol" unique_id=1317920623]
+layout_mode = 2
+text = "3/5"
+label_settings = SubResource("LabelSettings_p4h6w")
+
+[node name="XPLbl" type="Label" parent="UI/RootUI/PlayerInfo/CounterCol" unique_id=452327313]
+layout_mode = 2
+text = "2000/4568"
+label_settings = SubResource("LabelSettings_fua5m")
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
 anchors_preset = 0
@@ -282,6 +310,7 @@ show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
+visible = false
 
 [node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
 offset_left = 16.0
@@ -325,6 +354,16 @@ offset_top = 99.0
 offset_right = 125.0
 offset_bottom = 122.0
 text = "XP Required: --"
+
+[node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=921391486]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
+offset_left = -12.0
+offset_top = -9.0
+offset_right = 976.0
+offset_bottom = 556.0
+color = Color(0, 0, 0, 1)
 
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")
