@@ -310,6 +310,7 @@ show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
+visible = false
 
 [node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
 offset_left = 16.0
@@ -360,6 +361,16 @@ offset_top = 99.0
 offset_right = 125.0
 offset_bottom = 122.0
 text = "XP Required: --"
+
+[node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=921391486]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
+offset_left = -12.0
+offset_top = -9.0
+offset_right = 976.0
+offset_bottom = 556.0
+color = Color(0, 0, 0, 1)
 
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")

@@ -137,8 +137,8 @@ func update_speed_fx(delta: float) -> void:
 	
 # UI
 func _on_player_health_changed(current: int, max_health: int) -> void:
-	life_bar.value = current
 	life_bar.max_value = max_health
+	life_bar.value = current
 	life_lbl.text = "%d/%d" % [current, max_health]
 	
 func _on_player_damaged() -> void:
