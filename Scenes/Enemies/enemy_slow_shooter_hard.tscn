@@ -250,7 +250,7 @@ collision_mask = 15
 script = ExtResource("1_rt20c")
 body_rotation_offset_degrees = 270.0
 mouth_rotation_offset_degrees = 270.0
-max_health = 40
+max_health = 30
 toughness = 3
 unlock_time = 120
 
@@ -260,7 +260,8 @@ script = ExtResource("2_avd4e")
 [node name="Basic Shoot Component" type="Node" parent="." unique_id=1860826463]
 script = ExtResource("3_7e3e6")
 bullet_scene = ExtResource("4_7vy13")
-fire_rate = 0.75
+fire_rate = 1.0
+bullet_speed = 500.0
 bullet_spawn_path = NodePath("../Bullet Spawn")
 
 [node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118202]

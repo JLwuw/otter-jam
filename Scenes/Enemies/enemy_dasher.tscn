@@ -187,6 +187,8 @@ rect = Rect2(-53.666668, -53.66667, 107.333336, 107.33334)
 
 [node name="Dash Component" type="Node" parent="." unique_id=1786712199]
 script = ExtResource("3_2hggw")
+dash_duration = 0.5
+dash_trigger_distance = 350.0
 
 [node name="Sprite Rotation Component" type="Node" parent="." unique_id=1423879024]
 script = ExtResource("4_2hggw")
