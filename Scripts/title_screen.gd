@@ -13,6 +13,8 @@ func _ready() -> void:
 	close_btn.pressed.connect(_on_close_pressed)
 
 func _on_play_pressed() -> void:
+	AudioController.stop_all_sfx()
+	await AudioController.fade_out_music()
 	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")
 
 func _on_howto_pressed() -> void:

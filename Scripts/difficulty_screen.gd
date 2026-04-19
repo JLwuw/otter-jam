@@ -6,11 +6,14 @@ extends Node2D
 @export var speed_fx_lerp_speed: float = 6.0
 
 @onready var player: Player = $Player as Player
-@onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
+var speed_fx_rect: ColorRect
 var speed_fx_material: ShaderMaterial
 var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
+	speed_fx_rect = get_node_or_null("SpeedFX/SpeedFXRect") as ColorRect
+	AudioController.stop_all_sfx()
+	AudioController.play_menu_music()
 	if speed_fx_rect != null and speed_fx_rect.material is ShaderMaterial:
 		speed_fx_material = speed_fx_rect.material as ShaderMaterial
 
@@ -53,6 +56,8 @@ func select_difficulty(difficulty: String) -> void:
 			print("set to normal")
 		"hard":
 			print("set to hard")
+	AudioController.stop_all_sfx()
+	await AudioController.fade_out_music()
 	get_tree().change_scene_to_file("res://Scenes/gameplay_test.tscn")
 
 

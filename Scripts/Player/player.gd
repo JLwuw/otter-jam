@@ -74,6 +74,7 @@ var right_muzzle: Node2D
 var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
+var border_hit_cooldown: float = 0.0
 
 # Para UI
 signal health_changed(current: int, max: int)
@@ -119,12 +120,14 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.normalized() * max_speed 
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
+	AudioController.play_player_movement()
 	move_and_slide()
 	handle_rink_contacts()
 
 func _process(delta: float) -> void:
 	update_invuln_timer(delta)
 	_update_shoot_cooldown(delta)
+	border_hit_cooldown -= delta
 	if shoot_anim_timer > 0.0:
 		shoot_anim_timer -= delta
 	update_animation_state()
@@ -194,6 +197,7 @@ func update_invuln_timer(delta: float) -> void:
 
 func handle_rink_contacts() -> void:
 	var collision_count: int = get_slide_collision_count()
+	
 	if collision_count <= 0:
 		return
 
@@ -216,7 +220,9 @@ func handle_rink_contacts() -> void:
 
 		if rink == null:
 			continue
-
+		if border_hit_cooldown <= 0.0:
+			AudioController.play_border_hit()
+			border_hit_cooldown = 0.5
 		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), current_speed)
 
 
@@ -274,6 +280,7 @@ func shoot() -> void:
 	var effective_bullet_speed: float = bullet_speed + max(0.0, velocity.dot(direction))
 	for spawn_position in _get_bullet_spawn_positions(direction):
 		_spawn_bullet(spawn_position, direction, effective_bullet_speed, rotation_to_mouse)
+	AudioController.play_shoot()
 
 func _get_bullet_spawn_positions(direction: Vector2) -> Array[Vector2]:
 	var positions: Array[Vector2] = []
@@ -308,7 +315,8 @@ func take_damage(amount: int = 1) -> void:
 	print("Taking damage!")
 	current_health -= amount
 	health_changed.emit(current_health, max_health)  # UI
-	damaged.emit()									# UI
+	damaged.emit()			# UI
+	AudioController.play_health_loss()		
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)

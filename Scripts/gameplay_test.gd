@@ -41,6 +41,8 @@ var speed_fx_material: ShaderMaterial
 var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
+	AudioController.stop_music()
+	AudioController.play_music()
 	EnemyDB.init(enemy_scenes)
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
