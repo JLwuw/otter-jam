@@ -17,7 +17,6 @@ var label_update_timer: float = 0.01
 @onready var fps_label: Label = $DebugUI/FPSLabel
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
-@onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
 @onready var level_label: Label = $DebugUI/LevelLabel
 @onready var xp_label: Label = $DebugUI/XPLabel
 @onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
@@ -42,6 +41,8 @@ var speed_fx_strength: float = 0.0
 
 func _ready() -> void:
 	EnemyDB.init(enemy_scenes)
+	ScoreManager.is_active = true
+	
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
 
@@ -86,13 +87,9 @@ func _process(delta: float) -> void:
 	var score: int = ScoreManager.get_final_score()
 	score_label.text = "Score: %.0f" % score
 	
-	var combo: int = ScoreManager.combo
+	var combo: int = ScoreManager.is_active
 	combo_label.text = "Combo: %.0f" % combo
 	combo_meter_label.text = "x%d" % combo  			# UI
-	
-	var combo_timer: float = ScoreManager.combo_timer
-	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
-	combo_timer_bar.value = combo_timer					# UI
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level

@@ -20,8 +20,10 @@ var time_elapsed: float = 0.0
 var spawn_timer: float = 0.0
 var active_icicles: Array[Node] = []
 @onready var current_scene_root: Node = get_tree().current_scene
+var is_active: bool = true
 
 func _ready() -> void:
+	player.died.connect(_on_player_died)
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
 	spawn_timer = initial_spawn_interval
@@ -78,3 +80,8 @@ func spawn_icicle() -> void:
 
 func _on_icicle_removed(icicle: Node) -> void:
 	active_icicles.erase(icicle)
+
+func _on_player_died() -> void:
+	is_active = false
+	set_process(false)
+	
