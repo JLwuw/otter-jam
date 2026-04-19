@@ -42,6 +42,9 @@ var shake_target: Control = null  # ← nuevo
 @onready var game_over_screen: CanvasLayer = $GameOverScreen
 @onready var game_over_score_label: Label = $GameOverScreen/ScoreLabel
 
+# Pause Screen
+@onready var pause_menu: CanvasLayer = $PauseMenu
+
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
@@ -78,6 +81,11 @@ func _ready() -> void:
 	$GameOverScreen/BtnsCol/RetryBtn.pressed.connect(_on_play_again_pressed)
 	player.died.connect(_on_player_died)
 	$GameOverScreen/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
+	
+	pause_menu.hide()
+	$PauseMenu/BtnsCol/ContinueBtn.pressed.connect(toggle_pause)
+	$PauseMenu/BtnsCol/RestartBtn.pressed.connect(_on_play_again_pressed)
+	$PauseMenu/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -123,6 +131,18 @@ func _process(delta: float) -> void:
 	update_speedometer()
 	
 	process_shake(delta)
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):  # ESC por defecto
+		toggle_pause()
+		
+func toggle_pause() -> void:
+	var paused: bool = not get_tree().paused
+	get_tree().paused = paused
+	if paused:
+		pause_menu.show()
+	else:
+		pause_menu.hide()
 
 func update_speed_fx(delta: float) -> void:
 	if speed_fx_material == null or player == null:
@@ -207,10 +227,12 @@ func _on_player_died() -> void:
 
 	var overlay: ColorRect = $GameOverScreen/Overlay
 	var tween: Tween = create_tween()
-	tween.tween_property(overlay, "color:a", 0.8, 0.8)
+	tween.tween_property(overlay, "color:a", 0.92, 0.92)
 
 func _on_play_again_pressed() -> void:
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
 	
 func _on_main_menu_pressed() -> void:
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")

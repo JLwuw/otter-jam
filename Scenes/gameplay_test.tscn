@@ -360,6 +360,7 @@ offset_bottom = 122.0
 text = "XP Required: --"
 
 [node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=921391486]
+visible = false
 
 [node name="Overlay" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
 offset_left = -12.0
@@ -429,7 +430,72 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("21_1b3g2")
 theme_override_font_sizes/font_size = 25
-text = "Quit"
+text = "Main Menu"
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=889101716]
+process_mode = 3
+
+[node name="Overlay" type="ColorRect" parent="PauseMenu" unique_id=711062029]
+offset_left = -12.0
+offset_top = -9.0
+offset_right = 976.0
+offset_bottom = 556.0
+pivot_offset = Vector2(479, 573)
+color = Color(0, 0, 0, 0.92156863)
+
+[node name="BtnsCol" type="VBoxContainer" parent="PauseMenu" unique_id=1815300327]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = 17.0
+offset_right = 114.5
+offset_bottom = 161.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 11
+
+[node name="ContinueBtn" type="Button" parent="PauseMenu/BtnsCol" unique_id=720087470]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("21_1b3g2")
+theme_override_font_sizes/font_size = 25
+text = "Continue"
+
+[node name="RestartBtn" type="Button" parent="PauseMenu/BtnsCol" unique_id=1515821050]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("21_1b3g2")
+theme_override_font_sizes/font_size = 25
+text = "Retry"
+
+[node name="MainMenuBtn" type="Button" parent="PauseMenu/BtnsCol" unique_id=2144068177]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("21_1b3g2")
+theme_override_font_sizes/font_size = 25
+text = "Main Menu"
+
+[node name="GameOverText" type="RichTextLabel" parent="PauseMenu" unique_id=457645160]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -388.0
+offset_top = 114.0
+offset_right = 388.0
+offset_bottom = 244.0
+grow_horizontal = 2
+pivot_offset = Vector2(477, 156)
+theme_override_fonts/normal_font = ExtResource("21_1b3g2")
+theme_override_fonts/bold_font = ExtResource("21_1b3g2")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 38
+bbcode_enabled = true
+text = "[center][font_size=120]Paused[/font_size][/center]
+"
+fit_content = true
 
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")
