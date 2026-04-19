@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="5_6nxcd"]
 [ext_resource type="Texture2D" uid="uid://dcwhsfj8iitl7" path="res://Graphics/UI/Life Bar Over.png" id="6_f1xxd"]
 [ext_resource type="PackedScene" uid="uid://ba3g0t5t2s4lx" path="res://Scenes/enemy_spawner.tscn" id="6_gtphy"]
+[ext_resource type="PackedScene" uid="uid://dvkxkqvqpbdq" path="res://Scenes/hazard_spawner.tscn" id="6_hazard"]
 [ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="7_5d3qw"]
 [ext_resource type="Texture2D" uid="uid://dejxcaituiw16" path="res://Graphics/UI/Life Bar Progress.png" id="7_eh7ec"]
 [ext_resource type="Texture2D" uid="uid://dip6o5exswevy" path="res://Graphics/UI/XP Bar Under.png" id="8_kpd0n"]
@@ -75,6 +76,11 @@ max_speed = 750.0
 bullet_speed = 800.0
 
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_gtphy")]
+position = Vector2(-105, -43)
+player = NodePath("../Player")
+rink = NodePath("../Rink")
+
+[node name="Hazard Spawner" parent="." unique_id=2131718948 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_hazard")]
 position = Vector2(-105, -43)
 player = NodePath("../Player")
 rink = NodePath("../Rink")
