@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dxds34v0tclvx"]
+
+[sub_resource type="Environment" id="Environment_enltb"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 1.0
+
+[node name="Postprocessing" type="WorldEnvironment" unique_id=469052891]
+environment = SubResource("Environment_enltb")
