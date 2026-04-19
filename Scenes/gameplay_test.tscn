@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="5_6nxcd"]
 [ext_resource type="Texture2D" uid="uid://dcwhsfj8iitl7" path="res://Graphics/UI/Life Bar Over.png" id="6_f1xxd"]
 [ext_resource type="PackedScene" uid="uid://ba3g0t5t2s4lx" path="res://Scenes/enemy_spawner.tscn" id="6_gtphy"]
-[ext_resource type="PackedScene" uid="uid://dvkxkqvqpbdq" path="res://Scenes/hazard_spawner.tscn" id="6_hazard"]
+[ext_resource type="PackedScene" path="res://Scenes/hazard_spawner.tscn" id="6_hazard"]
 [ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="7_5d3qw"]
 [ext_resource type="Texture2D" uid="uid://dejxcaituiw16" path="res://Graphics/UI/Life Bar Progress.png" id="7_eh7ec"]
 [ext_resource type="Texture2D" uid="uid://dip6o5exswevy" path="res://Graphics/UI/XP Bar Under.png" id="8_kpd0n"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
@@ -40,6 +40,14 @@ font_size = 68
 [sub_resource type="LabelSettings" id="LabelSettings_8b8ff"]
 font = ExtResource("21_1b3g2")
 font_size = 133
+
+[sub_resource type="LabelSettings" id="LabelSettings_p4h6w"]
+font = ExtResource("21_1b3g2")
+font_size = 65
+
+[sub_resource type="LabelSettings" id="LabelSettings_fua5m"]
+font = ExtResource("21_1b3g2")
+font_size = 40
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("21_1b3g2")
@@ -58,6 +66,10 @@ bg_color = Color(0.85882354, 0.85882354, 0.85882354, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nk2r0"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rcr40"]
+font = ExtResource("21_1b3g2")
+font_size = 27
 
 [sub_resource type="Environment" id="Environment_p4h6w"]
 background_mode = 3
@@ -120,10 +132,10 @@ scale = Vector2(0.4, 0.4)
 
 [node name="BarsBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1422941206]
 layout_mode = 0
-offset_left = 78.500015
-offset_top = 88.50003
-offset_right = 660.5
-offset_bottom = 248.50003
+offset_left = 135.0
+offset_top = 84.99997
+offset_right = 814.99994
+offset_bottom = 261.99997
 texture = ExtResource("1_6nxcd")
 
 [node name="CharacterBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1253607656]
@@ -137,9 +149,9 @@ texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
 layout_mode = 0
-offset_left = 200.5
+offset_left = 532.49994
 offset_top = 112.5
-offset_right = 283.50003
+offset_right = 615.5
 offset_bottom = 215.0
 
 [node name="LifeIcon" type="TextureRect" parent="UI/RootUI/PlayerInfo/IconsCol" unique_id=640860895]
@@ -152,9 +164,9 @@ texture = ExtResource("4_gtphy")
 
 [node name="BarsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=1610906567]
 layout_mode = 0
-offset_left = 290.0
+offset_left = 207.5
 offset_top = 122.5
-offset_right = 633.0
+offset_right = 550.5
 offset_bottom = 231.5
 theme_override_constants/separation = 19
 
@@ -175,7 +187,7 @@ texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
 texture_progress_offset = Vector2(0, 2.425)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
+[node name="LvlCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 72.5
@@ -183,17 +195,35 @@ offset_right = 133.0
 offset_bottom = 260.5
 theme_override_constants/separation = -29
 
-[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=1824286944]
+[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/LvlCol" unique_id=1824286944]
 layout_mode = 2
 text = "Lvl"
 label_settings = SubResource("LabelSettings_tom5b")
 horizontal_alignment = 1
 
-[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=876506288]
+[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/LvlCol" unique_id=876506288]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_8b8ff")
 horizontal_alignment = 1
+
+[node name="CounterCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=845952610]
+layout_mode = 0
+offset_left = 630.0
+offset_top = 109.999985
+offset_right = 757.50006
+offset_bottom = 214.99998
+theme_override_constants/separation = -9
+
+[node name="LifeLbl" type="Label" parent="UI/RootUI/PlayerInfo/CounterCol" unique_id=1317920623]
+layout_mode = 2
+text = "3/5"
+label_settings = SubResource("LabelSettings_p4h6w")
+
+[node name="XPLbl" type="Label" parent="UI/RootUI/PlayerInfo/CounterCol" unique_id=452327313]
+layout_mode = 2
+text = "2000/4568"
+label_settings = SubResource("LabelSettings_fua5m")
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
 anchors_preset = 0
@@ -284,6 +314,7 @@ show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
+visible = false
 
 [node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
 offset_left = 16.0
@@ -307,13 +338,6 @@ offset_right = 88.0
 offset_bottom = 70.0
 text = "Combo: --"
 
-[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
-offset_left = 13.0
-offset_top = 63.0
-offset_right = 136.0
-offset_bottom = 86.0
-text = "Combo Timer: --"
-
 [node name="LevelLabel" type="Label" parent="DebugUI" unique_id=286208888]
 offset_left = 14.0
 offset_top = 80.0
@@ -334,6 +358,78 @@ offset_top = 99.0
 offset_right = 125.0
 offset_bottom = 122.0
 text = "XP Required: --"
+
+[node name="GameOverScreen" type="CanvasLayer" parent="." unique_id=921391486]
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen" unique_id=359578601]
+offset_left = -12.0
+offset_top = -9.0
+offset_right = 976.0
+offset_bottom = 556.0
+color = Color(0, 0, 0, 1)
+
+[node name="GameOverText" type="RichTextLabel" parent="GameOverScreen" unique_id=429451329]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -388.0
+offset_top = 75.0
+offset_right = 388.0
+offset_bottom = 205.0
+grow_horizontal = 2
+pivot_offset = Vector2(477, 156)
+theme_override_fonts/normal_font = ExtResource("21_1b3g2")
+theme_override_fonts/bold_font = ExtResource("21_1b3g2")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 38
+bbcode_enabled = true
+text = "[center][color=#f19db7][font_size=120]Game Over[/font_size][/color][/center]
+"
+fit_content = true
+
+[node name="ScoreLabel" type="Label" parent="GameOverScreen" unique_id=1330854381]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -45.0
+offset_right = 80.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: 1500"
+label_settings = SubResource("LabelSettings_rcr40")
+horizontal_alignment = 1
+
+[node name="BtnsCol" type="VBoxContainer" parent="GameOverScreen" unique_id=1549846686]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = 17.0
+offset_right = 114.5
+offset_bottom = 161.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 11
+
+[node name="PlayBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1516135890]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("21_1b3g2")
+theme_override_font_sizes/font_size = 25
+text = "Retry"
+
+[node name="QuitBtn" type="Button" parent="GameOverScreen/BtnsCol" unique_id=1019591651]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("21_1b3g2")
+theme_override_font_sizes/font_size = 25
+text = "Quit"
 
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")

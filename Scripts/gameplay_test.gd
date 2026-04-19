@@ -14,17 +14,20 @@ var enemy_scenes: Array[PackedScene] = [
 @export var speed_fx_lerp_speed: float = 6.0
 var label_update_timer: float = 0.01
 
+# Debug UI
 @onready var fps_label: Label = $DebugUI/FPSLabel
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
-@onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
 @onready var level_label: Label = $DebugUI/LevelLabel
 @onready var xp_label: Label = $DebugUI/XPLabel
 @onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
 
+# UI
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var xp_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/XPBar
-@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/VBoxContainer/LvlNum
+@onready var life_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/LifeLbl
+@onready var xp_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/XPLbl
+@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/LvlCol/LvlNum
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
 @onready var combo_meter_label: Label = $UI/RootUI/ComboMeter/ComboLabel
@@ -35,6 +38,10 @@ var shake_timer: float = 0.0
 var shake_target: Control = null  # ← nuevo
 @onready var speedometer_node: Control = $UI/RootUI/Speedometer
 
+# Game Over Screen
+@onready var game_over_screen: CanvasLayer = $GameOverScreen
+@onready var game_over_score_label: Label = $GameOverScreen/ScoreLabel
+
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
@@ -44,6 +51,8 @@ func _ready() -> void:
 	AudioController.stop_music()
 	AudioController.play_music()
 	EnemyDB.init(enemy_scenes)
+	ScoreManager.is_active = true
+	
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
 
@@ -56,11 +65,18 @@ func _ready() -> void:
 		player.xp_changed.connect(_on_player_xp_changed)
 		xp_bar.max_value = player.xp_for_next_level
 		xp_bar.value = player.current_xp
+		
+	life_lbl.text = "%d/%d" % [player.current_health, player.max_health]
+	xp_lbl.text = "%d/%d" % [player.current_xp, player.xp_for_next_level]
 	
 	player.level_up.connect(_on_player_level_up)
 	lvl_label.text = str(player.current_level)
 	
 	player.damaged.connect(_on_player_damaged)
+	
+	game_over_screen.hide()
+	$GameOverScreen/BtnsCol/PlayBtn.pressed.connect(_on_play_again_pressed)
+	# player.died.connect(_on_player_died)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -88,13 +104,9 @@ func _process(delta: float) -> void:
 	var score: int = ScoreManager.get_final_score()
 	score_label.text = "Score: %.0f" % score
 	
-	var combo: int = ScoreManager.combo
+	var combo: int = ScoreManager.is_active
 	combo_label.text = "Combo: %.0f" % combo
 	combo_meter_label.text = "x%d" % combo  			# UI
-	
-	var combo_timer: float = ScoreManager.combo_timer
-	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
-	combo_timer_bar.value = combo_timer					# UI
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level
@@ -134,8 +146,9 @@ func update_speed_fx(delta: float) -> void:
 	
 # UI
 func _on_player_health_changed(current: int, max_health: int) -> void:
-	life_bar.value = current
 	life_bar.max_value = max_health
+	life_bar.value = current
+	life_lbl.text = "%d/%d" % [current, max_health]
 	
 func _on_player_damaged() -> void:
 	start_shake($UI/RootUI/PlayerInfo, 0.4, 6.0)
@@ -143,6 +156,7 @@ func _on_player_damaged() -> void:
 func _on_player_xp_changed(current: int, max_xp: int) -> void:
 	xp_bar.value = current
 	xp_bar.max_value = max_xp
+	xp_lbl.text = "%d/%d" % [current, max_xp]
 	
 func _on_player_level_up(level: int) -> void:
 	lvl_label.text = str(level)
@@ -184,3 +198,10 @@ func update_speedometer() -> void:
 			if shake_timer <= 0:  # Evitar activar shake constantemente
 				start_shake(speedometer_node, 0.3, 5.0)  # duración, intensidad
 				
+
+func _on_player_died() -> void:
+	game_over_screen.show()
+	game_over_score_label.text = "Score: %d" % ScoreManager.get_final_score()
+
+func _on_play_again_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/GameplayTest/gameplay_test.tscn")  # ajusta el path

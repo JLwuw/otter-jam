@@ -20,16 +20,18 @@ var time_elapsed: float = 0
 var active_enemies: Array[Node] = []
 @onready var current_scene_root: Node = get_tree().current_scene
 @onready var spawn_timer: Timer = $Timer
+var is_active: bool = true
 
 func _ready() -> void:
+	player.died.connect(_on_player_died)
 	var rink_tilemap: TileMapLayer = rink.get_node("TileMapLayer")
 	rink_rect = get_tilemap_world_rect(rink_tilemap)
 	spawn_timer.wait_time = base_spawn_interval
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
-
-func _draw() -> void:
-	draw_rect(rink_rect, Color.GREEN, false, 2.0)
+		
+#func _draw() -> void:
+	#draw_rect(rink_rect, Color.GREEN, false, 2.0)
 
 func is_position_in_arena(pos: Vector2) -> bool:
 	return rink_rect.has_point(pos)
@@ -223,7 +225,14 @@ func clamp_to_arena(pos: Vector2, rect: Rect2) -> Vector2:
 	)
 
 func _on_timer_timeout() -> void:
+	if !is_active:
+		set_process(false)
+		$Timer.stop()
+		return
 	spawn_with_budget()
 
 func _on_enemy_removed(enemy: Node) -> void:
 	active_enemies.erase(enemy)
+
+func _on_player_died() -> void:
+	is_active = false

@@ -43,6 +43,7 @@ var has_direction: bool = false
 @export var idle_speed_threshold: float = 8.0
 @export var low_speed_animation: StringName = &"start"
 @export var high_speed_animation: StringName = &"walk"
+@export var death_animation: StringName = &"death"
 @export var gun_idle_animation: StringName = &"idle"
 @export var gun_shoot_animation: StringName = &"fire"
 @export var gun_shoot_animation_speed: float = 1.6
@@ -74,6 +75,9 @@ var right_muzzle: Node2D
 var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
+
+var is_dead: bool = false
+var played_dead_animation: bool = false
 var border_hit_cooldown: float = 0.0
 
 # Para UI
@@ -81,6 +85,7 @@ signal health_changed(current: int, max: int)
 signal damaged
 signal xp_changed(current: int, max_xp: int)
 signal level_up(level: int)
+signal died
 
 func _ready() -> void:
 	if SPEED_CAP > 0.0:
@@ -95,10 +100,17 @@ func _ready() -> void:
 	_initialize_leveling()
 
 func _input(event: InputEvent) -> void:
+	if is_dead: return
+	
 	if event.is_action_pressed("leftClick"):
 		_try_shoot_on_click()
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		velocity *= 0.8
+		move_and_slide()
+		return
+	
 	if Input.is_action_pressed("leftClick"):
 		move_hold_timer += delta
 		if move_hold_timer >= move_hold_delay:
@@ -124,8 +136,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	handle_rink_contacts()
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void:	
+	update_animation_state()
 	update_invuln_timer(delta)
+	
+	if !is_dead:
+		_update_shoot_cooldown(delta)
+		if shoot_anim_timer > 0.0:
+			shoot_anim_timer -= delta
+		update_gun_aim(delta)
 	_update_shoot_cooldown(delta)
 	border_hit_cooldown -= delta
 	if shoot_anim_timer > 0.0:
@@ -134,6 +153,9 @@ func _process(delta: float) -> void:
 	update_gun_aim(delta)
 
 func update_animation_state() -> void:
+	if is_dead:
+		return
+
 	if animated_otter != null:
 		var current_speed: float = velocity.length()
 		if current_speed <= idle_speed_threshold:
@@ -311,6 +333,9 @@ func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet
 	current_scene_root.add_child(bullet)
 
 func take_damage(amount: int = 1) -> void:
+	if is_dead:
+		return
+	
 	if invuln_timer > 0: return
 	print("Taking damage!")
 	current_health -= amount
@@ -327,6 +352,15 @@ func take_damage(amount: int = 1) -> void:
 	$Camera2D.current_shake = 20
 		
 func die() -> void:
+	if is_dead: return
+	is_dead = true
+	animated_otter.play(death_animation)
+	died.emit()
+	ScoreManager.is_active = false
+	$EnemyDetector.monitorable = false
+	$EnemyDetector.monitoring = false
+	set_collision_layer_value(1,  false)
+	
 	print("ggwp")
 
 func apply_slow(slow_amount: float, slow_duration: float) -> void:
@@ -450,7 +484,7 @@ func upgrade_max_hp(amount: int, index: int = 0) -> void:
 	_spawn_upgrade_popup("MAX HP", amount, index)
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
-	health_changed.emit(max_health, max_health)
+	health_changed.emit(current_health, max_health)	
 
 func upgrade_bullet_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Bullet Speed!")
