@@ -28,8 +28,20 @@ func _ready() -> void:
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
 
-#func _draw() -> void:
-	#draw_rect(rink_rect, Color.GREEN, false, 2.0)
+func _draw() -> void:
+	draw_rect(rink_rect, Color.GREEN, false, 2.0)
+
+func is_position_in_arena(pos: Vector2) -> bool:
+	return rink_rect.has_point(pos)
+
+func validate_spawn_position(pos: Vector2, enemy_name: String = "Enemy") -> void:
+	if not is_position_in_arena(pos):
+		print("WARNING: %s spawning at %.1f, %.1f which is OUTSIDE arena bounds!" % [enemy_name, pos.x, pos.y])
+		print("  Arena bounds: position=%.1f,%.1f  end=%.1f,%.1f  size=%.1f,%.1f" % [
+			rink_rect.position.x, rink_rect.position.y,
+			rink_rect.end.x, rink_rect.end.y,
+			rink_rect.size.x, rink_rect.size.y
+		])
 
 func get_tilemap_world_rect(tilemap: TileMapLayer) -> Rect2:
 	var used_rect: Rect2i = tilemap.get_used_rect()
@@ -39,12 +51,14 @@ func get_tilemap_world_rect(tilemap: TileMapLayer) -> Rect2:
 		tilemap.map_to_local(used_rect.position + used_rect.size)
 	)
 	
-	top_left.x += 90
-	top_left.y += 60
+	top_left.x += 120
+	top_left.y += 80
 	
-	bottom_right.y -= 30
+	bottom_right.x -= 40
+	bottom_right.y -= 40
 	
-	return Rect2(top_left, bottom_right - top_left).grow(-60)
+	var rect: Rect2 = Rect2(top_left, bottom_right - top_left)
+	return rect.grow(-50.0)
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
@@ -152,19 +166,60 @@ func spawn_enemy(scene: PackedScene) -> void:
 	enemy.global_position = spawn_pos
 	enemy.player = player
 	
+	# Validate spawn position
+	validate_spawn_position(spawn_pos, enemy.name)
+	
+	# Ensure enemy collider is set up before adding to scene
+	if enemy.has_node("CollisionShape2D"):
+		var collision_shape: CollisionShape2D = enemy.get_node("CollisionShape2D") as CollisionShape2D
+		if collision_shape != null and collision_shape.shape != null:
+			var shape_size: float = 0.0
+			if collision_shape.shape is CircleShape2D:
+				shape_size = (collision_shape.shape as CircleShape2D).radius
+			elif collision_shape.shape is RectangleShape2D:
+				shape_size = (collision_shape.shape as RectangleShape2D).size.length() * 0.5
+			
+			# Re-clamp with collision shape taken into account
+			if shape_size > 0:
+				var tight_rect: Rect2 = rink_rect.grow(-shape_size)
+				spawn_pos = Vector2(
+					clamp(spawn_pos.x, tight_rect.position.x, tight_rect.end.x),
+					clamp(spawn_pos.y, tight_rect.position.y, tight_rect.end.y)
+				)
+				enemy.global_position = spawn_pos
+	
 	active_enemies.append(enemy)
 	enemy.tree_exited.connect(_on_enemy_removed.bind(enemy))
 
 	current_scene_root.add_child(enemy)
+	
+	# Wait a frame for the enemy to initialize, then validate position again
+	await get_tree().process_frame
+	if enemy != null and is_instance_valid(enemy):
+		if not is_position_in_arena(enemy.global_position):
+			# Enemy somehow moved outside - force it back in
+			var corrected_pos: Vector2 = clamp_to_arena(enemy.global_position, rink_rect)
+			enemy.global_position = corrected_pos
+			print("Enemy was outside arena after spawn, repositioned to: %.1f, %.1f" % [corrected_pos.x, corrected_pos.y])
+	
 	await get_tree().create_timer(0.1).timeout
 
 func clamp_to_arena(pos: Vector2, rect: Rect2) -> Vector2:
-	var margin: float = 30.0  # Enemy collision margin
-	var clamped_rect: Rect2 = rect.grow(-margin)
+	# Ensure the position is strictly within bounds with a small safety margin
+	var safety_margin: float = 5.0
+	var safe_rect: Rect2 = rect.grow(-safety_margin)
+	
+	# Make sure safe_rect is valid before clamping
+	if safe_rect.size.x <= 0 or safe_rect.size.y <= 0:
+		# Fallback if rect is too small - just use the original rect
+		return Vector2(
+			clamp(pos.x, rect.position.x, rect.end.x),
+			clamp(pos.y, rect.position.y, rect.end.y)
+		)
 	
 	return Vector2(
-		clamp(pos.x, clamped_rect.position.x, clamped_rect.end.x),
-		clamp(pos.y, clamped_rect.position.y, clamped_rect.end.y)
+		clamp(pos.x, safe_rect.position.x, safe_rect.end.x),
+		clamp(pos.y, safe_rect.position.y, safe_rect.end.y)
 	)
 
 func _on_timer_timeout() -> void:
