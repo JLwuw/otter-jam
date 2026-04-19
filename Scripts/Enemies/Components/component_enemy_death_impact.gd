@@ -16,6 +16,17 @@ func _ready() -> void:
 	owner_enemy.died.connect(_on_enemy_died)
 
 func _on_enemy_died(_toughness: int) -> void:
+	var tween: Tween = create_tween()
+	
+	$"../AnimatedSprite2D".modulate = Color(1, 1, 1) # reset
+	
+	tween.tween_property(
+		$"../AnimatedSprite2D", 
+		"modulate", 
+		Color(1, 0.4, 0.4), 
+		0.1
+	)
+	
 	_emit_death_particles()
 	_trigger_hit_stop()
 

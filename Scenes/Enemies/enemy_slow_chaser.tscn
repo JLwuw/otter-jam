@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="4_hitfx"]
 [ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="4_p2rew"]
 [ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="5_deathfx"]
-[ext_resource type="Script" uid="uid://8iddeee25ag6" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="6_anim"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="6_anim"]
 [ext_resource type="Texture2D" uid="uid://qj8avxmvaego" path="res://Graphics/Enemies/TurttleDeath.png" id="7_ctxks"]
 [ext_resource type="Texture2D" uid="uid://yvfwnyt6gjp2" path="res://Graphics/Enemies/TurttleWalkIntercalado.png" id="8_jdliy"]
 
