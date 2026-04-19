@@ -24,7 +24,9 @@ var label_update_timer: float = 0.01
 
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var xp_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/XPBar
-@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/VBoxContainer/LvlNum
+@onready var life_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/LifeLbl
+@onready var xp_lbl: Label = $UI/RootUI/PlayerInfo/CounterCol/XPLbl
+@onready var lvl_label: Label = $UI/RootUI/PlayerInfo/LvlCol/LvlNum
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
 @onready var speed_bar: TextureProgressBar = $UI/RootUI/Speedometer/SpeedBar
 @onready var combo_meter_label: Label = $UI/RootUI/ComboMeter/ComboLabel
@@ -54,6 +56,9 @@ func _ready() -> void:
 		player.xp_changed.connect(_on_player_xp_changed)
 		xp_bar.max_value = player.xp_for_next_level
 		xp_bar.value = player.current_xp
+		
+	life_lbl.text = "%d/%d" % [player.current_health, player.max_health]
+	xp_lbl.text = "%d/%d" % [player.current_xp, player.xp_for_next_level]
 	
 	player.level_up.connect(_on_player_level_up)
 	lvl_label.text = str(player.current_level)
@@ -134,6 +139,7 @@ func update_speed_fx(delta: float) -> void:
 func _on_player_health_changed(current: int, max_health: int) -> void:
 	life_bar.value = current
 	life_bar.max_value = max_health
+	life_lbl.text = "%d/%d" % [current, max_health]
 	
 func _on_player_damaged() -> void:
 	start_shake($UI/RootUI/PlayerInfo, 0.4, 6.0)
@@ -141,6 +147,7 @@ func _on_player_damaged() -> void:
 func _on_player_xp_changed(current: int, max_xp: int) -> void:
 	xp_bar.value = current
 	xp_bar.max_value = max_xp
+	xp_lbl.text = "%d/%d" % [current, max_xp]
 	
 func _on_player_level_up(level: int) -> void:
 	lvl_label.text = str(level)
