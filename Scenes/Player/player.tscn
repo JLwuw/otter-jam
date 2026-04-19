@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://dovvkpgh5gfry" path="res://Graphics/Otter/NutriFinal.png" id="8_74mp2"]
 [ext_resource type="Texture2D" uid="uid://tq1ewnmf1b4h" path="res://Graphics/Otter/NutriaIntercaladoFinal.png" id="8_jlvik"]
 [ext_resource type="Texture2D" uid="uid://bhi4uqf1ydrp" path="res://Graphics/Otter/GunFinal.png" id="10_oikmp"]
+[ext_resource type="Script" uid="uid://ej1xphc4v2ig" path="res://Scripts/Player/upgrade_manager.gd" id="11_74mp2"]
+[ext_resource type="Script" uid="uid://betcfc8eype1d" path="res://Scripts/Player/upgrade.gd" id="12_06tpx"]
+[ext_resource type="Resource" uid="uid://dx7ngvnceha31" path="res://Resources/Upgrades/upgrade_max_hp.tres" id="13_7g0yx"]
 
 [sub_resource type="Curve" id="Curve_jlvik"]
 _data = [Vector2(0, 0.17179495), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -487,6 +490,7 @@ sprite_frames = SubResource("SpriteFrames_pcwjh")
 animation = &"fire"
 frame_progress = 0.8017695
 offset = Vector2(0, -18)
+script = ExtResource("1_a3d8c")
 
 [node name="MuzzleLeft" type="Marker2D" parent="AnimatedGun" unique_id=1882997916]
 position = Vector2(11.666667, -11.333334)
@@ -497,3 +501,7 @@ position = Vector2(-11.666664, -9.666668)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1340601154]
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_eksi1")
+
+[node name="Upgrade Manager" type="Node" parent="." unique_id=1716586623]
+script = ExtResource("11_74mp2")
+available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("13_7g0yx")])

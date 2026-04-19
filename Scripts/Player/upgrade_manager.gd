@@ -6,8 +6,6 @@ extends Node
 signal upgrade_offered(upgrades: Array[Upgrade], count: int)
 signal upgrade_selected(upgrade: Upgrade)
 
-
-
 func _ready() -> void:
 	if available_upgrades.is_empty():
 		print("WARNING: No upgrades configured in UpgradeManager")
@@ -56,9 +54,7 @@ func select_upgrade(upgrade: Upgrade, player: Player) -> void:
 func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 	match upgrade.upgrade_type:
 		Upgrade.Type.MAX_HP:
-			player.max_health += upgrade.amount
-			player.current_health = min(player.current_health + upgrade.amount, player.max_health)
-			player.health_changed.emit(player.current_health)
+			player.upgrade_max_hp(upgrade.amount)
 		
 		Upgrade.Type.FIRE_RATE:
 			player.max_fire_rate += upgrade.amount * 0.5

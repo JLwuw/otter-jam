@@ -50,8 +50,7 @@ var has_direction: bool = false
 var current_xp: int = 0
 var current_level: int = 0
 var xp_for_next_level: int = 0
-var upgrade_manager: UpgradeManager
-
+@onready var upgrade_manager: UpgradeManager = $"Upgrade Manager"
 
 var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
@@ -83,8 +82,6 @@ func _ready() -> void:
 	right_muzzle = get_node_or_null(right_muzzle_path) as Node2D
 	_set_otter_idle_pose()
 	_play_if_valid(animated_gun, gun_idle_animation)
-	
-	upgrade_manager = current_scene_root.get_node_or_null("UpgradeManager")
 	_initialize_leveling()
 
 func _input(event: InputEvent) -> void:
@@ -266,7 +263,7 @@ func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet
 	bullet.speed = effective_bullet_speed
 	bullet.rotation = rotation_to_mouse
 	current_scene_root.add_child(bullet)
-		
+
 func take_damage(amount: int = 1) -> void:
 	if invuln_timer > 0: return
 	print("Taking damage!")
@@ -289,6 +286,7 @@ func apply_slow(slow_amount: float, slow_duration: float) -> void:
 		set_meta("original_accel", acceleration_factor)
 		set_meta("current_slow", 0.0)
 	
+	@warning_ignore("untyped_declaration")
 	var original_accel = get_meta("original_accel")
 	
 	# Only apply if this slow is stronger
@@ -366,10 +364,13 @@ func _level_up() -> void:
 	
 	if upgrade_manager != null:
 		await get_tree().process_frame  # Let signals propagate first
-		var offered = upgrade_manager.offer_random_upgrades(3)
-		print("Level up! Choose an upgrade: ", offered.map(func(u): return u.display_name))
-
+		var offered: Array[Upgrade] = upgrade_manager.offer_random_upgrades(3)
+		
 func _on_enemy_died(toughness: int) -> void:
 	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
 	add_xp(xp_gain)
 	
+func upgrade_max_hp(amount: int) -> void:
+	max_health += amount
+	current_health = min(max_health, current_health + amount)
+	health_changed.emit(max_health)

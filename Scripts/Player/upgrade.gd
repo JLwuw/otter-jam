@@ -6,13 +6,11 @@ enum Type {
 	DAMAGE,
 	PIERCING,
 	MULTISHOT,
-	FIRE_RATE,
 	BULLET_SPEED
 }
 
 static var rarity_by_type: Dictionary[Type, float] = {
 	Upgrade.Type.MAX_HP: 1.0,
-	Upgrade.Type.FIRE_RATE: 0.8,
 	Upgrade.Type.BULLET_SPEED: 0.6,
 	Upgrade.Type.DAMAGE: 0.4,
 	Upgrade.Type.MULTISHOT: 0.3,
