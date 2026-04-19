@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dvqygiqjat8ne"]
+
+[ext_resource type="Script" uid="uid://x7alf4tl7eri" path="res://Scripts/difficulty_screen.gd" id="1_ndua3"]
+[ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="2_s0mie"]
+[ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_3bsy7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6hm7x"]
+font = ExtResource("3_3bsy7")
+font_size = 50
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3bsy7"]
+radius = 95.189285
+
+[node name="DifficultyScreen" type="Node2D" unique_id=1136167743]
+script = ExtResource("1_ndua3")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2066469197]
+offset_right = 961.0
+offset_bottom = 539.0
+color = Color(0.8509804, 0.91764706, 0.972549, 1)
+
+[node name="Player" parent="." unique_id=2009590095 instance=ExtResource("2_s0mie")]
+position = Vector2(171, 280)
+
+[node name="Label" type="Label" parent="." unique_id=731092994]
+offset_left = 344.0
+offset_top = 39.0
+offset_right = 620.0
+offset_bottom = 94.0
+text = "Select Difficulty"
+label_settings = SubResource("LabelSettings_6hm7x")
+
+[node name="EasyZone" type="Area2D" parent="." unique_id=1441595673]
+position = Vector2(816, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EasyZone" unique_id=730639081]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_3bsy7")
