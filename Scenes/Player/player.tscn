@@ -516,6 +516,6 @@ shape = SubResource("CapsuleShape2D_eksi1")
 
 [node name="Upgrade Manager" type="Node" parent="." unique_id=1716586623]
 script = ExtResource("11_74mp2")
-available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("17_ks1b7")])
+available_upgrades = [ExtResource("17_ks1b7")]
 
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
