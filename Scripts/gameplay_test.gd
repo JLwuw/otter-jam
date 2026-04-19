@@ -36,6 +36,9 @@ var shake_timer: float = 0.0
 var shake_target: Control = null  # ← nuevo
 @onready var speedometer_node: Control = $UI/RootUI/Speedometer
 
+@export var enemy_spawner_scene: PackedScene = preload("res://Scenes/enemy_spawner.tscn")
+@onready var current_scene_root: Node = get_tree().current_scene
+
 @onready var player: Player = $Player as Player
 @onready var speed_fx_rect: ColorRect = $SpeedFX/SpeedFXRect
 var speed_fx_material: ShaderMaterial
@@ -45,6 +48,31 @@ func _ready() -> void:
 	EnemyDB.init(enemy_scenes)
 	ScoreManager.is_active = true
 	
+	match ScoreManager.difficulty_selected:
+		ScoreManager.Difficulty.EASY:
+			print("Easy Mode!")
+			
+		ScoreManager.Difficulty.MEDIUM:
+			print("Medium Mode!")
+			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner.player = $Player
+			enemy_spawner.rink = $Rink
+			enemy_spawner.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner)
+			
+		ScoreManager.Difficulty.HARD:
+			print("Hard Mode!")
+			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner.player = $Player
+			enemy_spawner.rink = $Rink
+			enemy_spawner.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner)
+			var enemy_spawner2: EnemySpawner = enemy_spawner_scene.instantiate()
+			enemy_spawner2.player = $Player
+			enemy_spawner2.rink = $Rink
+			enemy_spawner2.time_elapsed = -30
+			current_scene_root.add_child(enemy_spawner2)
+
 	if player != null:
 		player.health_changed.connect(_on_player_health_changed)
 

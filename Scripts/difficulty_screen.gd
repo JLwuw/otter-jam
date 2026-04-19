@@ -39,22 +39,15 @@ func update_speed_fx(delta: float) -> void:
 		speed_fx_material.set_shader_parameter("velocity_dir", player.velocity.normalized())
 
 func select_difficulty(difficulty: String) -> void:
-	match difficulty:
-		#"easy":
-			#GameSettings.difficulty = "easy"	# ajusta a tu sistema
-		#"normal":
-			#GameSettings.difficulty = "normal"
-		#"hard":
-			#GameSettings.difficulty = "hard"
-			
-		"easy":							# PLACEHOLDERS !!
-			print("set to easy")
+	match difficulty:			
+		"easy":
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.EASY
 		"normal":
-			print("set to normal")
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.MEDIUM
 		"hard":
-			print("set to hard")
+			ScoreManager.difficulty_selected = ScoreManager.Difficulty.HARD
+	
 	get_tree().change_scene_to_file("res://Scenes/gameplay_test.tscn")
-
 
 func _on_easy_zone_body_entered(body: Node2D) -> void:
 	if body is Player:
