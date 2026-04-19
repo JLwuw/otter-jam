@@ -14,6 +14,7 @@ var lifetime_remaining: float = 0.0
 var pool: Node
 var release_requested: bool = false
 const POOL_PARK_POSITION: Vector2 = Vector2(100000.0, 100000.0)
+var damage: int = 1
 
 func _ready() -> void:
 	if pool != null:
@@ -40,12 +41,12 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	if team == Team.PLAYER and body.is_in_group("enemies") and body.has_method("take_damage"):
-		body.call("take_damage", 1)
+		body.call("take_damage", damage)
 		_emit_lifetime_end_particles()
 		despawn()
 
 	elif team == Team.ENEMY and body.is_in_group("player") and body.has_method("take_damage"):
-		body.call("take_damage", 1)
+		body.call("take_damage", damage)
 		_emit_lifetime_end_particles()
 		despawn()
 	
@@ -73,12 +74,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func set_pool(new_pool: Node) -> void:
 	pool = new_pool
 
-func activate(new_team: Team, spawn_position: Vector2, spawn_direction: Vector2, spawn_speed: float, spawn_rotation: float = 0.0) -> void:
+func activate(new_team: Team, spawn_position: Vector2, spawn_direction: Vector2, spawn_speed: float, spawn_rotation: float = 0.0, new_damage: int = 1) -> void:
 	release_requested = false
 	team = new_team
 	global_position = spawn_position
 	direction = spawn_direction
 	speed = spawn_speed
+	damage = new_damage
 	rotation = spawn_rotation + deg_to_rad(rotation_offset_degrees)
 	lifetime_remaining = lifetime_seconds
 	sprite.visible = true
@@ -93,6 +95,7 @@ func activate(new_team: Team, spawn_position: Vector2, spawn_direction: Vector2,
 func deactivate_for_pool() -> void:
 	release_requested = false
 	direction = Vector2.ZERO
+	damage = 1
 	lifetime_remaining = lifetime_seconds
 	global_position = POOL_PARK_POSITION
 	rotation = 0.0

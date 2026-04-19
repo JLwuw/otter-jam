@@ -18,7 +18,8 @@ static var rarity_by_type: Dictionary[Type, float] = {
 }
 
 static var upgrade_info: Dictionary = {
-	Upgrade.Type.MAX_HP: {"name": "Max HP", "description": "Increase maximum health"},	Upgrade.Type.BULLET_SPEED: {"name": "Bullet Speed", "description": "Increase bullet speed"},
+	Upgrade.Type.MAX_HP: {"name": "Max HP", "description": "Increase maximum health"},	
+	Upgrade.Type.BULLET_SPEED: {"name": "Bullet Speed", "description": "Increase bullet speed"},
 	Upgrade.Type.DAMAGE: {"name": "Damage", "description": "Increase bullet damage"},
 	Upgrade.Type.MULTISHOT: {"name": "Multishot", "description": "Fire multiple bullets"},
 	Upgrade.Type.PIERCING: {"name": "Piercing", "description": "Bullets pierce through enemies"}

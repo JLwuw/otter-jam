@@ -52,7 +52,7 @@ func warm_pool(count: int, scene_to_pool: PackedScene) -> void:
 	available_by_scene[scene_key] = available
 
 
-func get_bullet(team: Bullet.Team, spawn_position: Vector2, spawn_direction: Vector2, spawn_speed: float, spawn_rotation: float = 0.0, bullet_scene_override: PackedScene = null) -> Node:
+func get_bullet(team: Bullet.Team, spawn_position: Vector2, spawn_direction: Vector2, spawn_speed: float, spawn_rotation: float = 0.0, bullet_scene_override: PackedScene = null, damage: int = 1) -> Node:
 	var requested_scene: PackedScene = bullet_scene_override
 	if requested_scene == null:
 		requested_scene = bullet_scene
@@ -80,7 +80,7 @@ func get_bullet(team: Bullet.Team, spawn_position: Vector2, spawn_direction: Vec
 		bullet_2d.rotation = spawn_rotation
 
 	if bullet_node.has_method("activate"):
-		bullet_node.call("activate", team, spawn_position, spawn_direction, spawn_speed, spawn_rotation)
+		bullet_node.call("activate", team, spawn_position, spawn_direction, spawn_speed, spawn_rotation, damage)
 
 	return bullet_node
 

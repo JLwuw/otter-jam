@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://ej1xphc4v2ig" path="res://Scripts/Player/upgrade_manager.gd" id="11_74mp2"]
 [ext_resource type="Script" uid="uid://betcfc8eype1d" path="res://Scripts/Player/upgrade.gd" id="12_06tpx"]
 [ext_resource type="Resource" uid="uid://dx7ngvnceha31" path="res://Resources/Upgrades/upgrade_max_hp.tres" id="13_7g0yx"]
+[ext_resource type="Resource" uid="uid://bngxwwvmxrbq2" path="res://Resources/Upgrades/upgrade_bullet_speed.tres" id="14_7g0yx"]
+[ext_resource type="Resource" uid="uid://du5ecnrjd3iui" path="res://Resources/Upgrades/upgrade_damage.tres" id="15_dey5f"]
 
 [sub_resource type="Curve" id="Curve_jlvik"]
 _data = [Vector2(0, 0.17179495), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -505,4 +507,4 @@ shape = SubResource("CapsuleShape2D_eksi1")
 
 [node name="Upgrade Manager" type="Node" parent="." unique_id=1716586623]
 script = ExtResource("11_74mp2")
-available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("13_7g0yx")])
+available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("13_7g0yx"), ExtResource("14_7g0yx"), ExtResource("15_dey5f")])

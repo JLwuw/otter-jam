@@ -34,6 +34,7 @@ var has_direction: bool = false
 @export var burst_start_speed: float = 120.0
 @export var burst_shot_interval: float = 0.045
 @export var fire_rate_curve: Curve
+@export var damage: int = 1
 
 
 @export_category("Animation")
@@ -291,7 +292,7 @@ func _get_bullet_spawn_positions(direction: Vector2) -> Array[Vector2]:
 
 func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet_speed: float, rotation_to_mouse: float) -> void:
 	if bullet_pool != null and bullet_pool.has_method("get_bullet"):
-		bullet_pool.call("get_bullet", Bullet.Team.PLAYER, spawn_position, direction, effective_bullet_speed, rotation_to_mouse, bullet_scene)
+		bullet_pool.call("get_bullet", Bullet.Team.PLAYER, spawn_position, direction, effective_bullet_speed, rotation_to_mouse, bullet_scene, damage)
 		return
 
 	var bullet: Bullet = bullet_scene.instantiate()
@@ -300,6 +301,7 @@ func _spawn_bullet(spawn_position: Vector2, direction: Vector2, effective_bullet
 	bullet.direction = direction
 	bullet.speed = effective_bullet_speed
 	bullet.rotation = rotation_to_mouse
+	bullet.damage = damage
 	current_scene_root.add_child(bullet)
 
 func take_damage(amount: int = 1) -> void:
@@ -402,13 +404,24 @@ func _level_up() -> void:
 	
 	if upgrade_manager != null:
 		await get_tree().process_frame  # Let signals propagate first
-		var offered: Array[Upgrade] = upgrade_manager.offer_random_upgrades(3)
+		var upgrades_offered: Array[Upgrade] = upgrade_manager.offer_random_upgrades(1)
+		for upgrade in upgrades_offered:
+			upgrade_manager.apply_upgrade(upgrade, self)
 		
 func _on_enemy_died(toughness: int) -> void:
 	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
 	add_xp(xp_gain)
 	
 func upgrade_max_hp(amount: int) -> void:
+	print("Upgrading Max HP!")
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
 	health_changed.emit(max_health)
+
+func upgrade_bullet_speed(amount: int) -> void:
+	print("Upgrading Bullet Speed!")
+	bullet_speed += amount
+	
+func upgrade_damage(amount: int) -> void:
+	print("Upgrading Damage!")
+	damage += amount

@@ -56,14 +56,11 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		Upgrade.Type.MAX_HP:
 			player.upgrade_max_hp(upgrade.amount)
 		
-			player.max_fire_rate += upgrade.amount * 0.5
-		
 		Upgrade.Type.BULLET_SPEED:
-			player.bullet_speed += upgrade.amount * 50
+			player.upgrade_bullet_speed(upgrade.amount)
 		
 		Upgrade.Type.DAMAGE:
-			# Placeholder: when damage stat is added to player
-			pass
+			player.upgrade_damage(upgrade.amount)
 		
 		Upgrade.Type.PIERCING:
 			# Placeholder: when piercing is added to bullets
@@ -72,11 +69,4 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		Upgrade.Type.MULTISHOT:
 			# Placeholder: when multishot is added to player
 			pass
-
-func get_upgrade_display_name(upgrade: Upgrade) -> String:
-	var info = Upgrade.upgrade_info.get(upgrade.upgrade_type, {})
-	return info.get("name", "Unknown")
-
-func get_upgrade_description(upgrade: Upgrade) -> String:
-	var info = Upgrade.upgrade_info.get(upgrade.upgrade_type, {})
-	return info.get("description", "No description")
+	
