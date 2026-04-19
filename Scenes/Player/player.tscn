@@ -492,7 +492,6 @@ sprite_frames = SubResource("SpriteFrames_pcwjh")
 animation = &"fire"
 frame_progress = 0.8017695
 offset = Vector2(0, -18)
-script = ExtResource("1_a3d8c")
 
 [node name="MuzzleLeft" type="Marker2D" parent="AnimatedGun" unique_id=1882997916]
 position = Vector2(11.666667, -11.333334)
