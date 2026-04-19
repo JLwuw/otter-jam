@@ -63,7 +63,6 @@ var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
 var is_invuln: bool = false
-var max_speed_sq: float = 0.0
 var speed_cap_inv: float = 0.0
 @onready var current_scene_root: Node = get_tree().current_scene
 var bullet_pool: Node
@@ -75,13 +74,13 @@ var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
 
-# Para progress bar en UI
+# Para UI
 signal health_changed(current: int, max: int)
+signal damaged
 signal xp_changed(current: int, max_xp: int)
 signal level_up(level: int)
 
 func _ready() -> void:
-	max_speed_sq = max_speed * max_speed
 	if SPEED_CAP > 0.0:
 		speed_cap_inv = 1.0 / SPEED_CAP
 	if current_scene_root == null:
@@ -115,7 +114,7 @@ func _physics_process(delta: float) -> void:
 		var target_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
 		rotation = lerp_angle(rotation, target_rotation, turn_speed * delta)
 	
-	if velocity.length_squared() > max_speed_sq:
+	if velocity.length() > max_speed:
 		velocity = velocity.normalized() * max_speed 
 	
 	velocity *= 1.0 / (1.0 + drag * delta) 
@@ -308,6 +307,7 @@ func take_damage(amount: int = 1) -> void:
 	print("Taking damage!")
 	current_health -= amount
 	health_changed.emit(current_health, max_health)  # UI
+	damaged.emit()									# UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)
@@ -409,6 +409,8 @@ func _level_up() -> void:
 	if upgrade_manager != null:
 		await get_tree().process_frame  # Let signals propagate first
 		var upgrades_offered: Array[Upgrade] = upgrade_manager.offer_random_upgrades(1)
+		if upgrades_offered.is_empty():
+			print("WARNING: no upgrades available on level up")
 		for upgrade in upgrades_offered:
 			upgrade_manager.apply_upgrade(upgrade, self)
 		
@@ -434,4 +436,9 @@ func upgrade_bullet_count(amount: int) -> void:
 	print("Upgrading Bullet Count!")
 	min_burst_count += amount
 	max_burst_count += amount
+
+func upgrade_max_speed(amount: int) -> void:
+	print("Upgrading Max Speed!")
+	max_speed += amount
+	
 	

@@ -23,7 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -32,6 +33,14 @@ shader_parameter/velocity_dir = Vector2(1, 0)
 shader_parameter/blur_strength = 0.0
 shader_parameter/vignette_strength = 0.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_tom5b"]
+font = ExtResource("21_1b3g2")
+font_size = 68
+
+[sub_resource type="LabelSettings" id="LabelSettings_8b8ff"]
+font = ExtResource("21_1b3g2")
+font_size = 133
+
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("21_1b3g2")
 font_size = 68
@@ -39,6 +48,16 @@ font_size = 68
 [sub_resource type="LabelSettings" id="LabelSettings_wnwfe"]
 font = ExtResource("21_1b3g2")
 font_size = 92
+
+[sub_resource type="LabelSettings" id="LabelSettings_nk2r0"]
+font = ExtResource("21_1b3g2")
+font_size = 99
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4h6w"]
+bg_color = Color(0.85882354, 0.85882354, 0.85882354, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nk2r0"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Environment" id="Environment_p4h6w"]
 background_mode = 3
@@ -49,7 +68,7 @@ glow_bloom = 0.1
 script = ExtResource("1_n6585")
 
 [node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
-position = Vector2(-3086, -1935)
+position = Vector2(-3095, -1935)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
 position = Vector2(-6, 130)
@@ -110,9 +129,10 @@ texture = ExtResource("1_6nxcd")
 [node name="CharacterBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1253607656]
 layout_mode = 1
 anchors_preset = -1
+offset_left = -82.49999
 offset_top = 54.5
-offset_right = 203.0
-offset_bottom = 259.5
+offset_right = 198.5
+offset_bottom = 332.5
 texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
@@ -152,6 +172,26 @@ value = 25.0
 texture_under = ExtResource("8_kpd0n")
 texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 72.5
+offset_right = 133.0
+offset_bottom = 260.5
+theme_override_constants/separation = -29
+
+[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=1824286944]
+layout_mode = 2
+text = "Lvl"
+label_settings = SubResource("LabelSettings_tom5b")
+horizontal_alignment = 1
+
+[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=876506288]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_8b8ff")
+horizontal_alignment = 1
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
 anchors_preset = 0
@@ -203,6 +243,42 @@ offset_bottom = 160.00003
 text = "48"
 label_settings = SubResource("LabelSettings_wnwfe")
 horizontal_alignment = 1
+
+[node name="ComboMeter" type="Control" parent="UI/RootUI" unique_id=61240671]
+anchors_preset = 0
+offset_left = 866.0
+offset_top = 328.0
+offset_right = 1073.5
+offset_bottom = 533.0
+scale = Vector2(0.4, 0.4)
+
+[node name="ComboBG" type="TextureRect" parent="UI/RootUI/ComboMeter" unique_id=1805869791]
+layout_mode = 0
+offset_left = 5.722046e-05
+offset_top = 2.5000134
+offset_right = 207.00006
+offset_bottom = 212.50002
+texture = ExtResource("23_p4h6w")
+
+[node name="ComboLabel" type="Label" parent="UI/RootUI/ComboMeter" unique_id=1210938599]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 29.999998
+offset_right = 190.0
+offset_bottom = 137.0
+text = "x2"
+label_settings = SubResource("LabelSettings_nk2r0")
+horizontal_alignment = 1
+
+[node name="ComboTimerBar" type="ProgressBar" parent="UI/RootUI/ComboMeter" unique_id=1040315269]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 127.5
+offset_right = 160.0
+offset_bottom = 140.49988
+theme_override_styles/background = SubResource("StyleBoxFlat_p4h6w")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nk2r0")
+show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10

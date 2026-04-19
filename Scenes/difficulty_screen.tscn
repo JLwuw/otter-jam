@@ -1,38 +1,113 @@
 [gd_scene format=3 uid="uid://dvqygiqjat8ne"]
 
 [ext_resource type="Script" uid="uid://x7alf4tl7eri" path="res://Scripts/difficulty_screen.gd" id="1_ndua3"]
+[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="2_7rafo"]
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="2_s0mie"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_3bsy7"]
+[ext_resource type="Texture2D" uid="uid://81k17nn0w3tu" path="res://Graphics/UI/Hole.png" id="4_6hm7x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7rafo"]
+font = ExtResource("3_3bsy7")
+font_size = 65
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_6hm7x"]
 font = ExtResource("3_3bsy7")
 font_size = 50
+font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3bsy7"]
-radius = 95.189285
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3bsy7"]
+radius = 80.0
+height = 200.00003
 
 [node name="DifficultyScreen" type="Node2D" unique_id=1136167743]
 script = ExtResource("1_ndua3")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=2066469197]
-offset_right = 961.0
-offset_bottom = 539.0
-color = Color(0.8509804, 0.91764706, 0.972549, 1)
+[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("2_7rafo")]
+position = Vector2(-496, -202)
+scale = Vector2(0.275, 0.275)
 
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("2_s0mie")]
-position = Vector2(171, 280)
+position = Vector2(480, 269)
 
-[node name="Label" type="Label" parent="." unique_id=731092994]
-offset_left = 344.0
-offset_top = 39.0
-offset_right = 620.0
-offset_bottom = 94.0
+[node name="SelectDiffLabel" type="Label" parent="." unique_id=731092994]
+offset_left = 260.0
+offset_top = 38.0
+offset_right = 704.0
+offset_bottom = 93.0
 text = "Select Difficulty"
+label_settings = SubResource("LabelSettings_7rafo")
+horizontal_alignment = 1
+
+[node name="EasyLabel" type="Label" parent="." unique_id=121069208]
+offset_left = -38.0
+offset_top = 215.0
+offset_right = 126.0
+offset_bottom = 270.0
+text = "Easy"
 label_settings = SubResource("LabelSettings_6hm7x")
+horizontal_alignment = 1
+
+[node name="NormalLabel" type="Label" parent="." unique_id=1353348807]
+offset_left = 393.0
+offset_top = 468.0
+offset_right = 557.0
+offset_bottom = 523.0
+text = "Normal"
+label_settings = SubResource("LabelSettings_6hm7x")
+horizontal_alignment = 1
+
+[node name="HardLabel" type="Label" parent="." unique_id=826043268]
+offset_left = 806.0
+offset_top = 222.0
+offset_right = 970.0
+offset_bottom = 277.0
+text = "Hard"
+label_settings = SubResource("LabelSettings_6hm7x")
+horizontal_alignment = 1
 
 [node name="EasyZone" type="Area2D" parent="." unique_id=1441595673]
-position = Vector2(816, 120)
+position = Vector2(-238, 241)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EasyZone" unique_id=730639081]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_3bsy7")
+visibility_layer = 65
+position = Vector2(2.262329, 1.9999847)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_3bsy7")
+
+[node name="Sprite2D" type="Sprite2D" parent="EasyZone" unique_id=1690645793]
+position = Vector2(1.3869019, 3.124588)
+scale = Vector2(0.7508197, 0.7508197)
+texture = ExtResource("4_6hm7x")
+
+[node name="NormalZone" type="Area2D" parent="." unique_id=1812514745]
+position = Vector2(481, 702)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NormalZone" unique_id=1862081721]
+visibility_layer = 65
+position = Vector2(2.262329, 1.9999847)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_3bsy7")
+
+[node name="Sprite2D" type="Sprite2D" parent="NormalZone" unique_id=172243113]
+position = Vector2(1.3869019, 3.124588)
+scale = Vector2(0.7508197, 0.7508197)
+texture = ExtResource("4_6hm7x")
+
+[node name="HardZone" type="Area2D" parent="." unique_id=1646827409]
+position = Vector2(1216, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardZone" unique_id=865675832]
+visibility_layer = 65
+position = Vector2(2.262329, 1.9999847)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_3bsy7")
+
+[node name="Sprite2D" type="Sprite2D" parent="HardZone" unique_id=1779452049]
+position = Vector2(1.3869019, 3.124588)
+scale = Vector2(0.7508197, 0.7508197)
+texture = ExtResource("4_6hm7x")
+
+[connection signal="body_entered" from="EasyZone" to="." method="_on_easy_zone_body_entered"]
+[connection signal="body_entered" from="NormalZone" to="." method="_on_normal_zone_body_entered"]
+[connection signal="body_entered" from="HardZone" to="." method="_on_hard_zone_body_entered"]
