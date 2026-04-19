@@ -253,6 +253,7 @@ func _on_player_died() -> void:
 func _on_play_again_pressed() -> void:
 	AudioController.stop_all_sfx()
 	AudioController.stop_music()
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
 	
 func _on_main_menu_pressed() -> void:
@@ -260,7 +261,3 @@ func _on_main_menu_pressed() -> void:
 	AudioController.stop_music()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/difficulty_screen.tscn")  # ajusta el path
-	
-func _on_main_menu_pressed() -> void:
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
