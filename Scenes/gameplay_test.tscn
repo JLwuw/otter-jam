@@ -31,6 +31,14 @@ shader_parameter/velocity_dir = Vector2(1, 0)
 shader_parameter/blur_strength = 0.0
 shader_parameter/vignette_strength = 0.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_tom5b"]
+font = ExtResource("21_1b3g2")
+font_size = 68
+
+[sub_resource type="LabelSettings" id="LabelSettings_8b8ff"]
+font = ExtResource("21_1b3g2")
+font_size = 133
+
 [sub_resource type="LabelSettings" id="LabelSettings_wl76b"]
 font = ExtResource("21_1b3g2")
 font_size = 68
@@ -146,6 +154,26 @@ value = 25.0
 texture_under = ExtResource("8_kpd0n")
 texture_over = ExtResource("9_vuhfc")
 texture_progress = ExtResource("10_wl76b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
+layout_mode = 0
+offset_left = 52.5
+offset_top = 72.5
+offset_right = 130.5
+offset_bottom = 260.5
+theme_override_constants/separation = -29
+
+[node name="LvlLabel" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=1824286944]
+layout_mode = 2
+text = "Lvl"
+label_settings = SubResource("LabelSettings_tom5b")
+horizontal_alignment = 1
+
+[node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=876506288]
+layout_mode = 2
+text = "15"
+label_settings = SubResource("LabelSettings_8b8ff")
+horizontal_alignment = 1
 
 [node name="Speedometer" type="Control" parent="UI/RootUI" unique_id=1330466614]
 anchors_preset = 0
