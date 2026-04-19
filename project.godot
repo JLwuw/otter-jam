@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+AudioController="*uid://d3jufx4socsjn"
 EnemyDB="*uid://6lxgcgtlxnbs"
 ScoreManager="*uid://su1n6vvdsw32"
 
