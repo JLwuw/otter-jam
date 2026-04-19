@@ -12,7 +12,7 @@ region = Rect2(0, 0, 64, 64)
 radius = 4.2
 
 [node name="Bullet" type="Area2D" unique_id=143243005]
-scale = Vector2(5, 5)
+scale = Vector2(7, 7)
 script = ExtResource("1_t3y4n")
 lifetime_seconds = 5.0
 despawn_when_offscreen = true
@@ -20,6 +20,7 @@ rotation_offset_degrees = 90.0
 lifetime_end_particles = ExtResource("2_6332g")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1657239318]
+self_modulate = Color(1.3655106, 1.3655106, 1.3655106, 1)
 scale = Vector2(0.14257813, 0.14257813)
 texture = SubResource("AtlasTexture_nt0l2")
 

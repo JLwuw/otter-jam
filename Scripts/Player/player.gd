@@ -217,7 +217,6 @@ func handle_rink_contacts() -> void:
 			continue
 
 		rink.spawn_touch_particles(collision.get_position(), collision.get_normal(), current_speed)
-		break
 
 
 func _update_shoot_cooldown(delta: float) -> void:

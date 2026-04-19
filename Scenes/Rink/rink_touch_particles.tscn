@@ -32,7 +32,7 @@ color_ramp = SubResource("GradientTexture1D_1q2w3")
 [node name="RinkTouchParticles" type="GPUParticles2D" unique_id=1084537576]
 z_index = 4
 emitting = false
-amount = 18
+amount = 50
 texture = ExtResource("1_hx0x6")
 lifetime = 0.35
 one_shot = true
