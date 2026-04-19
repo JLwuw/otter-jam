@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 [ext_resource type="PackedScene" uid="uid://qxh60ffkds3" path="res://Scenes/Rink/rink2.tscn" id="25_p4h6w"]
 
