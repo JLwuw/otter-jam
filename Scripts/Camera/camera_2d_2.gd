@@ -10,6 +10,12 @@ extends Camera2D
 @export var zoom_in: Vector2 = Vector2(1.2, 1.2)
 @export var zoom_out: Vector2 = Vector2(0.7, 0.7)
 
+@export_category("Shake")
+@export var shake_strength: float = 20.0
+@export var shake_decay: float = 5.0
+var current_shake: float = 0.0
+
+
 var player: CharacterBody2D
 var follow_velocity: Vector2 = Vector2.ZERO
 var zoom_in_delay_timer: float = 0.0
@@ -26,6 +32,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if player == null:
 		return
+	
+	apply_shake(delta)
 
 	var speed_ratio: float = 0.0
 	if speed_for_max_zoom_out > 0.0:
@@ -53,3 +61,19 @@ func _physics_process(delta: float) -> void:
 	var target_zoom: Vector2 = zoom_in.lerp(zoom_out, zoom_ratio)
 	var zoom_weight: float = 1.0 - exp(-zoom_lerp_speed * delta)
 	zoom = zoom.lerp(target_zoom, zoom_weight)
+
+
+func apply_shake(delta: float) -> void:
+	if current_shake > 0.0:
+		current_shake = lerp(current_shake, 0.0, shake_decay * delta)
+		
+		var new_offset: Vector2 = Vector2(
+			randf_range(-1.0, 1.0),
+			randf_range(-1.0, 1.0)
+		) * current_shake
+		
+		new_offset = new_offset.round() # helps avoid subpixel jitter
+		
+		offset = new_offset
+	else:
+		offset = Vector2.ZERO

@@ -316,6 +316,7 @@ func take_damage(amount: int = 1) -> void:
 	if animated_otter != null:
 		animated_otter.self_modulate = Color(1.0, 1.0, 1.0, 0.6)
 	is_invuln = true
+	$Camera2D.current_shake = 20
 		
 func die() -> void:
 	print("ggwp")

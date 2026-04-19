@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://tq1ewnmf1b4h" path="res://Graphics/Otter/NutriaIntercaladoFinal.png" id="8_jlvik"]
 [ext_resource type="Texture2D" uid="uid://bhi4uqf1ydrp" path="res://Graphics/Otter/GunFinal.png" id="10_oikmp"]
 [ext_resource type="Script" uid="uid://ej1xphc4v2ig" path="res://Scripts/Player/upgrade_manager.gd" id="11_74mp2"]
-[ext_resource type="Script" uid="uid://betcfc8eype1d" path="res://Scripts/Player/upgrade.gd" id="12_06tpx"]
 [ext_resource type="Resource" uid="uid://cc520ind8t6m5" path="res://Resources/Upgrades/upgrade_max_speed.tres" id="17_ks1b7"]
 
 [sub_resource type="Curve" id="Curve_jlvik"]
