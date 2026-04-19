@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bj7w1si78q6gg" path="res://Graphics/UI/Character Box.png" id="3_kpd0n"]
 [ext_resource type="Texture2D" uid="uid://dcbb6egq48r5h" path="res://Graphics/UI/XP Icon.png" id="4_gtphy"]
 [ext_resource type="Texture2D" uid="uid://7kvuic2ffbek" path="res://Graphics/UI/Life Bar Under.png" id="5_5q62e"]
-[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/rink.tscn" id="5_6nxcd"]
+[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="5_6nxcd"]
 [ext_resource type="Texture2D" uid="uid://dcwhsfj8iitl7" path="res://Graphics/UI/Life Bar Over.png" id="6_f1xxd"]
 [ext_resource type="PackedScene" uid="uid://ba3g0t5t2s4lx" path="res://Scenes/enemy_spawner.tscn" id="6_gtphy"]
 [ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="7_5d3qw"]
@@ -71,38 +71,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
-layer = 10
-
-[node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 148.0
-offset_bottom = 38.0
-theme_override_font_sizes/font_size = 18
-text = "FPS: --"
-
-[node name="ScoreLabel" type="Label" parent="DebugUI" unique_id=329183662]
-offset_left = 17.0
-offset_top = 40.0
-offset_right = 69.0
-offset_bottom = 63.0
-text = "Score: --"
-
-[node name="ComboLabel" type="Label" parent="DebugUI" unique_id=428956484]
-offset_left = 17.0
-offset_top = 69.0
-offset_right = 91.0
-offset_bottom = 92.0
-text = "Combo: --"
-
-[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
-offset_left = 19.0
-offset_top = 96.0
-offset_right = 59.0
-offset_bottom = 119.0
-text = "Combo Timer: --"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=933685181]
 
@@ -199,7 +167,7 @@ scale = Vector2(1.2, 1.2)
 fill_mode = 4
 radial_initial_angle = 270.0
 radial_fill_degrees = 90.0
-radial_center_offset = Vector2(122, 122)
+radial_center_offset = Vector2(117.095, 104.13)
 texture_under = ExtResource("18_tom5b")
 texture_over = ExtResource("19_8b8ff")
 texture_progress = ExtResource("20_nk2r0")
@@ -223,3 +191,56 @@ offset_bottom = 160.00003
 text = "48"
 label_settings = SubResource("LabelSettings_wnwfe")
 horizontal_alignment = 1
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
+layer = 10
+
+[node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 148.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 18
+text = "FPS: --"
+
+[node name="ScoreLabel" type="Label" parent="DebugUI" unique_id=329183662]
+offset_left = 15.0
+offset_top = 31.0
+offset_right = 77.0
+offset_bottom = 54.0
+text = "Score: --"
+
+[node name="ComboLabel" type="Label" parent="DebugUI" unique_id=428956484]
+offset_left = 14.0
+offset_top = 47.0
+offset_right = 88.0
+offset_bottom = 70.0
+text = "Combo: --"
+
+[node name="ComboTimerLabel" type="Label" parent="DebugUI" unique_id=328751797]
+offset_left = 13.0
+offset_top = 63.0
+offset_right = 136.0
+offset_bottom = 86.0
+text = "Combo Timer: --"
+
+[node name="LevelLabel" type="Label" parent="DebugUI" unique_id=286208888]
+offset_left = 14.0
+offset_top = 80.0
+offset_right = 74.0
+offset_bottom = 103.0
+text = "Level: --"
+
+[node name="XPLabel" type="Label" parent="DebugUI" unique_id=1291166677]
+offset_left = 15.0
+offset_top = 116.0
+offset_right = 54.0
+offset_bottom = 139.0
+text = "XP: --"
+
+[node name="XPRequieredLabel" type="Label" parent="DebugUI" unique_id=2013483746]
+offset_left = 12.0
+offset_top = 99.0
+offset_right = 125.0
+offset_bottom = 122.0
+text = "XP Required: --"

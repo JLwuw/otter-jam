@@ -31,7 +31,7 @@ script = ExtResource("6_hitfx")
 script = ExtResource("7_deathfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1448765432 groups=["enemies"]]
-scale = Vector2(3, 3)
+scale = Vector2(3.3, 3.3)
 shape = SubResource("CircleShape2D_6w4k9")
 
 [node name="Wander Component" type="Node" parent="." unique_id=1449273388]
