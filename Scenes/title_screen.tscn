@@ -15,14 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://mc5k0x4c6h2d" path="res://Graphics/UI/Play Btn Hover.png" id="6_ycay6"]
 [ext_resource type="Texture2D" uid="uid://d2k57cnape1yi" path="res://Graphics/UI/How to play Btn Hover.png" id="7_w5sh6"]
 [ext_resource type="Texture2D" uid="uid://chl03n1uc6pmk" path="res://Graphics/UI/Quit Btn.png" id="8_o1e67"]
+[ext_resource type="Texture2D" uid="uid://dvcd354j4125k" path="res://Graphics/UI/Game Logo.png" id="8_vqgqr"]
 [ext_resource type="Texture2D" uid="uid://cv2a1m17tvghe" path="res://Graphics/UI/Quit Btn Pressed.png" id="11_bsy20"]
 [ext_resource type="Texture2D" uid="uid://ic5m2wctfma8" path="res://Graphics/UI/Quit Btn Hover.png" id="12_07cxn"]
 [ext_resource type="Texture2D" uid="uid://dovvkpgh5gfry" path="res://Graphics/Otter/NutriFinal.png" id="15_bsy20"]
 [ext_resource type="Texture2D" uid="uid://f7i6duuyoug1" path="res://Graphics/UI/Tutorial BG.png" id="18_4blwa"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_twnyg"]
-font = ExtResource("3_4gxqj")
-font_size = 60
 
 [node name="TitleScreen" type="Control" unique_id=502329976]
 texture_filter = 1
@@ -92,21 +89,21 @@ offset_bottom = 1115.0002
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_ycay6")
 
-[node name="Placeholder Icon" type="Label" parent="." unique_id=1774034061]
+[node name="GameLogo" type="TextureRect" parent="." unique_id=1386410212]
 layout_mode = 0
-offset_left = 114.0
-offset_top = 130.0
-offset_right = 326.0
-offset_bottom = 196.0
-text = "OTTER JAM"
-label_settings = SubResource("LabelSettings_twnyg")
+offset_left = 91.0
+offset_top = 58.0
+offset_right = 748.72
+offset_bottom = 565.49994
+scale = Vector2(0.36190382, 0.36190382)
+texture = ExtResource("8_vqgqr")
 
 [node name="BtnsCol" type="VBoxContainer" parent="." unique_id=1900655575]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 235.0
-offset_right = 647.0
-offset_bottom = 553.0
+offset_left = 106.0
+offset_top = 291.0
+offset_right = 617.0
+offset_bottom = 655.0
 scale = Vector2(0.4, 0.4)
 theme_override_constants/separation = 34
 
@@ -132,6 +129,7 @@ texture_pressed = ExtResource("11_bsy20")
 texture_hover = ExtResource("12_07cxn")
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
+visible = false
 
 [node name="Box" type="Panel" parent="TutorialPopUp" unique_id=705000720]
 offset_top = -2.0
