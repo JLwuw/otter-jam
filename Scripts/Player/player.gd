@@ -27,6 +27,17 @@ var has_direction: bool = false
 @export var max_fire_rate: float = 6
 @export var fire_rate_curve: Curve
 
+@export_category("Leveling")
+@export var xp_curve: Curve 
+@export var level_cap: int = 10
+@export var xp_growth_factor: float = 20
+
+var current_xp: int = 0
+var current_level: int = 0
+var xp_for_next_level: int = 0
+var upgrade_manager: UpgradeManager
+
+
 var shoot_timer: float = 0.0
 @onready var current_health: int = max_health
 var invuln_timer: float = 0
@@ -39,7 +50,8 @@ var bullet_pool: Node
 
 # Para progress bar en UI
 signal health_changed(current: int)
-signal xp_changed(current: int)
+signal xp_changed(current: int, max_xp: int)
+signal level_up(level: int)
 
 func _ready() -> void:
 	max_speed_sq = max_speed * max_speed
@@ -48,6 +60,9 @@ func _ready() -> void:
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
 	bullet_pool = current_scene_root.get_node_or_null("BulletPool")
+	
+	upgrade_manager = current_scene_root.get_node_or_null("UpgradeManager")
+	_initialize_leveling()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftClick"):
@@ -189,3 +204,43 @@ func apply_slow(slow_amount: float, slow_duration: float) -> void:
 		await get_tree().create_timer(slow_duration).timeout
 		set_meta("current_slow", 0.0)
 		acceleration_factor = original_accel
+
+func _initialize_leveling() -> void:
+	current_level = 0
+	current_xp = 0
+	_update_xp_requirement()
+
+func _update_xp_requirement() -> void:
+	if xp_curve == null:
+		# Fallback: simple quadratic scaling
+		xp_for_next_level = int(100 * pow(current_level + 1, 1.5))
+	else:
+		# Sample curve at normalized level (0 to 1)
+		var curve_sample: float = float(current_level) / float(max(1, level_cap))
+		var base_xp: float = xp_curve.sample(curve_sample) * 1000.0
+		xp_for_next_level = int(base_xp)
+
+func add_xp(amount: int) -> void:
+	current_xp += amount
+	xp_changed.emit(current_xp, xp_for_next_level)
+	
+	while current_xp >= xp_for_next_level and current_level < level_cap:
+		_level_up()
+
+func _level_up() -> void:
+	print("Leveling up!")
+	current_xp -= xp_for_next_level
+	current_level += 1
+	_update_xp_requirement()
+	
+	level_up.emit(current_level)
+	
+	if upgrade_manager != null:
+		await get_tree().process_frame  # Let signals propagate first
+		var offered = upgrade_manager.offer_random_upgrades(3)
+		print("Level up! Choose an upgrade: ", offered.map(func(u): return u.display_name))
+
+func _on_enemy_died(toughness: int) -> void:
+	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
+	add_xp(xp_gain)
+	

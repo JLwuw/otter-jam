@@ -18,6 +18,9 @@ var label_update_timer: float = 0.01
 @onready var score_label: Label = $DebugUI/ScoreLabel
 @onready var combo_label: Label = $DebugUI/ComboLabel
 @onready var combo_timer_label: Label = $DebugUI/ComboTimerLabel
+@onready var level_label: Label = $DebugUI/LevelLabel
+@onready var xp_label: Label = $DebugUI/XPLabel
+@onready var xp_required_label: Label = $DebugUI/XPRequieredLabel
 
 @onready var life_bar: TextureProgressBar = $UI/RootUI/PlayerInfo/BarsCol/LifeBar
 @onready var speed_label: Label = $UI/RootUI/Speedometer/SpeedLabel
@@ -67,13 +70,21 @@ func _process(delta: float) -> void:
 	
 	var combo_timer: float = ScoreManager.combo_timer
 	combo_timer_label.text = "Combo Timer: %.0f" % combo_timer
+	
+	var level: int = player.current_level
+	level_label.text = "Level: %.0f" % level
+	
+	var xp: int = player.current_xp
+	xp_label.text = "XP: %.0f" % xp
+	
+	var requiered_xp: int = player.xp_for_next_level
+	xp_required_label.text = "XP Required: %0.f" % requiered_xp
 
 	update_speed_fx(delta)
 	
 	update_speedometer()
 	
 	process_shake(delta)
-
 
 func update_speed_fx(delta: float) -> void:
 	if speed_fx_material == null or player == null:
@@ -105,7 +116,7 @@ func start_shake(duration: float, intensity: float) -> void:
 	shake_intensity = intensity
 	shake_timer = duration
 	
-func process_shake(delta: float):
+func process_shake(delta: float) -> void:
 	# Guardar la posición original si no existe
 	if not has_meta("original_position"):
 		set_meta("original_position", speedometer_node.position)
