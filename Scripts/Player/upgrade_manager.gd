@@ -56,7 +56,6 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		Upgrade.Type.MAX_HP:
 			player.upgrade_max_hp(upgrade.amount)
 		
-		Upgrade.Type.FIRE_RATE:
 			player.max_fire_rate += upgrade.amount * 0.5
 		
 		Upgrade.Type.BULLET_SPEED:
