@@ -437,6 +437,7 @@ text = "Main menu"
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=889101716]
 process_mode = 3
+visible = false
 
 [node name="Overlay" type="ColorRect" parent="PauseMenu" unique_id=711062029]
 offset_left = -12.0

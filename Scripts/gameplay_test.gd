@@ -134,9 +134,10 @@ func _process(delta: float) -> void:
 	var score: int = ScoreManager.get_final_score()
 	score_label.text = "Score: %.0f" % score
 	
-	var combo: int = ScoreManager.is_active
+	var combo: int = ScoreManager.combo
 	combo_label.text = "Combo: %.0f" % combo
 	combo_meter_label.text = "x%d" % combo  			# UI
+	combo_timer_bar.value = ScoreManager.combo_timer
 	
 	var level: int = player.current_level
 	level_label.text = "Level: %.0f" % level
