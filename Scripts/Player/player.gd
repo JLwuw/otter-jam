@@ -344,22 +344,26 @@ func _on_enemy_detector_body_entered(body: Node) -> void:
 		# Don't take damage during invulnerability
 		if invuln_timer > 0:
 			return
+
+		var body_script: Script = body.get_script() as Script
+		var script_path: String = body_script.resource_path if body_script != null else ""
 			
 		var damage_amount: int = 1
 		
 		# Vary damage based on enemy type
-		if body.get_script().get_path().contains("enemy_dasher"):
+		if script_path.contains("enemy_dasher"):
 			damage_amount = 2
-		elif body.get_script().get_path().contains("enemy_tank"):
+		elif script_path.contains("enemy_tank"):
 			damage_amount = 3
-		elif body.get_script().get_path().contains("enemy_slow_shooter"):
+		elif script_path.contains("enemy_slow_shooter"):
 			damage_amount = 1
-		elif body.get_script().get_path().contains("enemy_slow_chaser"):
+		elif script_path.contains("enemy_slow_chaser"):
 			damage_amount = 1
 		
 		# Only push if NOT a dasher
-		if not body.get_script().get_path().contains("enemy_dasher"):
-			var push_direction: Vector2 = (global_position - body.global_position).normalized()
+		if not script_path.contains("enemy_dasher"):
+			var body_node: Node2D = body as Node2D
+			var push_direction: Vector2 = (global_position - body_node.global_position).normalized()
 			var push_force: float = 200.0
 			var enemy_push_force: float = 200.0  
 			
@@ -368,7 +372,8 @@ func _on_enemy_detector_body_entered(body: Node) -> void:
 			
 			# Push enemy (opposite direction, less force)
 			if body is CharacterBody2D:
-				body.velocity += -push_direction * enemy_push_force
+				var enemy_body: CharacterBody2D = body as CharacterBody2D
+				enemy_body.velocity += -push_direction * enemy_push_force
 		
 		take_damage(damage_amount)
 

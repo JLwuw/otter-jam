@@ -409,8 +409,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eksi1"]
-radius = 7.0
-height = 36.0
+radius = 21.282053
+height = 42.564106
 
 [node name="Player" type="CharacterBody2D" unique_id=2009590095 groups=["player"]]
 scale = Vector2(3, 3)
@@ -505,6 +505,18 @@ position = Vector2(-11.666664, -9.666668)
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_eksi1")
 
+[node name="EnemyDetector" type="Area2D" parent="." unique_id=1340601155]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector" unique_id=1340601156]
+position = Vector2(3.8146973e-06, -6)
+scale = Vector2(1.3, 1.3)
+shape = SubResource("CapsuleShape2D_eksi1")
+
 [node name="Upgrade Manager" type="Node" parent="." unique_id=1716586623]
 script = ExtResource("11_74mp2")
+available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("13_7g0yx")])
+
+[connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
 available_upgrades = Array[ExtResource("12_06tpx")]([ExtResource("13_7g0yx"), ExtResource("14_7g0yx"), ExtResource("15_dey5f")])
