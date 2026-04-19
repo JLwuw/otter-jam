@@ -23,6 +23,7 @@ var has_direction: bool = false
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
 @export var upgrade_popup_scene: PackedScene = preload("res://Scenes/UI/upgrade_popup.tscn")
+@export var level_up_particles_scene: PackedScene = preload("res://Scenes/Bullet/plop.tscn")
 @export var bullet_speed: float = 1000
 @export var bullet_spawn_offset: float = 28.0
 @export var muzzle_lateral_offset: float = 10.0
@@ -450,6 +451,7 @@ func _level_up() -> void:
 	
 	xp_changed.emit(current_xp, xp_for_next_level)
 	level_up.emit(current_level)
+	_play_level_up_particles()
 	
 	if upgrade_manager != null:
 		await get_tree().process_frame  # Let signals propagate first
@@ -501,6 +503,37 @@ func upgrade_bullet_count(amount: int, index: int = 0) -> void:
 	_spawn_upgrade_popup("BULLETS", amount, index)
 	min_burst_count += amount
 	max_burst_count += amount
+
+func _play_level_up_particles() -> void:
+	if level_up_particles_scene == null:
+		return
+
+	var effect: GPUParticles2D = level_up_particles_scene.instantiate() as GPUParticles2D
+	if effect == null:
+		return
+
+	var scene_root: Node = current_scene_root
+	if scene_root == null:
+		scene_root = get_tree().root
+
+	effect.top_level = true
+	effect.global_position = global_position + Vector2(0, -36)
+	effect.emitting = false
+	scene_root.add_child(effect)
+	effect.restart()
+	effect.emitting = true
+
+	if effect.one_shot:
+		effect.finished.connect(Callable(effect, "queue_free"), CONNECT_ONE_SHOT)
+		return
+
+	var cleanup_delay: float = max(0.1, effect.lifetime + effect.preprocess)
+	var cleanup_timer: SceneTreeTimer = get_tree().create_timer(cleanup_delay)
+	cleanup_timer.timeout.connect(Callable(self, "_free_level_up_particles").bind(effect), CONNECT_ONE_SHOT)
+
+func _free_level_up_particles(effect: GPUParticles2D) -> void:
+	if effect != null and is_instance_valid(effect):
+		effect.queue_free()
 
 func upgrade_max_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Max Speed!")

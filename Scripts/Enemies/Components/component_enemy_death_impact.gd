@@ -34,7 +34,7 @@ func _emit_death_particles() -> void:
 	if death_particles_scene == null or owner_enemy == null:
 		return
 
-	var effect: GPUParticles2D = death_particles_scene.instantiate() as GPUParticles2D
+	var effect: Node = death_particles_scene.instantiate()
 	if effect == null:
 		return
 
@@ -46,14 +46,27 @@ func _emit_death_particles() -> void:
 	if scene_root == null:
 		scene_root = tree.root
 
-	effect.top_level = true
-	effect.global_position = owner_enemy.global_position
-	effect.one_shot = true
-	effect.emitting = false
+	var particles_root: GPUParticles2D = effect as GPUParticles2D
+	if particles_root != null:
+		particles_root.top_level = true
+		particles_root.global_position = owner_enemy.global_position
+		particles_root.one_shot = true
+		particles_root.emitting = false
+
 	scene_root.add_child(effect)
-	effect.restart()
-	effect.emitting = true
-	effect.finished.connect(Callable(effect, "queue_free"), CONNECT_ONE_SHOT)
+	if particles_root != null:
+		_restart_particle_nodes(effect)
+		particles_root.finished.connect(Callable(particles_root, "queue_free"), CONNECT_ONE_SHOT)
+
+func _restart_particle_nodes(node: Node) -> void:
+	if node is GPUParticles2D:
+		var particles: GPUParticles2D = node as GPUParticles2D
+		particles.emitting = false
+		particles.restart()
+		particles.emitting = true
+
+	for child: Node in node.get_children():
+		_restart_particle_nodes(child)
 
 func _trigger_hit_stop() -> void:
 	if not enable_hit_stop or hit_stop_duration <= 0.0:
