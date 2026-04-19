@@ -76,7 +76,7 @@ var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
 
 # Para progress bar en UI
-signal health_changed(current: int)
+signal health_changed(current: int, max: int)
 signal xp_changed(current: int, max_xp: int)
 signal level_up(level: int)
 
@@ -308,7 +308,7 @@ func take_damage(amount: int = 1) -> void:
 	if invuln_timer > 0: return
 	print("Taking damage!")
 	current_health -= amount
-	health_changed.emit(current_health)  # UI
+	health_changed.emit(current_health, max_health)  # UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)
@@ -421,7 +421,7 @@ func upgrade_max_hp(amount: int) -> void:
 	print("Upgrading Max HP!")
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
-	health_changed.emit(max_health)
+	health_changed.emit(max_health, max_health)
 
 func upgrade_bullet_speed(amount: int) -> void:
 	print("Upgrading Bullet Speed!")
