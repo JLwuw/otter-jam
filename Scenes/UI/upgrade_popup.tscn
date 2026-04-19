@@ -6,6 +6,7 @@
 [node name="Upgrade Popup" type="Node2D" unique_id=383786191]
 script = ExtResource("1_l89lw")
 duration = 1.0
+flash_speed = 0.2
 fade_delay = 0.5
 
 [node name="Label" type="Label" parent="." unique_id=284359085]

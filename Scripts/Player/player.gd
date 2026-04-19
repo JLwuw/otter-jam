@@ -405,6 +405,7 @@ func _level_up() -> void:
 	current_level += 1
 	_update_xp_requirement()
 	
+	xp_changed.emit(current_xp, xp_for_next_level)
 	level_up.emit(current_level)
 	
 	if upgrade_manager != null:
