@@ -7,13 +7,18 @@ extends Node2D
 # SFX players
 @onready var shoot: AudioStreamPlayer = $Shoot
 @onready var shoot2: AudioStreamPlayer = $Shoot2
+@onready var shoot3: AudioStreamPlayer = $Shoot3
+@onready var shoot4: AudioStreamPlayer = $Shoot4
 @onready var enemy_hit: AudioStreamPlayer = $EnemyHit
 @onready var enemy_hit2: AudioStreamPlayer = $EnemyHit2
 @onready var enemy_death: AudioStreamPlayer = $EnemyDeath
 @onready var enemy_death2: AudioStreamPlayer = $EnemyDeath2
+@onready var enemy_death3: AudioStreamPlayer = $EnemyDeath3
+@onready var enemy_death4: AudioStreamPlayer = $EnemyDeath4
 @onready var player_movement: AudioStreamPlayer = $PlayerMovement
 @onready var health_loss: AudioStreamPlayer = $HealthLoss
 @onready var health_loss2: AudioStreamPlayer = $HealthLoss2
+@onready var health_loss3: AudioStreamPlayer = $HealthLoss3
 @onready var border_hit: AudioStreamPlayer = $BorderHit
 
 
@@ -32,13 +37,18 @@ func stop_music() -> void:
 func stop_all_sfx() -> void:
 	shoot.stop()
 	shoot2.stop()
+	shoot3.stop()
+	shoot4.stop()
 	enemy_hit.stop()
 	enemy_hit2.stop()
 	enemy_death.stop()
 	enemy_death2.stop()
+	enemy_death3.stop()
+	enemy_death4.stop()
 	player_movement.stop()
 	health_loss.stop()
 	health_loss2.stop()
+	health_loss3.stop()
 	border_hit.stop()
 
 func stop_all() -> void:
@@ -57,10 +67,16 @@ func fade_out_music(duration: float = 0.5) -> void:
 
 # Sound effect functions
 func play_shoot() -> void:
-	if randi() % 2 == 0:
-		shoot.play()
-	else:
-		shoot2.play()
+	var variant = randi() % 4
+	match variant:
+		0:
+			shoot.play()
+		1:
+			shoot2.play()
+		2:
+			shoot3.play()
+		3:
+			shoot4.play()
 
 func play_enemy_hit() -> void:
 	if randi() % 2 == 0:
@@ -69,19 +85,29 @@ func play_enemy_hit() -> void:
 		enemy_hit2.play()
 
 func play_enemy_death() -> void:
-	if randi() % 2 == 0:
-		enemy_death.play()
-	else:
-		enemy_death2.play()
+	var variant = randi() % 4
+	match variant:
+		0:
+			enemy_death.play()
+		1:
+			enemy_death2.play()
+		2:
+			enemy_death3.play()
+		3:
+			enemy_death4.play()
 
 func play_player_movement() -> void:
 	player_movement.play()
 
 func play_health_loss() -> void:
-	if randi() % 2 == 0:
-		health_loss.play()
-	else:
-		health_loss2.play()
+	var variant = randi() % 3
+	match variant:
+		0:
+			health_loss.play()
+		1:
+			health_loss2.play()
+		2:
+			health_loss3.play()
 
 func play_border_hit() -> void:
 	border_hit.stop()
