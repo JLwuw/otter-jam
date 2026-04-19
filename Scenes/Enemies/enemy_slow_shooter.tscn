@@ -252,15 +252,17 @@ body_rotation_offset_degrees = 270.0
 mouth_rotation_offset_degrees = 270.0
 max_health = 15
 toughness = 3
-unlock_time = 10
+unlock_time = 15
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=2079848975]
 script = ExtResource("2_in5mm")
+max_speed = 150.0
 
 [node name="Basic Shoot Component" type="Node" parent="." unique_id=1860826463]
 script = ExtResource("3_vqo77")
 bullet_scene = ExtResource("5_vqo77")
 fire_rate = 0.75
+bullet_speed = 400.0
 bullet_spawn_path = NodePath("../Bullet Spawn")
 
 [node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118202]

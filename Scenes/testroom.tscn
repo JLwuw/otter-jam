@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="1_5anip"]
 [ext_resource type="PackedScene" uid="uid://b6b00kju5pepw" path="res://Scenes/Enemies/enemy_dasher.tscn" id="2_2fjlk"]
 [ext_resource type="PackedScene" uid="uid://0my6rj4rribm" path="res://Scenes/Enemies/enemy_tank.tscn" id="3_hbesj"]
+[ext_resource type="PackedScene" uid="uid://7vk1xxcqwx4a" path="res://Scenes/Risks/risk_falling.tscn" id="4_5anip"]
 
 [node name="Testroom" type="Node2D" unique_id=1820498590]
 
@@ -10,8 +11,11 @@
 max_speed = 100.0
 
 [node name="Enemy Dasher" parent="." unique_id=1693089183 node_paths=PackedStringArray("player") instance=ExtResource("2_2fjlk")]
-position = Vector2(187, -375)
+position = Vector2(3237, -744)
 player = NodePath("../Player")
 
 [node name="Enemy Tank" parent="." unique_id=1146190899 instance=ExtResource("3_hbesj")]
-position = Vector2(-391, -244)
+position = Vector2(2659, -613)
+
+[node name="Icicle" parent="." unique_id=1025647153 instance=ExtResource("4_5anip")]
+position = Vector2(310, -318)

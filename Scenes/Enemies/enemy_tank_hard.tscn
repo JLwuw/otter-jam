@@ -205,7 +205,7 @@ script = ExtResource("1_yco6r")
 sprite_rotation_offset_degrees = 90.0
 max_health = 100
 toughness = 10
-unlock_time = 80
+unlock_time = 180
 
 [node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=320118203]
 script = ExtResource("2_ywer3")
@@ -227,6 +227,7 @@ script = ExtResource("4_1b6gj")
 [node name="Throw Hazard Component" type="Node" parent="." unique_id=1450781344]
 script = ExtResource("5_va0fv")
 hazard_scene = ExtResource("6_y3yvk")
+spawn_rate = 0.5
 hazard_speed = 400.0
 throw_distance = 600.0
 spawn_origin_path = NodePath("AnimatedSprite2D/Shoot Origin")

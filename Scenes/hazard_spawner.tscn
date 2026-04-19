@@ -4,9 +4,5 @@
 
 [node name="Hazard Spawner" type="Node2D" unique_id=2131718948]
 script = ExtResource("1_hazard_spawner")
-spawn_start_time = 0.0
-initial_spawn_interval = 8.0
-minimum_spawn_interval = 1.0
-interval_decrease_rate = 0.03
-spawn_radius = 400.0
-max_icicles = 50
+spawn_start_time = 45.0
+minimum_spawn_interval = 5.0
