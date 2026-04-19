@@ -1,7 +1,7 @@
 class_name Hazard
 extends StaticBody2D
 
-@export var damage: int = 8
+@export var damage: int = 3
 @export var landed_texture: Texture2D
 @export var destroy_particles_scene: PackedScene
 @export var lifetime: float = 4.0
