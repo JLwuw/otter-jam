@@ -8,7 +8,7 @@ var rink_rect: Rect2
 
 @export_group("Spawn")
 @export var base_spawn_interval: float = 6.0
-@export var spawn_radius: float = 600
+@export var spawn_radius: float = 700
 @export var max_enemy_count: int = 400
 @export var forbidden_angle_deg: float = 45.0
 
