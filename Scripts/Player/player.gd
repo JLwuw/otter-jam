@@ -205,6 +205,39 @@ func apply_slow(slow_amount: float, slow_duration: float) -> void:
 		set_meta("current_slow", 0.0)
 		acceleration_factor = original_accel
 
+func _on_enemy_detector_body_entered(body: Node) -> void:
+	if body.is_in_group("enemies"):
+		# Don't take damage during invulnerability
+		if invuln_timer > 0:
+			return
+			
+		var damage_amount: int = 1
+		
+		# Vary damage based on enemy type
+		if body.get_script().get_path().contains("enemy_dasher"):
+			damage_amount = 2
+		elif body.get_script().get_path().contains("enemy_tank"):
+			damage_amount = 3
+		elif body.get_script().get_path().contains("enemy_slow_shooter"):
+			damage_amount = 1
+		elif body.get_script().get_path().contains("enemy_slow_chaser"):
+			damage_amount = 1
+		
+		# Only push if NOT a dasher
+		if not body.get_script().get_path().contains("enemy_dasher"):
+			var push_direction: Vector2 = (global_position - body.global_position).normalized()
+			var push_force: float = 200.0
+			var enemy_push_force: float = 200.0  
+			
+			# Push player
+			velocity = push_direction * push_force
+			
+			# Push enemy (opposite direction, less force)
+			if body is CharacterBody2D:
+				body.velocity += -push_direction * enemy_push_force
+		
+		take_damage(damage_amount)
+
 func _initialize_leveling() -> void:
 	current_level = 0
 	current_xp = 0
