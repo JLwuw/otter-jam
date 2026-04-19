@@ -15,7 +15,7 @@ var difficulty_selected: Difficulty = Difficulty.EASY
 
 const TOUGHNESS_MULT: float = 5.0
 const TIME_MULT: float = 0.1
-const COMBO_DURATION: float = 5.0
+const COMBO_DURATION: float = 3.0
 
 func _process(delta: float) -> void:
 	if not is_active: return

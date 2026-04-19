@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="5_qowop"]
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_gsudo"]
 [ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_0wcx7"]
-[ext_resource type="Script" uid="uid://8iddeee25ag6" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="8_anim"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="8_anim"]
 [ext_resource type="Texture2D" uid="uid://yd6lcrkde2bn" path="res://Graphics/Enemies/PinguinoDash.png" id="8_gbk5u"]
 [ext_resource type="Texture2D" uid="uid://es620nbmeu4q" path="res://Graphics/Enemies/PinguinoDeath.png" id="9_cnj5c"]
 [ext_resource type="Texture2D" uid="uid://cxndlemenydcu" path="res://Graphics/Enemies/PinguinoCaminata.png" id="10_gbxm0"]
@@ -178,7 +178,8 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 31
 script = ExtResource("1_jctw4")
-toughness = 2
+max_health = 10
+toughness = 5
 unlock_time = 30
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=217337813]

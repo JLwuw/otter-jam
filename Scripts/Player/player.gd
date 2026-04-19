@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export_category("Movement")
 @export var SPEED_CAP: float = 1000
-@export var max_speed: float = 500.0
+@export var max_speed: float = 750.0
 @export var responsiveness: float = 45
 @export var acceleration_factor: float = 3
 @export var drag: float = 0.5
@@ -17,8 +17,10 @@ var has_direction: bool = false
 
 @export_category("Health")
 @export var max_health: int = 5
-@export var invuln_time: float = 0.3
+@export var invuln_time: float = 1.5
 @export var base_fire_rate: float = 0.5
+@export var health_regen_interval: float = 20.0
+@onready var health_regen_timer: float = health_regen_interval
 
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
@@ -38,7 +40,6 @@ var has_direction: bool = false
 @export var fire_rate_curve: Curve
 @export var damage: int = 1
 
-
 @export_category("Animation")
 @export var move_speed_threshold: float = 120.0
 @export var idle_speed_threshold: float = 8.0
@@ -54,8 +55,10 @@ var has_direction: bool = false
 
 @export_category("Leveling")
 @export var xp_curve: Curve 
-@export var level_cap: int = 10
-@export var xp_growth_factor: float = 20
+@export var level_cap: int = 50
+@export var xp_growth_factor: float = 10.0
+@export var combo_weight: float = 1.0
+@export var enemy_weight: float = 1.5
 
 var current_xp: int = 0
 var current_level: int = 0
@@ -99,6 +102,7 @@ func _ready() -> void:
 	_set_otter_idle_pose()
 	_play_if_valid(animated_gun, gun_idle_animation)
 	_initialize_leveling()
+	xp_changed.emit(current_xp, xp_for_next_level)
 
 func _input(event: InputEvent) -> void:
 	if is_dead: return
@@ -140,18 +144,35 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:	
 	update_animation_state()
 	update_invuln_timer(delta)
+	update_regen_timer(delta)
 	
 	if !is_dead:
 		_update_shoot_cooldown(delta)
 		if shoot_anim_timer > 0.0:
 			shoot_anim_timer -= delta
 		update_gun_aim(delta)
-	_update_shoot_cooldown(delta)
-	border_hit_cooldown -= delta
-	if shoot_anim_timer > 0.0:
-		shoot_anim_timer -= delta
-	update_animation_state()
-	update_gun_aim(delta)
+		_update_shoot_cooldown(delta)
+		border_hit_cooldown -= delta
+		if shoot_anim_timer > 0.0:
+			shoot_anim_timer -= delta
+		update_animation_state()
+		update_gun_aim(delta)
+		
+
+func update_regen_timer(delta: float) -> void:
+	if current_health == max_health:
+		health_regen_timer = health_regen_interval
+
+	if health_regen_timer > 0:
+		health_regen_timer -= delta
+		
+		if health_regen_timer <= 0:
+			heal(1)
+			health_regen_timer = health_regen_interval
+
+func heal(amount: int = 1) -> void:
+	current_health = min(max_health, current_health + amount)
+	health_changed.emit(current_health, max_health)
 
 func update_animation_state() -> void:
 	if is_dead:
@@ -462,7 +483,7 @@ func _level_up() -> void:
 			upgrade_manager.apply_upgrade(upgrades_offered[idx], self, idx)
 		
 func _on_enemy_died(toughness: int) -> void:
-	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
+	var xp_gain: int = int(round(xp_growth_factor * (toughness * enemy_weight + ScoreManager.combo * combo_weight)))
 	add_xp(xp_gain)
 
 func _spawn_upgrade_popup(upgrade_name: String, amount: int, index: int = 0) -> void:

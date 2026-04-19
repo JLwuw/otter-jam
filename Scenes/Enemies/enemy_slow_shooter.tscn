@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="4_hitfx"]
 [ext_resource type="PackedScene" uid="uid://bk03ob16jbyap" path="res://Scenes/Bullet/bulletcirc.tscn" id="5_vqo77"]
 [ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="6_deathfx"]
-[ext_resource type="Script" uid="uid://8iddeee25ag6" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="7_anim"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Components/component_enemy_animation.gd" id="7_anim"]
 [ext_resource type="Texture2D" uid="uid://o1wsshspcg4q" path="res://Graphics/Enemies/OctoshooterDeath.png" id="9_4eaku"]
 [ext_resource type="Texture2D" uid="uid://dy6t06yo8sdtg" path="res://Graphics/Enemies/OctoshooterWalk.png" id="10_q2811"]
 [ext_resource type="Texture2D" uid="uid://coub70yw67qvk" path="res://Graphics/Enemies/BocaOctoshooter.png" id="11_0haw7"]
@@ -250,6 +250,7 @@ collision_mask = 15
 script = ExtResource("1_fcceh")
 body_rotation_offset_degrees = 270.0
 mouth_rotation_offset_degrees = 270.0
+max_health = 15
 toughness = 3
 unlock_time = 10
 

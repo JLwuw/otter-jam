@@ -9,6 +9,7 @@ extends StaticBody2D
 @export var slow_amount: float = 0.65
 @export var slow_duration: float = 1
 @export var health: int = 15
+@export var airborne_collision_layer: int = 0
 
 var speed: float = 200.0
 var direction: Vector2 = Vector2.ZERO
@@ -26,8 +27,11 @@ var original_texture: Texture2D
 var base_sprite_scale: Vector2 = Vector2.ONE
 var base_shadow_scale: Vector2 = Vector2(0.2, 0.12)
 var current_health: int
+var landed_collision_layer: int = 0
 
 func _ready() -> void:
+	landed_collision_layer = collision_layer
+
 	airborne_shadow_sprite = get_node_or_null("AirborneShadowSprite2D") as Sprite2D
 	landed_shadow_sprite = get_node_or_null("LandedShadowSprite2D") as Sprite2D
 
@@ -67,6 +71,7 @@ func _ready() -> void:
 		airborne_collision_shape.disabled = false
 	if landed_collision_shape != null:
 		landed_collision_shape.disabled = true
+	collision_layer = airborne_collision_layer
 	lifetime_remaining = lifetime
 	current_health = health
 	set_process(true)
@@ -100,7 +105,7 @@ func _process(delta: float) -> void:
 			is_landed = true
 			_apply_landed_state()
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	# Player damage is handled via PlayerDetector.
 	return
 
@@ -134,6 +139,7 @@ func _apply_landed_state() -> void:
 		airborne_collision_shape.disabled = true
 	if landed_collision_shape != null:
 		landed_collision_shape.disabled = false
+	collision_layer = landed_collision_layer
 
 func _destroy_hazard() -> void:
 	_spawn_destroy_particles()
