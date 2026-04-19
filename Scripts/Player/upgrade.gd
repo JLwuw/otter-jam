@@ -26,3 +26,7 @@ static var upgrade_info: Dictionary = {
 
 @export var upgrade_type: Type = Type.MAX_HP
 @export var amount: int = 1
+
+func _init(_upgrade_type: Type, _amount: int) -> void:
+	upgrade_type = _upgrade_type
+	amount = _amount

@@ -68,5 +68,80 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		Upgrade.Type.MAX_SPEED:
 			player.upgrade_max_speed(upgrade.amount)
 		_:
-			print("WARNING: upgrade type: ", upgrade.upgrade_type, " not found in apply upgrade")
-	
+			print("WARNING: upgrade type: ", upgrade.upgrade_type, " not found in apply upgrade")	
+
+
+func get_upgrade_per_level(level: int) -> Array[Upgrade]:
+	match level:
+		1:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 30)
+			]
+		
+		2:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 30)
+			]
+		
+		3:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.DAMAGE, 1)
+			]
+		
+		4:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+			]
+		
+		5:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+			]
+		
+		6:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.BULLET_SPEED, 100),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 5)
+			]
+
+		7:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+			]
+			
+		8:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+			]
+			
+		9:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+			]
+			
+		10:
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.BULLET_SPEED, 100),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 5),
+				Upgrade.new(Upgrade.Type.DAMAGE, 1)
+			]
+			
+		_:
+			print("WARNING: Level not defined in get_upgrade_per_level")
+			return [
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 40)
+			]
