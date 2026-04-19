@@ -62,11 +62,6 @@ func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
 		Upgrade.Type.DAMAGE:
 			player.upgrade_damage(upgrade.amount)
 		
-		Upgrade.Type.PIERCING:
-			# Placeholder: when piercing is added to bullets
-			pass
-		
-		Upgrade.Type.MULTISHOT:
-			# Placeholder: when multishot is added to player
-			pass
+		Upgrade.Type.BULLET_COUNT:
+			player.upgrade_bullet_count(upgrade.amount)
 	
