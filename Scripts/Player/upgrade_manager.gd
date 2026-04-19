@@ -67,22 +67,22 @@ func select_upgrade(upgrade: Upgrade, player: Player) -> void:
 	apply_upgrade(upgrade, player)
 	upgrade_selected.emit(upgrade)
 
-func apply_upgrade(upgrade: Upgrade, player: Player) -> void:
+func apply_upgrade(upgrade: Upgrade, player: Player, index: int = 0) -> void:
 	match upgrade.upgrade_type:
 		Upgrade.Type.MAX_HP:
-			player.upgrade_max_hp(upgrade.amount)
+			player.upgrade_max_hp(upgrade.amount, index)
 		
 		Upgrade.Type.BULLET_SPEED:
-			player.upgrade_bullet_speed(upgrade.amount)
+			player.upgrade_bullet_speed(upgrade.amount, index)
 		
 		Upgrade.Type.DAMAGE:
-			player.upgrade_damage(upgrade.amount)
+			player.upgrade_damage(upgrade.amount, index)
 		
 		Upgrade.Type.BULLET_COUNT:
-			player.upgrade_bullet_count(upgrade.amount)
+			player.upgrade_bullet_count(upgrade.amount, index)
 		
 		Upgrade.Type.MAX_SPEED:
-			player.upgrade_max_speed(upgrade.amount)
+			player.upgrade_max_speed(upgrade.amount, index)
 		_:
 			print("WARNING: upgrade type: ", upgrade.upgrade_type, " not found in apply upgrade")	
 

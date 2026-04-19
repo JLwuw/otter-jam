@@ -22,6 +22,7 @@ var has_direction: bool = false
 
 @export_category("Shooting")
 @export var bullet_scene: PackedScene = preload("res://Scenes/Bullet/bullet.tscn")
+@export var upgrade_popup_scene: PackedScene = preload("res://Scenes/UI/upgrade_popup.tscn")
 @export var bullet_speed: float = 1000
 @export var bullet_spawn_offset: float = 28.0
 @export var muzzle_lateral_offset: float = 10.0
@@ -411,34 +412,55 @@ func _level_up() -> void:
 		var upgrades_offered: Array[Upgrade] = upgrade_manager.get_upgrade_per_level(current_level)
 		if upgrades_offered.is_empty():
 			print("WARNING: no upgrades available on level up")
-		for upgrade in upgrades_offered:
-			upgrade_manager.apply_upgrade(upgrade, self)
+		for idx in range(upgrades_offered.size()):
+			upgrade_manager.apply_upgrade(upgrades_offered[idx], self, idx)
 		
 func _on_enemy_died(toughness: int) -> void:
 	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
 	add_xp(xp_gain)
+
+func _spawn_upgrade_popup(upgrade_name: String, amount: int, index: int = 0) -> void:
+	if upgrade_popup_scene == null:
+		return
 	
-func upgrade_max_hp(amount: int) -> void:
+	var popup: PopupUpgrade = upgrade_popup_scene.instantiate()
+	current_scene_root.add_child(popup)
+	popup.global_position = global_position
+	
+	# Stack popups vertically based on index
+	var vertical_offset: float = index * -60.0  # Each popup offset 40 pixels down
+	if popup.has_method("set_target"):
+		popup.set_target(self, vertical_offset)
+	
+	if popup.has_method("set_upgrade_text"):
+		popup.set_upgrade_text(upgrade_name, amount)
+	
+func upgrade_max_hp(amount: int, index: int = 0) -> void:
 	print("Upgrading Max HP!")
+	_spawn_upgrade_popup("MAX HP", amount, index)
 	max_health += amount
 	current_health = min(max_health, current_health + amount)
 	health_changed.emit(max_health, max_health)
 
-func upgrade_bullet_speed(amount: int) -> void:
+func upgrade_bullet_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Bullet Speed!")
+	_spawn_upgrade_popup("BULLET SPEED", amount, index)
 	bullet_speed += amount
 	
-func upgrade_damage(amount: int) -> void:
+func upgrade_damage(amount: int, index: int = 0) -> void:
 	print("Upgrading Damage!")
+	_spawn_upgrade_popup("DAMAGE", amount, index)
 	damage += amount
 
-func upgrade_bullet_count(amount: int) -> void:
+func upgrade_bullet_count(amount: int, index: int = 0) -> void:
 	print("Upgrading Bullet Count!")
+	_spawn_upgrade_popup("BULLETS", amount, index)
 	min_burst_count += amount
 	max_burst_count += amount
 
-func upgrade_max_speed(amount: int) -> void:
+func upgrade_max_speed(amount: int, index: int = 0) -> void:
 	print("Upgrading Max Speed!")
+	_spawn_upgrade_popup("MAX SPEED", amount, index)
 	max_speed += amount
 	
 	

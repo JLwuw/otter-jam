@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bwje6ltc0xslc"]
+
+[ext_resource type="Script" uid="uid://dw6eby1gvu7gr" path="res://Scripts/UI/upgrade_popup.gd" id="1_l89lw"]
+[ext_resource type="FontFile" uid="uid://km8ltiqtdsoc" path="res://Fonts/Pixelmax-Regular.otf" id="2_wf4eu"]
+
+[node name="Upgrade Popup" type="Node2D" unique_id=383786191]
+script = ExtResource("1_l89lw")
+duration = 1.0
+fade_delay = 0.5
+
+[node name="Label" type="Label" parent="." unique_id=284359085]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.3019608, 1)
+theme_override_fonts/font = ExtResource("2_wf4eu")
+theme_override_font_sizes/font_size = 40
+text = "UPGRADE"
+horizontal_alignment = 1
+vertical_alignment = 1
