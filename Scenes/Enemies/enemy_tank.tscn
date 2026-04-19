@@ -17,6 +17,7 @@ collision_mask = 31
 script = ExtResource("1_k8c9p")
 max_health = 7
 toughness = 2
+unlock_time = 30
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1447258476]
 modulate = Color(1, 1, 0, 1)
