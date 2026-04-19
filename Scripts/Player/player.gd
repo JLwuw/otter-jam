@@ -55,7 +55,7 @@ var has_direction: bool = false
 
 @export_category("Leveling")
 @export var xp_curve: Curve 
-@export var level_cap: int = 25
+@export_range(1, 25, 1) var level_cap: int = 25
 @export var xp_growth_factor: float = 10.0
 @export var combo_weight: float = 1.0
 @export var enemy_weight: float = 1.5
@@ -74,6 +74,8 @@ var speed_cap_inv: float = 0.0
 var bullet_pool: Node
 var left_muzzle: Node2D
 var right_muzzle: Node2D
+@onready var enemy_detector: Area2D = $EnemyDetector as Area2D
+@onready var gameplay_camera: Camera2D = $Camera2D as Camera2D
 @onready var animated_otter: AnimatedSprite2D = $AnimatedOtter
 @onready var animated_gun: AnimatedSprite2D = $AnimatedGun
 var shoot_anim_timer: float = 0.0
@@ -92,6 +94,7 @@ signal level_up(level: int)
 signal died
 
 func _ready() -> void:
+	level_cap = clampi(level_cap, 1, 25)
 	if SPEED_CAP > 0.0:
 		speed_cap_inv = 1.0 / SPEED_CAP
 	if current_scene_root == null:
@@ -371,7 +374,8 @@ func take_damage(amount: int = 1) -> void:
 	if animated_otter != null:
 		animated_otter.self_modulate = Color(1.0, 1.0, 1.0, 0.6)
 	is_invuln = true
-	$Camera2D.current_shake = 20
+	if gameplay_camera != null:
+		gameplay_camera.call("set", "current_shake", 20)
 		
 func die() -> void:
 	if is_dead: return
@@ -379,8 +383,9 @@ func die() -> void:
 	animated_otter.play(death_animation)
 	died.emit()
 	ScoreManager.is_active = false
-	$EnemyDetector.monitorable = false
-	$EnemyDetector.monitoring = false
+	if enemy_detector != null:
+		enemy_detector.call_deferred("set_monitorable", false)
+		enemy_detector.call_deferred("set_monitoring", false)
 	set_collision_layer_value(1,  false)
 	
 	print("ggwp")

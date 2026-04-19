@@ -433,8 +433,7 @@ move_speed_threshold = 400.0
 gun_shoot_animation_speed = 4.0
 gun_aim_offset_degrees = 90.0
 xp_curve = ExtResource("4_7g0yx")
-level_cap = 100
-xp_growth_factor = 3.0
+xp_growth_factor = 5.0
 combo_weight = 0.5
 
 [node name="Line2D2" type="Line2D" parent="." unique_id=1120057671]

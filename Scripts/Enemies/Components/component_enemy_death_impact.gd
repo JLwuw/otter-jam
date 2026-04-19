@@ -6,6 +6,7 @@ extends Node
 @export var hit_stop_duration: float = 0.1
 
 var owner_enemy: Enemy
+@onready var animated_sprite: AnimatedSprite2D = get_node_or_null("../AnimatedSprite2D") as AnimatedSprite2D
 
 func _ready() -> void:
 	owner_enemy = _find_owner_enemy()
@@ -16,12 +17,16 @@ func _ready() -> void:
 	owner_enemy.died.connect(_on_enemy_died)
 
 func _on_enemy_died(_toughness: int) -> void:
+	if not is_inside_tree():
+		return
+
 	var tween: Tween = create_tween()
 	
-	$"../AnimatedSprite2D".modulate = Color(1, 1, 1) # reset
+	if animated_sprite != null:
+		animated_sprite.modulate = Color(1, 1, 1) # reset
 	
 	tween.tween_property(
-		$"../AnimatedSprite2D", 
+		animated_sprite, 
 		"modulate", 
 		Color(1, 0.4, 0.4), 
 		0.1
@@ -33,14 +38,14 @@ func _on_enemy_died(_toughness: int) -> void:
 func _emit_death_particles() -> void:
 	if death_particles_scene == null or owner_enemy == null:
 		return
+	if not is_inside_tree():
+		return
 
 	var effect: Node = death_particles_scene.instantiate()
 	if effect == null:
 		return
 
 	var tree: SceneTree = get_tree()
-	if tree == null:
-		return
 
 	var scene_root: Node = tree.current_scene
 	if scene_root == null:
@@ -71,10 +76,10 @@ func _restart_particle_nodes(node: Node) -> void:
 func _trigger_hit_stop() -> void:
 	if not enable_hit_stop or hit_stop_duration <= 0.0:
 		return
+	if not is_inside_tree():
+		return
 
 	var tree: SceneTree = get_tree()
-	if tree == null:
-		return
 
 	if tree.paused or tree.has_meta("enemy_death_hit_stop_active"):
 		return

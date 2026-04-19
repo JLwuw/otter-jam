@@ -4,6 +4,9 @@ extends Node2D
 @export var player: Player
 @onready var camera: Camera2D = null
 @export var rink: Rink
+@export var spawn_rect_min_path: NodePath = NodePath("SpawnRectMin")
+@export var spawn_rect_max_path: NodePath = NodePath("SpawnRectMax")
+@export var allow_rink_fallback: bool = false
 var rink_rect: Rect2
 
 @export_group("Spawn")
@@ -20,6 +23,8 @@ var time_elapsed: float = 0
 var active_enemies: Array[Node] = []
 @onready var current_scene_root: Node = get_tree().current_scene
 @onready var spawn_timer: Timer = $Timer
+@onready var spawn_rect_min_node: Node2D = get_node_or_null(spawn_rect_min_path) as Node2D
+@onready var spawn_rect_max_node: Node2D = get_node_or_null(spawn_rect_max_path) as Node2D
 var is_active: bool = true
 
 func _ready() -> void:
@@ -38,25 +43,56 @@ func _ready() -> void:
 	camera = player.get_node_or_null("Camera2D") as Camera2D
 	if camera == null:
 		camera = get_viewport().get_camera_2d()
+
+	var parent_spawn_rect_min: Node2D = get_parent().get_node_or_null("SpawnRectMin") as Node2D
+	var parent_spawn_rect_max: Node2D = get_parent().get_node_or_null("SpawnRectMax") as Node2D
+	if parent_spawn_rect_min != null and parent_spawn_rect_max != null:
+		spawn_rect_min_node = parent_spawn_rect_min
+		spawn_rect_max_node = parent_spawn_rect_max
+
+	if spawn_rect_min_node == null:
+		spawn_rect_min_node = get_parent().get_node_or_null("SpawnRectMin") as Node2D
+	if spawn_rect_max_node == null:
+		spawn_rect_max_node = get_parent().get_node_or_null("SpawnRectMax") as Node2D
 	
-	if rink == null:
-		rink = get_parent().get_node_or_null("Rink") as Rink
-	if rink == null:
-		push_error("EnemySpawner: missing rink reference")
+	if spawn_rect_min_node != null and spawn_rect_max_node != null:
+		rink_rect = get_rect_from_nodes(spawn_rect_min_node.global_position, spawn_rect_max_node.global_position)
+		print("EnemySpawner bounds from markers: min=", spawn_rect_min_node.global_position, " max=", spawn_rect_max_node.global_position, " size=", rink_rect.size)
+	else:
+		if not allow_rink_fallback:
+			push_error("EnemySpawner: missing SpawnRectMin/SpawnRectMax markers")
+			is_active = false
+			set_process(false)
+			spawn_timer.stop()
+			return
+
+		if rink == null:
+			rink = get_parent().get_node_or_null("Rink") as Rink
+		if rink == null:
+			push_error("EnemySpawner: missing spawn rect nodes and rink reference")
+			is_active = false
+			set_process(false)
+			spawn_timer.stop()
+			return
+		
+		var rink_tilemap: TileMapLayer = rink.get_node_or_null("TileMapLayer") as TileMapLayer
+		if rink_tilemap == null:
+			push_error("EnemySpawner: missing spawn rect nodes and Rink TileMapLayer")
+			is_active = false
+			set_process(false)
+			spawn_timer.stop()
+			return
+		
+		rink_rect = get_tilemap_world_rect(rink_tilemap)
+		push_warning("EnemySpawner: using rink tilemap bounds fallback; assign SpawnRectMin and SpawnRectMax")
+
+	if rink_rect.size.x <= 1.0 or rink_rect.size.y <= 1.0:
+		push_error("EnemySpawner: invalid spawn rectangle size")
 		is_active = false
 		set_process(false)
 		spawn_timer.stop()
 		return
-	
-	var rink_tilemap: TileMapLayer = rink.get_node_or_null("TileMapLayer") as TileMapLayer
-	if rink_tilemap == null:
-		push_error("EnemySpawner: Rink is missing TileMapLayer")
-		is_active = false
-		set_process(false)
-		spawn_timer.stop()
-		return
-	
-	rink_rect = get_tilemap_world_rect(rink_tilemap)
+
 	spawn_timer.wait_time = base_spawn_interval
 	if current_scene_root == null:
 		current_scene_root = get_tree().root
@@ -92,6 +128,13 @@ func get_tilemap_world_rect(tilemap: TileMapLayer) -> Rect2:
 	
 	var rect: Rect2 = Rect2(top_left, bottom_right - top_left)
 	return rect.grow(-50.0)
+
+func get_rect_from_nodes(a: Vector2, b: Vector2) -> Rect2:
+	var min_x: float = minf(a.x, b.x)
+	var min_y: float = minf(a.y, b.y)
+	var max_x: float = maxf(a.x, b.x)
+	var max_y: float = maxf(a.y, b.y)
+	return Rect2(Vector2(min_x, min_y), Vector2(max_x - min_x, max_y - min_y))
 
 func _process(delta: float) -> void:
 	time_elapsed += delta

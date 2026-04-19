@@ -50,11 +50,23 @@ func die() -> void:
 	_disable_gameplay_processing()
 	velocity = Vector2.ZERO
 
-	if death_free_delay > 0.0:
-		var free_timer: SceneTreeTimer = get_tree().create_timer(death_free_delay)
+	if death_free_delay > 0.0 and is_inside_tree():
+		var scene_tree: SceneTree = get_tree()
+		var free_timer: SceneTreeTimer = scene_tree.create_timer(death_free_delay)
 		free_timer.timeout.connect(Callable(self, "queue_free"), CONNECT_ONE_SHOT)
 		return
 
+	queue_free()
+
+
+func despawn() -> void:
+	if is_dying:
+		return
+	is_dying = true
+	_disable_dash_behavior()
+	_disable_all_collisions()
+	_disable_gameplay_processing()
+	velocity = Vector2.ZERO
 	queue_free()
 
 
