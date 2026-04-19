@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ca4gbky704gq8"]
+
+[ext_resource type="Texture2D" uid="uid://ckfn0hqcrigar" path="res://Graphics/minfects.png" id="1_edy8c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts7vw"]
+atlas = ExtResource("1_edy8c")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="Gradient" id="Gradient_thcn5"]
+offsets = PackedFloat32Array(0.44262296, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ckpsb"]
+gradient = SubResource("Gradient_thcn5")
+
+[sub_resource type="Curve" id="Curve_paxmd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7799771), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_83gdx"]
+curve = SubResource("Curve_paxmd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pfvaw"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 46.879997
+initial_velocity_max = 46.879997
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_83gdx")
+color_ramp = SubResource("GradientTexture1D_ckpsb")
+
+[node name="Lvup" type="GPUParticles2D" unique_id=546360544]
+texture_filter = 1
+amount = 1
+texture = SubResource("AtlasTexture_ts7vw")
+process_material = SubResource("ParticleProcessMaterial_pfvaw")
