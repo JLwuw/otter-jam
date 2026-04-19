@@ -75,8 +75,9 @@ var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
 var is_firing_burst: bool = false
 
-# Para progress bar en UI
+# Para UI
 signal health_changed(current: int, max: int)
+signal damaged
 signal xp_changed(current: int, max_xp: int)
 signal level_up(level: int)
 
@@ -308,6 +309,7 @@ func take_damage(amount: int = 1) -> void:
 	print("Taking damage!")
 	current_health -= amount
 	health_changed.emit(current_health, max_health)  # UI
+	damaged.emit()									# UI
 	if current_health <= 0: die()
 	invuln_timer = invuln_time
 	set_collision_layer_value(1, false)

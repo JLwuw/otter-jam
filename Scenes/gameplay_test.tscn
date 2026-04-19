@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -112,9 +112,10 @@ texture = ExtResource("1_6nxcd")
 [node name="CharacterBox" type="TextureRect" parent="UI/RootUI/PlayerInfo" unique_id=1253607656]
 layout_mode = 1
 anchors_preset = -1
+offset_left = -82.49999
 offset_top = 54.5
-offset_right = 203.0
-offset_bottom = 259.5
+offset_right = 198.5
+offset_bottom = 332.5
 texture = ExtResource("3_kpd0n")
 
 [node name="IconsCol" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=260804915]
@@ -157,9 +158,9 @@ texture_progress = ExtResource("10_wl76b")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PlayerInfo" unique_id=801552357]
 layout_mode = 0
-offset_left = 52.5
+offset_left = 55.0
 offset_top = 72.5
-offset_right = 130.5
+offset_right = 133.0
 offset_bottom = 260.5
 theme_override_constants/separation = -29
 
@@ -171,7 +172,7 @@ horizontal_alignment = 1
 
 [node name="LvlNum" type="Label" parent="UI/RootUI/PlayerInfo/VBoxContainer" unique_id=876506288]
 layout_mode = 2
-text = "15"
+text = "0"
 label_settings = SubResource("LabelSettings_8b8ff")
 horizontal_alignment = 1
 
