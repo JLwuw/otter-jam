@@ -252,7 +252,7 @@ body_rotation_offset_degrees = 270.0
 mouth_rotation_offset_degrees = 270.0
 max_health = 15
 toughness = 3
-unlock_time = 10
+unlock_time = 15
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=2079848975]
 script = ExtResource("2_in5mm")
