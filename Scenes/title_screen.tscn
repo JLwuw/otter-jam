@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://c5p5g6tjjegnh" path="res://Graphics/UI/red otter studios logo.png" id="3_ycay6"]
 [ext_resource type="Texture2D" uid="uid://yd6lcrkde2bn" path="res://Graphics/Enemies/PinguinoDash.png" id="4_4blwa"]
 [ext_resource type="Texture2D" uid="uid://juqvdg3f6p6d" path="res://Graphics/UI/Play Btn.png" id="4_0061g"]
-[ext_resource type="Texture2D" uid="uid://jft2gsfi3yya" path="res://Graphics/UI/Ulti Box.png" id="4_twnyg"]
 [ext_resource type="Texture2D" uid="uid://bobn7jue15qbp" path="res://Graphics/UI/How to play Btn.png" id="5_8mikk"]
 [ext_resource type="Texture2D" uid="uid://ber626twqrat7" path="res://Graphics/UI/Play Btn Pressed.png" id="5_o1e67"]
 [ext_resource type="Texture2D" uid="uid://bmbinrhal6l2" path="res://Graphics/Enemies/TurttleWalk.png" id="5_vqgqr"]
@@ -20,6 +19,14 @@
 [ext_resource type="Texture2D" uid="uid://ic5m2wctfma8" path="res://Graphics/UI/Quit Btn Hover.png" id="12_07cxn"]
 [ext_resource type="Texture2D" uid="uid://dovvkpgh5gfry" path="res://Graphics/Otter/NutriFinal.png" id="15_bsy20"]
 [ext_resource type="Texture2D" uid="uid://f7i6duuyoug1" path="res://Graphics/UI/Tutorial BG.png" id="18_4blwa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4blwa"]
+atlas = ExtResource("15_bsy20")
+region = Rect2(332, 0, 42, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqgqr"]
+atlas = ExtResource("4_4blwa")
+region = Rect2(0, 1, 64, 63)
 
 [node name="TitleScreen" type="Control" unique_id=502329976]
 texture_filter = 1
@@ -129,7 +136,6 @@ texture_pressed = ExtResource("11_bsy20")
 texture_hover = ExtResource("12_07cxn")
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
-visible = false
 
 [node name="Box" type="Panel" parent="TutorialPopUp" unique_id=705000720]
 offset_top = -2.0
@@ -186,15 +192,18 @@ theme_override_fonts/font = ExtResource("3_4gxqj")
 text = "Close"
 
 [node name="Img1" type="TextureRect" parent="TutorialPopUp" unique_id=1262307287]
-offset_left = 646.0
-offset_top = 180.0
-offset_right = 755.0
-offset_bottom = 288.0
-texture = ExtResource("4_twnyg")
+texture_filter = 1
+offset_left = 678.00006
+offset_top = 155.00002
+offset_right = 759.3186
+offset_bottom = 282.78632
+rotation = 0.39618975
+texture = SubResource("AtlasTexture_4blwa")
 
 [node name="Img2" type="TextureRect" parent="TutorialPopUp" unique_id=369689855]
-offset_left = 646.0
-offset_top = 316.0
-offset_right = 755.0
-offset_bottom = 424.0
-texture = ExtResource("4_twnyg")
+texture_filter = 1
+offset_left = 591.0
+offset_top = 285.0
+offset_right = 738.35187
+offset_bottom = 431.0
+texture = SubResource("AtlasTexture_vqgqr")
