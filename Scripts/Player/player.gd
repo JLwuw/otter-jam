@@ -55,7 +55,7 @@ var has_direction: bool = false
 
 @export_category("Leveling")
 @export var xp_curve: Curve 
-@export var level_cap: int = 50
+@export var level_cap: int = 25
 @export var xp_growth_factor: float = 10.0
 @export var combo_weight: float = 1.0
 @export var enemy_weight: float = 1.5
