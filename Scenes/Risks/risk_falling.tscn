@@ -8,15 +8,18 @@
 height = 692.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkiwc"]
-height = 700.0
+radius = 26.666656
+height = 306.66666
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_airborne"]
 height = 558.3333
 
 [node name="Icicle" type="StaticBody2D" unique_id=1025647153 groups=["enemies"]]
+scale = Vector2(0.3, 0.3)
 collision_layer = 16
 script = ExtResource("1_risk_falling")
 destroy_particles_scene = ExtResource("3_particles")
+landed_sprite_cut_ratio = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520685895]
 self_modulate = Color(0.7, 1, 1, 1)
@@ -27,6 +30,7 @@ texture = ExtResource("3_vsh8j")
 shape = SubResource("CapsuleShape2D_vsh8j")
 
 [node name="LandedCollisionShape2D" type="CollisionShape2D" parent="." unique_id=1953520325]
+position = Vector2(-6.6666565, -200)
 shape = SubResource("CapsuleShape2D_kkiwc")
 disabled = true
 
@@ -36,5 +40,7 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1712139628]
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CapsuleShape2D_airborne")
+
+[node name="LandedParticles" parent="." unique_id=810124499 instance=ExtResource("3_particles")]
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
