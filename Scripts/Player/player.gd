@@ -55,6 +55,8 @@ var has_direction: bool = false
 @export var xp_curve: Curve 
 @export var level_cap: int = 10
 @export var xp_growth_factor: float = 20
+@export var combo_weight: float = 1
+@export var enemy_weight: float = 1.5
 
 var current_xp: int = 0
 var current_level: int = 0
@@ -98,6 +100,7 @@ func _ready() -> void:
 	_set_otter_idle_pose()
 	_play_if_valid(animated_gun, gun_idle_animation)
 	_initialize_leveling()
+	xp_changed.emit(current_xp, xp_for_next_level)
 
 func _input(event: InputEvent) -> void:
 	if is_dead: return
@@ -460,7 +463,7 @@ func _level_up() -> void:
 			upgrade_manager.apply_upgrade(upgrades_offered[idx], self, idx)
 		
 func _on_enemy_died(toughness: int) -> void:
-	var xp_gain: int = int(round(toughness * xp_growth_factor * ScoreManager.combo))
+	var xp_gain: int = int(round(xp_growth_factor * (toughness * enemy_weight + ScoreManager.combo * combo_weight)))
 	add_xp(xp_gain)
 
 func _spawn_upgrade_popup(upgrade_name: String, amount: int, index: int = 0) -> void:

@@ -428,6 +428,7 @@ fire_rate_curve = ExtResource("2_xpcdj")
 move_speed_threshold = 400.0
 gun_shoot_animation_speed = 4.0
 gun_aim_offset_degrees = 90.0
+level_cap = 100
 
 [node name="Line2D2" type="Line2D" parent="." unique_id=1120057671]
 show_behind_parent = true
