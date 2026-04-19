@@ -6,13 +6,11 @@
 [ext_resource type="Script" uid="uid://cavvhlr7oonau" path="res://Scripts/Bullet/bullet_pool.gd" id="2_0f8g4"]
 [ext_resource type="Texture2D" uid="uid://4src10pkqshk" path="res://Graphics/UI/Life Icon.png" id="3_2okw4"]
 [ext_resource type="Texture2D" uid="uid://bj7w1si78q6gg" path="res://Graphics/UI/Character Box.png" id="3_kpd0n"]
-[ext_resource type="Curve" uid="uid://45ykhry8jxt5" path="res://Resources/Player/xp_curve.tres" id="4_fua5m"]
 [ext_resource type="Texture2D" uid="uid://dcbb6egq48r5h" path="res://Graphics/UI/XP Icon.png" id="4_gtphy"]
 [ext_resource type="Texture2D" uid="uid://7kvuic2ffbek" path="res://Graphics/UI/Life Bar Under.png" id="5_5q62e"]
-[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="5_6nxcd"]
 [ext_resource type="Texture2D" uid="uid://dcwhsfj8iitl7" path="res://Graphics/UI/Life Bar Over.png" id="6_f1xxd"]
 [ext_resource type="PackedScene" uid="uid://ba3g0t5t2s4lx" path="res://Scenes/enemy_spawner.tscn" id="6_gtphy"]
-[ext_resource type="PackedScene" path="res://Scenes/hazard_spawner.tscn" id="6_hazard"]
+[ext_resource type="PackedScene" uid="uid://dvkxkqvqpbdq" path="res://Scenes/hazard_spawner.tscn" id="6_hazard"]
 [ext_resource type="PackedScene" uid="uid://28syyhoybqas" path="res://Scenes/Bullet/bullet.tscn" id="7_5d3qw"]
 [ext_resource type="Texture2D" uid="uid://dejxcaituiw16" path="res://Graphics/UI/Life Bar Progress.png" id="7_eh7ec"]
 [ext_resource type="Texture2D" uid="uid://dip6o5exswevy" path="res://Graphics/UI/XP Bar Under.png" id="8_kpd0n"]
@@ -26,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
 [ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
+[ext_resource type="PackedScene" uid="uid://qxh60ffkds3" path="res://Scenes/Rink/rink2.tscn" id="25_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -80,16 +79,10 @@ glow_bloom = 0.1
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
 
-[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("5_6nxcd")]
-position = Vector2(-3095, -1935)
-
 [node name="Player" parent="." unique_id=2009590095 instance=ExtResource("1_6kpuu")]
 position = Vector2(-6, 130)
 max_speed = 750.0
 bullet_speed = 800.0
-xp_curve = ExtResource("4_fua5m")
-xp_growth_factor = 3.0
-combo_weight = 0.5
 
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_gtphy")]
 position = Vector2(-105, -43)
@@ -505,3 +498,9 @@ fit_content = true
 
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")
+
+[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("25_p4h6w")]
+position = Vector2(-846, 2345)
+
+[node name="Rink2" parent="." unique_id=1431816685 instance=ExtResource("25_p4h6w")]
+position = Vector2(-3543, -1836)

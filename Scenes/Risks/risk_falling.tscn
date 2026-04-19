@@ -1,43 +1,39 @@
 [gd_scene format=3 uid="uid://7vk1xxcqwx4a"]
 
-[ext_resource type="Script" path="res://Scripts/Risks/risk_falling.gd" id="1_risk_falling"]
+[ext_resource type="Script" uid="uid://ddqsafuxgctng" path="res://Scripts/Risks/risk_falling.gd" id="1_risk_falling"]
 [ext_resource type="PackedScene" uid="uid://bsu3ed0myajq2" path="res://Scenes/Bullet/plop.tscn" id="3_particles"]
+[ext_resource type="Texture2D" uid="uid://drsdgcgshldb" path="res://Graphics/spike.png" id="3_vsh8j"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_icicle"]
-size = Vector2(16, 16)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vsh8j"]
+height = 692.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkiwc"]
+height = 700.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_airborne"]
-radius = 50.0
-height = 128.0
+height = 558.3333
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_crater"]
-radius = 70.0
-
-[node name="Icicle" type="StaticBody2D" groups=["enemies"]]
+[node name="Icicle" type="StaticBody2D" unique_id=1025647153 groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_risk_falling")
 destroy_particles_scene = ExtResource("3_particles")
-damage = 2
-lifetime = 30.0
-slow_amount = 0.5
-slow_duration = 0.5
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520685895]
 self_modulate = Color(0.7, 1, 1, 1)
 scale = Vector2(4, 12)
-texture = SubResource("PlaceholderTexture2D_icicle")
+texture = ExtResource("3_vsh8j")
 
-[node name="AirborneCollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_airborne")
+[node name="AirborneCollisionShape2D" type="CollisionShape2D" parent="." unique_id=982888090]
+shape = SubResource("CapsuleShape2D_vsh8j")
 
-[node name="LandedCollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_crater")
+[node name="LandedCollisionShape2D" type="CollisionShape2D" parent="." unique_id=1953520325]
+shape = SubResource("CapsuleShape2D_kkiwc")
 disabled = true
 
-[node name="PlayerDetector" type="Area2D" parent="."]
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=928349684]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1712139628]
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CapsuleShape2D_airborne")
 

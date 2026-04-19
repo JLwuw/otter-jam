@@ -2,7 +2,7 @@ class_name EnemySpawner
 extends Node2D
 
 @export var player: Player
-@onready var camera: Camera2D = player.get_node("Camera2D")
+@onready var camera: Camera2D = null
 @export var rink: Rink
 var rink_rect: Rect2
 
@@ -23,8 +23,39 @@ var active_enemies: Array[Node] = []
 var is_active: bool = true
 
 func _ready() -> void:
-	player.died.connect(_on_player_died)
-	var rink_tilemap: TileMapLayer = rink.get_node("TileMapLayer")
+	if player == null:
+		player = get_parent().get_node_or_null("Player") as Player
+	if player == null:
+		push_error("EnemySpawner: missing player reference")
+		is_active = false
+		set_process(false)
+		spawn_timer.stop()
+		return
+	
+	if not player.died.is_connected(_on_player_died):
+		player.died.connect(_on_player_died)
+	
+	camera = player.get_node_or_null("Camera2D") as Camera2D
+	if camera == null:
+		camera = get_viewport().get_camera_2d()
+	
+	if rink == null:
+		rink = get_parent().get_node_or_null("Rink") as Rink
+	if rink == null:
+		push_error("EnemySpawner: missing rink reference")
+		is_active = false
+		set_process(false)
+		spawn_timer.stop()
+		return
+	
+	var rink_tilemap: TileMapLayer = rink.get_node_or_null("TileMapLayer") as TileMapLayer
+	if rink_tilemap == null:
+		push_error("EnemySpawner: Rink is missing TileMapLayer")
+		is_active = false
+		set_process(false)
+		spawn_timer.stop()
+		return
+	
 	rink_rect = get_tilemap_world_rect(rink_tilemap)
 	spawn_timer.wait_time = base_spawn_interval
 	if current_scene_root == null:
@@ -69,6 +100,10 @@ func get_current_budget() -> float:
 	return base_budget + time_elapsed * budget_growth
 
 func get_camera_rect() -> Rect2:
+	if camera == null:
+		var fallback_center: Vector2 = player.global_position if player != null else global_position
+		return Rect2(fallback_center - Vector2(640, 360), Vector2(1280, 720))
+	
 	var viewport_size: Vector2 = camera.get_viewport().get_visible_rect().size
 	var zoom: Vector2 = camera.zoom
 	
@@ -146,6 +181,11 @@ func pick_affordable_enemy(available_enemies: Array[EnemyData], budget: float) -
 	return choice
 
 func spawn_enemy(scene: PackedScene) -> void:
+	if player == null:
+		return
+	if scene == null:
+		return
+	
 	var enemy: Enemy = scene.instantiate()
 	var move_dir: Vector2 = player.velocity.normalized()
 	
@@ -227,7 +267,7 @@ func clamp_to_arena(pos: Vector2, rect: Rect2) -> Vector2:
 func _on_timer_timeout() -> void:
 	if !is_active:
 		set_process(false)
-		$Timer.stop()
+		spawn_timer.stop()
 		return
 	spawn_with_budget()
 
