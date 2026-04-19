@@ -56,7 +56,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_4gxqj")
 theme_override_font_sizes/font_size = 25
-text = "How to Play"
+text = "How to play"
 
 [node name="QuitBtn" type="Button" parent="BtnsCol" unique_id=715132463]
 layout_mode = 2

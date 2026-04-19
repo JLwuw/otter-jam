@@ -24,7 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5cf7jm6go7" path="res://Graphics/UI/Speed Bar Progress.png" id="20_nk2r0"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="21_1b3g2"]
 [ext_resource type="Texture2D" uid="uid://nk7yamca2ivx" path="res://Graphics/UI/Speedometer BG.png" id="23_8b8ff"]
-[ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
+[ext_resource type="PackedScene" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
@@ -433,7 +433,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("21_1b3g2")
 theme_override_font_sizes/font_size = 25
-text = "Main Menu"
+text = "Main menu"
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=889101716]
 process_mode = 3
@@ -479,7 +479,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("21_1b3g2")
 theme_override_font_sizes/font_size = 25
-text = "Main Menu"
+text = "Main menu"
 
 [node name="GameOverText" type="RichTextLabel" parent="PauseMenu" unique_id=457645160]
 anchors_preset = 5
