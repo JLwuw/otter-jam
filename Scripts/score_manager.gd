@@ -4,12 +4,14 @@ var score: float = 0
 var elapsed_time: float = 0.0
 var combo: int = 0
 var combo_timer: float = 0.0
+var is_active: bool = false
 
 const TOUGHNESS_MULT: float = 5.0
 const TIME_MULT: float = 0.1
 const COMBO_DURATION: float = 5.0
 
 func _process(delta: float) -> void:
+	if not is_active: return
 	elapsed_time += delta
 	if combo > 0:
 		combo_timer -= delta
@@ -17,6 +19,7 @@ func _process(delta: float) -> void:
 			combo = 0
 
 func _on_enemy_died(toughness: int) -> void:
+	if not is_active: return
 	combo += 1
 	combo_timer = COMBO_DURATION
 	
