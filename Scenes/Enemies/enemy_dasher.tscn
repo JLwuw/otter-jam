@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://ctes2a87u5w4p" path="res://Scripts/Enemies/Components/component_dash.gd" id="3_2hggw"]
 [ext_resource type="Script" uid="uid://dqyj2gf1i6828" path="res://Scripts/Enemies/Components/component_sprite_rotation.gd" id="4_2hggw"]
 [ext_resource type="Script" uid="uid://rl1trhvbn5pv" path="res://Scripts/Enemies/Components/component_player_chase.gd" id="5_qowop"]
+[ext_resource type="Script" uid="uid://bnl1trh50noee" path="res://Scripts/Enemies/Components/component_bullet_hit_flash.gd" id="6_gsudo"]
+[ext_resource type="Script" uid="uid://460skcljylw5" path="res://Scripts/Enemies/Components/component_enemy_death_impact.gd" id="7_0wcx7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl1sk"]
 
@@ -35,6 +37,12 @@ metadata/_custom_type_script = "uid://dqyj2gf1i6828"
 
 [node name="Player Chase Component" type="Node" parent="." unique_id=1454679778]
 script = ExtResource("5_qowop")
+
+[node name="Bullet Hit Flash Component" type="Node" parent="." unique_id=844876498]
+script = ExtResource("6_gsudo")
+
+[node name="Enemy Death Impact Component" type="Node" parent="." unique_id=1579944941]
+script = ExtResource("7_0wcx7")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
