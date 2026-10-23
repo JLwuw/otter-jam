@@ -126,31 +126,38 @@ func despawn() -> void:
 func _emit_lifetime_end_particles() -> void:
 	if lifetime_end_particles == null:
 		return
-
-	var effect: GPUParticles2D = lifetime_end_particles.instantiate() as GPUParticles2D
-	if effect == null:
+	
+	if not visible:
+		return
+	
+	var particles: GPUParticles2D = lifetime_end_particles.instantiate() as GPUParticles2D
+	if particles == null:
 		return
 
+	if not particles.one_shot:
+		printerr("Bullet lifetime end particles should be one-shot")
+		return
+		
 	var scene_root: Node = get_tree().current_scene
 	if scene_root == null:
 		scene_root = get_tree().root
 
-	effect.top_level = true
-	effect.global_position = global_position
-	effect.global_rotation = rotation
-	effect.emitting = false
-	scene_root.add_child(effect)
-	effect.restart()
-	effect.emitting = true
+	particles.top_level = true
+	particles.global_position = global_position
+	particles.global_rotation = rotation
+	scene_root.add_child(particles)
+	
+	particles.finished.connect(
+		Callable(particles, "queue_free"),
+		CONNECT_ONE_SHOT
+	)
 
-	if effect.one_shot:
-		effect.finished.connect(Callable(effect, "queue_free"), CONNECT_ONE_SHOT)
-		return
+	particles.restart()
+	
 
-	var cleanup_delay: float = max(0.1, effect.lifetime + effect.preprocess)
-	var cleanup_timer: SceneTreeTimer = get_tree().create_timer(cleanup_delay)
-	cleanup_timer.timeout.connect(Callable(self, "_free_effect").bind(effect), CONNECT_ONE_SHOT)
-
+func _on_particles_finished(particles: GPUParticles2D) -> void:
+	print("FINISHED: ", particles.name, " #", particles.get_instance_id())
+	particles.queue_free()
 
 func _free_effect(effect: GPUParticles2D) -> void:
 	if effect != null and is_instance_valid(effect):

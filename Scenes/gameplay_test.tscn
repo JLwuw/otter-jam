@@ -25,7 +25,10 @@
 [ext_resource type="PackedScene" uid="uid://dxds34v0tclvx" path="res://Scenes/postprocessing.tscn" id="23_nk2r0"]
 [ext_resource type="Texture2D" uid="uid://ebnxwpadrv2j" path="res://Graphics/UI/Combo Meter BG.png" id="23_p4h6w"]
 [ext_resource type="PackedScene" uid="uid://qxh60ffkds3" path="res://Scenes/Rink/rink2.tscn" id="25_p4h6w"]
-[ext_resource type="Script" path="res://Scripts/Spawner/arena_kill_zone.gd" id="26_killz"]
+[ext_resource type="Script" uid="uid://bc5nrqdhqyeo7" path="res://Scripts/Spawner/arena_kill_zone.gd" id="26_killz"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena_kill_zone"]
+size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf2k8"]
 shader = ExtResource("19_qf2k8")
@@ -77,9 +80,6 @@ background_mode = 3
 glow_enabled = true
 glow_bloom = 0.1
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena_kill_zone"]
-size = Vector2(1, 1)
-
 [node name="GameplayTest" type="Node2D" unique_id=1958848919]
 script = ExtResource("1_n6585")
 
@@ -91,7 +91,7 @@ bullet_speed = 800.0
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_gtphy")]
 position = Vector2(-105, -43)
 player = NodePath("../Player")
-rink = NodePath("../Rink")
+rink = NodePath("")
 
 [node name="SpawnRectMin" type="Marker2D" parent="." unique_id=1508187531]
 position = Vector2(-3409.147, -1736.5618)
@@ -110,7 +110,7 @@ shape = SubResource("RectangleShape2D_arena_kill_zone")
 [node name="Hazard Spawner" parent="." unique_id=2131718948 node_paths=PackedStringArray("player", "rink") instance=ExtResource("6_hazard")]
 position = Vector2(-105, -43)
 player = NodePath("../Player")
-rink = NodePath("../Rink")
+rink = NodePath("")
 spawn_start_time = 20.0
 
 [node name="BulletPool" type="Node" parent="." unique_id=1411259080]
@@ -517,8 +517,5 @@ fit_content = true
 [node name="Postprocessing" parent="." unique_id=469052891 instance=ExtResource("23_nk2r0")]
 environment = SubResource("Environment_p4h6w")
 
-[node name="Rink" parent="." unique_id=487660221 instance=ExtResource("25_p4h6w")]
-position = Vector2(26604.893, 8394.893)
-
-[node name="Rink2" parent="." unique_id=1431816685 instance=ExtResource("25_p4h6w")]
+[node name="Rink" parent="." unique_id=1431816685 instance=ExtResource("25_p4h6w")]
 position = Vector2(-3543, -1836)

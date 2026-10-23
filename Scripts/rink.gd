@@ -15,6 +15,10 @@ func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZE
 	var particles: GPUParticles2D = touch_particles_scene.instantiate() as GPUParticles2D
 	if particles == null:
 		return
+	
+	if not particles.one_shot:
+		printerr("Bullet lifetime end particles should be one-shot")
+		return
 
 	var scene_root: Node = get_tree().current_scene
 	if scene_root == null:
@@ -24,18 +28,15 @@ func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZE
 	particles.global_position = world_position + normal * 2.0
 	if normal != Vector2.ZERO:
 		particles.global_rotation = normal.angle() + PI * 0.5
-	particles.emitting = false
 	scene_root.add_child(particles)
+	
+	particles.finished.connect(
+		Callable(particles, "queue_free"),
+		CONNECT_ONE_SHOT
+	)
+
 	particles.restart()
-	particles.emitting = true
-
-	if particles.one_shot:
-		particles.finished.connect(Callable(particles, "queue_free"), CONNECT_ONE_SHOT)
-		return
-
-	var cleanup_delay: float = max(0.1, particles.lifetime + particles.preprocess)
-	var cleanup_timer: SceneTreeTimer = get_tree().create_timer(cleanup_delay)
-	cleanup_timer.timeout.connect(Callable(self, "_free_rink_particles").bind(particles), CONNECT_ONE_SHOT)
+	
 
 
 func _free_rink_particles(particles: GPUParticles2D) -> void:
