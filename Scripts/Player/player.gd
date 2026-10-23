@@ -110,9 +110,13 @@ func _ready() -> void:
 	xp_changed.emit(current_xp, xp_for_next_level)
 
 func _input(event: InputEvent) -> void:
-	if is_dead: return
-	
-	if event.is_action_pressed("leftClick") or event.is_action_pressed("controller_fire"):
+	if is_dead:
+		return
+
+	if (
+		Input.is_action_just_pressed_by_event("leftClick", event)
+		or Input.is_action_just_pressed_by_event("controller_fire", event)
+	):
 		_try_shoot_on_click()
 
 func _physics_process(delta: float) -> void:
