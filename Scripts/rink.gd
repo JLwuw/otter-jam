@@ -7,10 +7,14 @@ extends Node2D
 @onready var particle_cooldown_timer: Timer = $ParticleCooldown
 
 func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZERO, player_speed: float = 0.0) -> void:
-	if player_speed < touch_particles_min_speed:
+	if not particle_cooldown_timer:
+		printerr("Rink Timer no longer with us")
 		return
 	
 	if not particle_cooldown_timer.is_stopped():
+		return
+		
+	if player_speed < touch_particles_min_speed:
 		return
 
 	if touch_particles_scene == null:

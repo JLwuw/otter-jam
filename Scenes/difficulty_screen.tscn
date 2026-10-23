@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dvqygiqjat8ne"]
 
 [ext_resource type="Script" uid="uid://x7alf4tl7eri" path="res://Scripts/difficulty_screen.gd" id="1_ndua3"]
-[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink.tscn" id="2_7rafo"]
+[ext_resource type="PackedScene" uid="uid://6samdck1tc8k" path="res://Scenes/Rink/rink_diff_select.tscn" id="2_7rafo"]
 [ext_resource type="PackedScene" uid="uid://bttw28xgext45" path="res://Scenes/Player/player.tscn" id="2_s0mie"]
 [ext_resource type="FontFile" uid="uid://b2dgyhbp3te7t" path="res://Fonts/Jersey10-Regular.ttf" id="3_3bsy7"]
 [ext_resource type="Texture2D" uid="uid://81k17nn0w3tu" path="res://Graphics/UI/Hole.png" id="4_6hm7x"]
