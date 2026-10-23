@@ -4,9 +4,13 @@ extends Node2D
 @onready var tile_map: TileMapLayer = $TileMapLayer
 @onready var touch_particles_scene: PackedScene = load("res://Scenes/Rink/rink_touch_particles.tscn") as PackedScene
 @export var touch_particles_min_speed: float = 120.0
+@onready var particle_cooldown_timer: Timer = $ParticleCooldown
 
 func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZERO, player_speed: float = 0.0) -> void:
 	if player_speed < touch_particles_min_speed:
+		return
+	
+	if not particle_cooldown_timer.is_stopped():
 		return
 
 	if touch_particles_scene == null:
@@ -37,6 +41,7 @@ func spawn_touch_particles(world_position: Vector2, normal: Vector2 = Vector2.ZE
 
 	particles.restart()
 	
+	particle_cooldown_timer.start()
 
 
 func _free_rink_particles(particles: GPUParticles2D) -> void:
