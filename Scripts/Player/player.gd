@@ -14,6 +14,7 @@ extends CharacterBody2D
 
 var move_direction: Vector2 = Vector2.ZERO
 var has_direction: bool = false
+var controller_connected: bool = false
 
 @export_category("Health")
 @export var max_health: int = 5
@@ -94,6 +95,7 @@ signal level_up(level: int)
 signal died
 
 func _ready() -> void:
+	controller_connected = not Input.get_connected_joypads().is_empty()
 	level_cap = clampi(level_cap, 1, 25)
 	if SPEED_CAP > 0.0:
 		speed_cap_inv = 1.0 / SPEED_CAP
@@ -110,7 +112,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if is_dead: return
 	
-	if event.is_action_pressed("leftClick"):
+	if event.is_action_pressed("leftClick") or event.is_action_pressed("controller_fire"):
 		_try_shoot_on_click()
 
 func _physics_process(delta: float) -> void:
@@ -119,22 +121,35 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	
-	if Input.is_action_pressed("leftClick"):
+	controller_connected = not Input.get_connected_joypads().is_empty()
+	var controller_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var fire_pressed: bool = _is_fire_pressed()
+	if controller_connected and controller_direction.length_squared() > 0.01:
+		move_direction = controller_direction.normalized()
+		has_direction = true
+		var controller_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
+		rotation = lerp_angle(rotation, controller_rotation, turn_speed * delta)
+
+	var can_accelerate: bool = false
+	if fire_pressed:
 		move_hold_timer += delta
 		if move_hold_timer >= move_hold_delay:
-			var to_mouse: Vector2 = get_global_mouse_position() - global_position
-			if to_mouse.length() > 5.0:
-				move_direction = to_mouse.normalized()
-				has_direction = true
+			if controller_connected:
+				can_accelerate = controller_direction.length_squared() > 0.01
+			else:
+				var to_mouse: Vector2 = get_global_mouse_position() - global_position
+				if to_mouse.length() > 5.0:
+					move_direction = to_mouse.normalized()
+					has_direction = true
+					can_accelerate = true
 	else:
 		move_hold_timer = 0.0
 
-	if has_direction:
+	var should_accelerate: bool = can_accelerate or (not controller_connected and has_direction)
+	if should_accelerate and has_direction:
 		var target_velocity: Vector2 = move_direction * max_speed
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
 		velocity += accel * acceleration_factor * delta
-		var target_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
-		rotation = lerp_angle(rotation, target_rotation, turn_speed * delta)
 	
 	if velocity.length() > max_speed:
 		velocity = velocity.normalized() * max_speed 
@@ -214,13 +229,24 @@ func update_gun_aim(delta: float) -> void:
 	if animated_gun == null:
 		return
 
-	if Input.is_action_pressed("leftClick"):
-		var to_mouse: Vector2 = get_global_mouse_position() - animated_gun.global_position
-		if to_mouse.length_squared() > 0.001:
-			var target_rotation: float = to_mouse.angle() + deg_to_rad(gun_aim_offset_degrees)
+	if _is_fire_pressed():
+		var aim_direction: Vector2 = _get_aim_direction()
+		if aim_direction.length_squared() > 0.001:
+			var target_rotation: float = aim_direction.angle() + deg_to_rad(gun_aim_offset_degrees)
 			animated_gun.global_rotation = lerp_angle(animated_gun.global_rotation, target_rotation, gun_aim_turn_speed * delta)
 	else:
 		animated_gun.rotation = lerp_angle(animated_gun.rotation, 0.0, gun_aim_turn_speed * delta)
+
+func _get_aim_direction() -> Vector2:
+	var controller_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if controller_direction.length_squared() > 0.01:
+		return controller_direction.normalized()
+	if controller_connected:
+		return Vector2.ZERO
+	return (get_global_mouse_position() - global_position).normalized()
+
+func _is_fire_pressed() -> bool:
+	return Input.is_action_pressed("leftClick") or Input.is_action_pressed("controller_fire")
 
 func _play_if_valid(target: AnimatedSprite2D, animation_name: StringName) -> void:
 	if target == null or target.sprite_frames == null:
@@ -281,6 +307,8 @@ func _try_shoot_on_click() -> void:
 		return
 
 	var current_speed: float = velocity.length()
+	if controller_connected and _get_aim_direction().length_squared() <= 0.001:
+		return
 	var burst_count: int = _get_burst_count(current_speed)
 	_fire_speed_burst(burst_count)
 	shoot_anim_timer = max(shoot_anim_hold_time, burst_shot_interval * max(0, burst_count - 1) + 0.05)
@@ -322,8 +350,8 @@ func shoot() -> void:
 		print("No bullet scene for player")
 		return
 
-	var direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
-	var rotation_to_mouse: float = (get_global_mouse_position() - global_position).angle()
+	var direction: Vector2 = _get_aim_direction()
+	var rotation_to_mouse: float = direction.angle()
 	var effective_bullet_speed: float = bullet_speed + max(0.0, velocity.dot(direction))
 	for spawn_position in _get_bullet_spawn_positions(direction):
 		_spawn_bullet(spawn_position, direction, effective_bullet_speed, rotation_to_mouse)
