@@ -60,21 +60,25 @@ func _ready() -> void:
 			print("Medium Mode!")
 			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
 			enemy_spawner.player = $Player
-			enemy_spawner.rink = $Rink
 			enemy_spawner.time_elapsed = -30
+			enemy_spawner.spawn_rect_min = $SpawnRectMin
+			enemy_spawner.spawn_rect_max = $SpawnRectMax
 			current_scene_root.add_child(enemy_spawner)
 			
 		ScoreManager.Difficulty.HARD:
 			print("Hard Mode!")
 			var enemy_spawner: EnemySpawner = enemy_spawner_scene.instantiate()
 			enemy_spawner.player = $Player
-			enemy_spawner.rink = $Rink
 			enemy_spawner.time_elapsed = -30
+			enemy_spawner.spawn_rect_min = $SpawnRectMin
+			enemy_spawner.spawn_rect_max = $SpawnRectMax
+			
 			current_scene_root.add_child(enemy_spawner)
 			var enemy_spawner2: EnemySpawner = enemy_spawner_scene.instantiate()
 			enemy_spawner2.player = $Player
-			enemy_spawner2.rink = $Rink
 			enemy_spawner2.time_elapsed = -30
+			enemy_spawner2.spawn_rect_min = $SpawnRectMin
+			enemy_spawner2.spawn_rect_max = $SpawnRectMax
 			current_scene_root.add_child(enemy_spawner2)
 
 	if player != null:

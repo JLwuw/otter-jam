@@ -88,15 +88,17 @@ position = Vector2(-6, 130)
 max_speed = 750.0
 bullet_speed = 800.0
 
-[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player") instance=ExtResource("6_gtphy")]
-position = Vector2(-105, -43)
+[node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "spawn_rect_min", "spawn_rect_max") instance=ExtResource("6_gtphy")]
 player = NodePath("../Player")
+spawn_rect_min = NodePath("../SpawnRectMin")
+spawn_rect_max = NodePath("../SpawnRectMax")
+forbidden_angle_deg = 45.0
 
 [node name="SpawnRectMin" type="Marker2D" parent="." unique_id=1508187531]
-position = Vector2(-3409.147, -1736.5618)
+position = Vector2(-3313.402, -1649.572)
 
 [node name="SpawnRectMax" type="Marker2D" parent="." unique_id=248440973]
-position = Vector2(3350.3623, 2049.396)
+position = Vector2(3275.387, 1972.056)
 
 [node name="ArenaKillZone" type="Area2D" parent="." unique_id=1702819246]
 collision_layer = 0
@@ -105,6 +107,7 @@ script = ExtResource("26_killz")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaKillZone" unique_id=921884124]
 shape = SubResource("RectangleShape2D_arena_kill_zone")
+debug_color = Color(0.86540437, 0.0005848849, 0.863436, 0.41960785)
 
 [node name="Hazard Spawner" parent="." unique_id=2131718948 node_paths=PackedStringArray("player") instance=ExtResource("6_hazard")]
 position = Vector2(-105, -43)
@@ -328,7 +331,6 @@ show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
-visible = false
 
 [node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
 offset_left = 16.0
