@@ -111,6 +111,8 @@ func _ready() -> void:
 	$PauseMenu/BtnsCol/ContinueBtn.pressed.connect(toggle_pause)
 	$PauseMenu/BtnsCol/RestartBtn.pressed.connect(_on_play_again_pressed)
 	$PauseMenu/BtnsCol/MainMenuBtn.pressed.connect(_on_main_menu_pressed)
+	_configure_menu_buttons($PauseMenu/BtnsCol)
+	_configure_menu_buttons($GameOverScreen/BtnsCol)
 	
 	if speed_bar != null:
 		speed_bar.max_value = player.max_speed
@@ -161,14 +163,34 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):  # ESC por defecto
 		toggle_pause()
+		get_viewport().set_input_as_handled()
 		
 func toggle_pause() -> void:
+	if player.is_dead or game_over_screen.visible:
+		return
 	var paused: bool = not get_tree().paused
 	get_tree().paused = paused
 	if paused:
 		pause_menu.show()
+		$PauseMenu/BtnsCol/ContinueBtn.grab_focus()
 	else:
 		pause_menu.hide()
+		var focused: Control = get_viewport().gui_get_focus_owner()
+		if focused != null and pause_menu.is_ancestor_of(focused):
+			focused.release_focus()
+
+func _configure_menu_buttons(container: Control) -> void:
+	var buttons: Array[Button] = []
+	for child in container.get_children():
+		if child is Button:
+			buttons.append(child)
+	for index in range(buttons.size()):
+		var button: Button = buttons[index]
+		button.focus_mode = Control.FOCUS_ALL
+		button.focus_neighbor_top = button.get_path_to(buttons[posmod(index - 1, buttons.size())])
+		button.focus_neighbor_bottom = button.get_path_to(buttons[(index + 1) % buttons.size()])
+		button.add_theme_stylebox_override("focus", button.get_theme_stylebox("hover"))
+		button.add_theme_color_override("font_focus_color", button.get_theme_color("font_hover_color"))
 
 func update_speed_fx(delta: float) -> void:
 	if speed_fx_material == null or player == null:
