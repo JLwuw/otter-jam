@@ -117,28 +117,35 @@ theme_override_constants/separation = 34
 [node name="PlayBtn" type="TextureButton" parent="BtnsCol" unique_id=1263224851]
 layout_mode = 2
 size_flags_horizontal = 0
-focus_mode = 2
+focus_neighbor_top = NodePath("../QuitBtn")
+focus_neighbor_bottom = NodePath("../HowtoPlayBtn")
 texture_normal = ExtResource("4_0061g")
 texture_pressed = ExtResource("5_o1e67")
 texture_hover = ExtResource("6_ycay6")
+texture_focused = ExtResource("6_ycay6")
 
 [node name="HowtoPlayBtn" type="TextureButton" parent="BtnsCol" unique_id=508027331]
 layout_mode = 2
 size_flags_horizontal = 0
-focus_mode = 2
+focus_neighbor_top = NodePath("../PlayBtn")
+focus_neighbor_bottom = NodePath("../QuitBtn")
 texture_normal = ExtResource("5_8mikk")
 texture_pressed = ExtResource("6_sqelc")
 texture_hover = ExtResource("7_w5sh6")
+texture_focused = ExtResource("7_w5sh6")
 
 [node name="QuitBtn" type="TextureButton" parent="BtnsCol" unique_id=177993440]
 layout_mode = 2
 size_flags_horizontal = 0
-focus_mode = 2
+focus_neighbor_top = NodePath("../HowtoPlayBtn")
+focus_neighbor_bottom = NodePath("../PlayBtn")
 texture_normal = ExtResource("8_o1e67")
 texture_pressed = ExtResource("11_bsy20")
 texture_hover = ExtResource("12_07cxn")
+texture_focused = ExtResource("12_07cxn")
 
 [node name="TutorialPopUp" type="CanvasLayer" parent="." unique_id=1846266251]
+visible = false
 
 [node name="Box" type="Panel" parent="TutorialPopUp" unique_id=705000720]
 offset_top = -2.0
@@ -191,7 +198,6 @@ offset_top = 449.0
 offset_right = 804.0
 offset_bottom = 483.0
 size_flags_horizontal = 8
-focus_mode = 2
 theme_override_fonts/font = ExtResource("3_4gxqj")
 text = "Close"
 

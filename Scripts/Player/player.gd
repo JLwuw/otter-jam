@@ -114,7 +114,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if (
-		Input.is_action_just_pressed_by_event("leftClick", event)
+		event.is_action_pressed("leftClick")
 		or Input.is_action_just_pressed_by_event("controller_fire", event)
 	):
 		_try_shoot_on_click()
@@ -154,6 +154,8 @@ func _physics_process(delta: float) -> void:
 		var target_velocity: Vector2 = move_direction * max_speed
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
 		velocity += accel * acceleration_factor * delta
+		var target_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
+		rotation = lerp_angle(rotation, target_rotation, turn_speed * delta)
 	
 	if velocity.length() > max_speed:
 		velocity = velocity.normalized() * max_speed 
