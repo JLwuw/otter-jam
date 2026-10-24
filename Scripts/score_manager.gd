@@ -16,6 +16,7 @@ var difficulty_selected: Difficulty = Difficulty.EASY
 const TOUGHNESS_MULT: float = 5.0
 const TIME_MULT: float = 0.1
 const COMBO_DURATION: float = 3.0
+const MAX_COMBO: int = 20
 
 func _process(delta: float) -> void:
 	if not is_active: return
@@ -27,7 +28,7 @@ func _process(delta: float) -> void:
 
 func _on_enemy_died(toughness: int) -> void:
 	if not is_active: return
-	combo += 1
+	combo = min(MAX_COMBO, combo + 1)
 	combo_timer = COMBO_DURATION
 	
 	var final_points: float = toughness * combo * TOUGHNESS_MULT

@@ -83,6 +83,8 @@ script = ExtResource("1_n6585")
 position = Vector2(-6, 130)
 max_speed = 750.0
 bullet_speed = 800.0
+combo_weight = 0.1
+enemy_weight = 1.0
 
 [node name="Enemy Spawner" parent="." unique_id=2131718947 node_paths=PackedStringArray("player", "spawn_rect_min", "spawn_rect_max") instance=ExtResource("6_gtphy")]
 player = NodePath("../Player")
@@ -318,6 +320,7 @@ show_percentage = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=901245771]
 layer = 10
+visible = false
 
 [node name="FPSLabel" type="Label" parent="DebugUI" unique_id=506331224]
 offset_left = 16.0

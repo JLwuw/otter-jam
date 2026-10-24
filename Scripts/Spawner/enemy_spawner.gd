@@ -8,7 +8,7 @@ extends Node2D
 var rink_rect: Rect2
 
 @export_group("Spawn")
-@export var base_spawn_interval: float = 6.0
+@export var base_spawn_interval: float = 10.0
 @export var spawn_radius: float = 700
 @export_range(0.0, 500.0, 5.0) var spawn_screen_margin: float = 80.0
 @export_range(0.0, 2000.0, 10.0) var min_spawn_distance: float = 600.0
@@ -63,8 +63,8 @@ func _ready() -> void:
 		current_scene_root = get_tree().root
 
 
-func _draw() -> void:
-	draw_rect(rink_rect, Color.GREEN, false, 2.0)
+#func _draw() -> void:
+	#draw_rect(rink_rect, Color.GREEN, false, 2.0)
 
 func is_position_in_arena(pos: Vector2) -> bool:
 	return rink_rect.has_point(pos)
