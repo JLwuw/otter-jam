@@ -91,74 +91,74 @@ func get_upgrade_per_level(level: int) -> Array[Upgrade]:
 	match level:
 		1:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 3),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 30)
+				Upgrade.new(Upgrade.Type.MAX_HP, 2),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20)
 			]
 		
 		2:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 30)
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20)
 			]
 		
 		3:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 				Upgrade.new(Upgrade.Type.DAMAGE, 1)
 			]
 		
 		4:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 			]
 		
 		5:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 			]
 		
 		6:
 			return [
 				Upgrade.new(Upgrade.Type.MAX_HP, 1),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
-				Upgrade.new(Upgrade.Type.BULLET_SPEED, 100),
-				Upgrade.new(Upgrade.Type.BULLET_COUNT, 5)
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
+				Upgrade.new(Upgrade.Type.BULLET_SPEED, 50),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 2)
 			]
 
 		7:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 3),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 2),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 			]
 			
 		8:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 3),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 2),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 			]
 			
 		9:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 3),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
+				Upgrade.new(Upgrade.Type.MAX_HP, 2),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
 			]
 			
 		10:
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
-				Upgrade.new(Upgrade.Type.BULLET_SPEED, 100),
-				Upgrade.new(Upgrade.Type.BULLET_COUNT, 5),
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 20),
+				Upgrade.new(Upgrade.Type.BULLET_SPEED, 50),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 2),
 				Upgrade.new(Upgrade.Type.DAMAGE, 1)
 			]
 			
 		_:
 			print("WARNING: Level not defined in get_upgrade_per_level")
 			return [
-				Upgrade.new(Upgrade.Type.MAX_HP, 2),
-				Upgrade.new(Upgrade.Type.MAX_SPEED, 40),
-				Upgrade.new(Upgrade.Type.BULLET_COUNT, 1)
+				Upgrade.new(Upgrade.Type.MAX_HP, 1),
+				Upgrade.new(Upgrade.Type.MAX_SPEED, 5),
+				Upgrade.new(Upgrade.Type.BULLET_COUNT, 0)
 			]

@@ -7,10 +7,10 @@ signal dash_ended
 @export_group("Movement")
 @export var responsiveness: float = 55
 @export var acceleration_factor: float = 30
-@export var chase_speed: float = 400.0
+@export var chase_speed: float = 500.0
 
 @export_group("Dash")
-@export var dash_speed: float = 1100.0
+@export var dash_speed: float = 1300.0
 @export var dash_cooldown: float = 2.0
 @export var dash_duration: float = 0.8
 @export var dash_trigger_distance: float = 300.0  # Distance at which to start dashing
