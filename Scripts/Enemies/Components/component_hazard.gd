@@ -99,7 +99,7 @@ func _process(delta: float) -> void:
 
 		if sprite != null and airborne_shadow_sprite != null and sprite.texture != null:
 			airborne_shadow_sprite.texture = sprite.texture
-		
+
 		# Check if reached destination
 		if distance_traveled >= travel_distance:
 			is_landed = true
