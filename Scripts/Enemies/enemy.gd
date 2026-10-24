@@ -5,7 +5,6 @@ extends CharacterBody2D
 @export var toughness: int = 1
 @export var unlock_time: int = 0
 @export var player: Player
-@export var disable_collision_when_offscreen: bool = true
 @export var death_free_delay: float = 0.0
 
 var current_health: int = 3
@@ -83,8 +82,6 @@ func set_enemy_active(is_active: bool) -> void:
 	if visual_node != null:
 		visual_node.visible = is_active
 
-	if disable_collision_when_offscreen and collision_shape != null:
-		collision_shape.disabled = not is_active
 
 
 func _find_visual_node() -> CanvasItem:
