@@ -81,6 +81,7 @@ var right_muzzle: Node2D
 @onready var animated_gun: AnimatedSprite2D = $AnimatedGun
 var shoot_anim_timer: float = 0.0
 var move_hold_timer: float = 0.0
+var controller_move_strength: float = 0.0
 var is_firing_burst: bool = false
 
 var is_dead: bool = false
@@ -127,31 +128,41 @@ func _physics_process(delta: float) -> void:
 	
 	controller_connected = not Input.get_connected_joypads().is_empty()
 	var controller_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var controller_input_strength: float = controller_direction.length()
 	var fire_pressed: bool = _is_fire_pressed()
-	if controller_connected and controller_direction.length_squared() > 0.01:
-		move_direction = controller_direction.normalized()
-		has_direction = true
-		var controller_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
+	if controller_connected and controller_input_strength > 0.01:
+		var controller_rotation: float = controller_direction.angle() + deg_to_rad(rotation_offset_degrees)
 		rotation = lerp_angle(rotation, controller_rotation, turn_speed * delta)
+		if fire_pressed:
+			move_direction = controller_direction.normalized()
 
 	var can_accelerate: bool = false
-	if fire_pressed:
+	if controller_connected:
+		if fire_pressed:
+			move_hold_timer += delta
+			if move_hold_timer >= move_hold_delay and controller_input_strength > 0.01:
+				has_direction = true
+				controller_move_strength = controller_input_strength
+				can_accelerate = true
+		else:
+			move_hold_timer = 0.0
+	elif fire_pressed:
 		move_hold_timer += delta
 		if move_hold_timer >= move_hold_delay:
-			if controller_connected:
-				can_accelerate = controller_direction.length_squared() > 0.01
-			else:
-				var to_mouse: Vector2 = get_global_mouse_position() - global_position
-				if to_mouse.length() > 5.0:
-					move_direction = to_mouse.normalized()
-					has_direction = true
-					can_accelerate = true
+			var to_mouse: Vector2 = get_global_mouse_position() - global_position
+			if to_mouse.length() > 5.0:
+				move_direction = to_mouse.normalized()
+				has_direction = true
+				can_accelerate = true
 	else:
 		move_hold_timer = 0.0
 
-	var should_accelerate: bool = can_accelerate or (not controller_connected and has_direction)
+	var should_accelerate: bool = can_accelerate or has_direction
 	if should_accelerate and has_direction:
-		var target_velocity: Vector2 = move_direction * max_speed
+		var target_speed: float = max_speed
+		if controller_connected:
+			target_speed *= controller_move_strength
+		var target_velocity: Vector2 = move_direction * target_speed
 		var accel: Vector2 = velocity.lerp(target_velocity, responsiveness * delta)
 		velocity += accel * acceleration_factor * delta
 		var target_rotation: float = move_direction.angle() + deg_to_rad(rotation_offset_degrees)
